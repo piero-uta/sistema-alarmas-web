@@ -1,17 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Comunidades;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/comunidades', [Comunidades::class, 'index'])->name('comunidades.index');
+Route::get('/comunidades/crear', [Comunidades::class, 'formularioGuardar'])->name('comunidades.crearEditar');
 
 Route::get('/', function () {
     return view('welcome');
