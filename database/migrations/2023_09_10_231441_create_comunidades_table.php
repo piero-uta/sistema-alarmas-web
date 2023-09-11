@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
+            //TO DO ver si se hace unico el rut
             $table->integer('rut');
             $table->string('digito');
             $table->string('razon_social');

@@ -9,12 +9,26 @@ class Comunidades extends Controller
 {
     public function index()
     {
-        return view('comunidades.index');
+        //obtener todas las comunidades
+        $comunidades = Comunidad::all();
+        //retornar la vista comunidades.index
+        return view('comunidades.index', compact('comunidades'));
     }
 
     public function formularioGuardar(Request $request)
     {
-        return view('comunidades.guardar');
+        $parametros = [];
+        if($request->has('id')){
+            $comunidad = Comunidad::find($request->id);
+            if(!$comunidad){
+                //agregar error a parametros
+                $parametros['error'] = 'Comunidad no encontrada';
+                return redirect()->route('comunidades.index')->with($parametros);
+            }
+            $parametros['comunidad'] = $comunidad;
+        }
+        //retornar la vista comunidades.crearEditar con parametros
+        return view('comunidades.guardar', $parametros);
     }
 
     public function handleGuardar(Request $request)
@@ -28,15 +42,68 @@ class Comunidades extends Controller
             'costo_mensual' => 'required',
 
         ]);
-        $comunidad = new Comunidad();
+        if($request->has('id')){
+            $comunidad = Comunidad::find($request->id);
+            if(!$comunidad){
+                //agregar error a parametros
+                $parametros['error'] = 'Comunidad no encontrada';
+                return redirect()->route('comunidades.index')->with($parametros);
+            }
+        }else{
+            $comunidad = new Comunidad();
+        }
         $comunidad->razon_social = $request->razon_social;
         $comunidad->rut = $request->rut;
         $comunidad->digito = $request->digito;
         $comunidad->direccion = $request->direccion;
         $comunidad->tipo_servicio = $request->tipo_servicio;
         $comunidad->costo_mensual = $request->costo_mensual;
+
+        if($request->has('representante_legal')){
+            $comunidad->representante_legal = $request->representante_legal;
+        }
+        if($request->has('email')){
+            $comunidad->email = $request->email;
+        }
+        if($request->has('giro')){
+            $comunidad->giro = $request->giro;
+        }
+        if($request->has('telefono')){
+            $comunidad->telefono = $request->telefono;
+        }
+        if($request->has('celular')){
+            $comunidad->celular = $request->celular;
+        }
+        if($request->has('logo')){
+            $comunidad->logo = $request->logo;
+        }
+        if($request->has('activo')){
+            $comunidad->activo = 1;
+        }else{
+            $comunidad->activo = 0;
+        }
+
         $comunidad->save();
-        return redirect()->route('comunidades.index');
+        $parametros['success'] = 'Comunidad' . $request->razon_social . 'guardada';
+        return redirect()->route('comunidades.index')->with($parametros);
+    }
+
+    public function eliminar(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $comunidad = Comunidad::find($request->id);
+        if(!$comunidad){
+            //agregar error a parametros
+            $parametros['error'] = 'Comunidad no encontrada';
+            return redirect()->route('comunidades.index')->with($parametros);
+        }
+        $razonSocial = $comunidad->razon_social;
+        $comunidad->delete();
+        //success
+        $parametros['success'] = 'Comunidad' . $razonSocial . 'eliminada';
+        return redirect()->route('comunidades.index')->with($parametros);
     }
     
 
