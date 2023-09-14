@@ -19,6 +19,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('email')->unique();
             $table->string('password');
+
+            
             $table->string('nombre');
             $table->string('apellido_paterno');
             $table->string('apellido_materno');   

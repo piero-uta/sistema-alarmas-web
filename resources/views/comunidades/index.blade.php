@@ -3,7 +3,7 @@
 
 @section('content')
 
-<h1>Comunidades</h1>
+<h2>Comunidades</h2>
 <div>
     <table class="table">
         <thead>

@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Comunidades')
+@section('title', 'Guardar comunidad')
 
 @section('content')
-<h1>Crear comunidad</h1>
+<h2>Crear comunidad</h2>
 
 <form method="POST" action="{{route('comunidades.handleGuardar')}}">
     @csrf
