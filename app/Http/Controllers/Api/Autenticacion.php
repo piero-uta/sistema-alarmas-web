@@ -29,7 +29,7 @@ class Autenticacion extends Controller
         {
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('authToken')->plainTextToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json(['token' => $token, 'user'=>$user], 200);
         }
         else
         {
