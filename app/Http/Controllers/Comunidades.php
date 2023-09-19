@@ -59,24 +59,13 @@ class Comunidades extends Controller
         $comunidad->tipo_servicio = $request->tipo_servicio;
         $comunidad->costo_mensual = $request->costo_mensual;
 
-        if($request->has('representante_legal')){
-            $comunidad->representante_legal = $request->representante_legal;
-        }
-        if($request->has('email')){
-            $comunidad->email = $request->email;
-        }
-        if($request->has('giro')){
-            $comunidad->giro = $request->giro;
-        }
-        if($request->has('telefono')){
-            $comunidad->telefono = $request->telefono;
-        }
-        if($request->has('celular')){
-            $comunidad->celular = $request->celular;
-        }
-        if($request->has('logo')){
-            $comunidad->logo = $request->logo;
-        }
+        $comunidad->representante_legal = $request->representante_legal;        
+        $comunidad->email = $request->email;        
+        $comunidad->giro = $request->giro;
+        $comunidad->telefono = $request->telefono;
+        $comunidad->celular = $request->celular;
+        $comunidad->logo = $request->logo;
+
         if($request->has('activo')){
             $comunidad->activo = 1;
         }else{

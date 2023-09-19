@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('digito');
             $table->string('codigo')->nullable();
             $table->string('calle');
-            // $table->int('numero'); esta mal el tipo deberia ser:
+            $table->integer('numero'); // numero de casa
             
             $table->integer('piso')->nullable();
             // create latitude

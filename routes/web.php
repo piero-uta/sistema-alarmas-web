@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Comunidades;
 use App\Http\Controllers\Usuarios;
 use App\Http\Controllers\Autenticacion;
+use App\Http\Controllers\Direcciones;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,6 +26,12 @@ Route::get('/usuarios', [Usuarios::class, 'index'])->name('usuarios.index');
 Route::get('/usuarios/crear', [Usuarios::class, 'formularioGuardar'])->name('usuarios.crearEditar');
 Route::post('/usuarios/guardar', [Usuarios::class, 'handleGuardar'])->name('usuarios.handleGuardar');
 Route::post('/usuarios/eliminar', [Usuarios::class, 'eliminar'])->name('usuarios.eliminar');
+
+// DIRECCIONES PROVICIONAL
+Route::get('/direcciones', [Direcciones::class, 'index'])->name('direcciones.index');
+Route::get('/direcciones/crear', [Direcciones::class, 'formularioGuardar'])->name('direcciones.crearEditar');
+Route::post('/direcciones/guardar', [Direcciones::class, 'handleGuardar'])->name('direcciones.handleGuardar');
+Route::post('/direcciones/eliminar', [Direcciones::class, 'eliminar'])->name('direcciones.eliminar');
 
 
 

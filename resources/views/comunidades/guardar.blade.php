@@ -67,7 +67,9 @@
     {{-- checkbox para saber si esta activo --}}
     <div class="form-check">
         <input class="form-check-input" type="checkbox" name="activo" id="activo" 
-        {{ old('activo')==null ? ( isset($comunidad) && $comunidad->activo==1 ? 'checked' : '' ) : ( old('activo')==1 ? 'checked' : '' ) }}>
+        {{ old('activo')==null 
+            ? ( isset($comunidad) && $comunidad->activo==0 ? '' : 'checked' ) 
+            : ( old('activo')==1 ? 'checked' : '' ) }}>
         <label class="form-check-label" for="activo">
             Activo
         </label>

@@ -84,12 +84,12 @@
             <div class="modal-footer">            
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 {{-- editar --}}
-                <a type="button" class="btn btn-primary" href="#" id="btn_editar_empleado">Editar</a>
+                <a type="button" class="btn btn-primary" href="#" id="btn_editar_comunidad">Editar</a>
                 {{-- eliminar form--}}
                 <form action="#" method="POST" id="form_eliminar_comunidad">
                     @csrf
-                    <input type="hidden" name="id" id="id_empleado_eliminar" required>
-                    <button type="submit" class="btn btn-danger" id="btn_eliminar_empleado">Eliminar</button>
+                    <input type="hidden" name="id" id="id_comunidad_eliminar" required>
+                    <button type="submit" class="btn btn-danger" id="btn_eliminar_comunidad">Eliminar</button>
                 </form>
                 
             </div>
@@ -122,10 +122,10 @@
             
             
         `;
-        document.getElementById('btn_editar_empleado').href = "{{route('comunidades.crearEditar')}}?id="+comunidad.id;
+        document.getElementById('btn_editar_comunidad').href = "{{route('comunidades.crearEditar')}}?id="+comunidad.id;
         
         document.getElementById('form_eliminar_comunidad').action = "{{route('comunidades.eliminar')}}";
-        document.getElementById('id_empleado_eliminar').value = comunidad.id;
+        document.getElementById('id_comunidad_eliminar').value = comunidad.id;
 
     }
 </script>

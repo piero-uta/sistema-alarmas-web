@@ -17,7 +17,7 @@ return new class extends Migration
             //bolean activo
             $table->boolean('activo')->default(true);
             //constraint usuario
-            $table->foreignId('usuario_id')->constrained('usuarios');
+            $table->foreignId('usuario_id')->constrained('users');
             //constraint comunidad
             $table->foreignId('comunidad_id')->constrained('comunidades');
             //constraint perfil

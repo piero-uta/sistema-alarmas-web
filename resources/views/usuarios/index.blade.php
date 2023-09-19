@@ -27,12 +27,12 @@
         </thead>
         <tbody>
             @foreach ($usuarios as $usuario)
-            <tr onClick="modalComunidad({{$usuario}})">
+            <tr onClick="modalUsuario({{$usuario}})">
                 <th scope="row">
                     {{$usuario->id}}
                 </th>
                 <td>
-                    {{$usuario->name}}
+                    {{$usuario->nombre}}
                 </td>
                 <td>
                     {{$usuario->apellido_paterno}} {{$usuario->apellido_materno}}
@@ -61,4 +61,52 @@
 
 
 
+<div class="modal" tabindex="-1" id="modalUsuario">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">            
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                {{-- editar --}}
+                <a type="button" class="btn btn-primary" href="#" id="btn_editar_usuario">Editar</a>
+                {{-- eliminar form--}}
+                <form action="#" method="POST" id="form_eliminar_usuario">
+                    @csrf
+                    <input type="hidden" name="id" id="id_usuario_eliminar" required>
+                    <button type="submit" class="btn btn-danger" id="btn_eliminar_usuario">Eliminar</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @endsection
+
+@section('scripts')
+<script>
+    function modalUsuario(usuario){
+        console.log(usuario)
+
+        const modal = new bootstrap.Modal(document.getElementById('modalUsuario'));
+        modal.show();
+        document.getElementById('modalUsuario').querySelector('.modal-body').innerHTML = `
+        <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+        <p><strong>Apellido paterno:</strong> ${usuario.apellido_paterno}</p>
+        <p><strong>Apellido materno:</strong> ${usuario.apellido_materno}</p>
+        <p><strong>Email:</strong> ${usuario.email}</p>
+        <p><strong>Estado:</strong> ${usuario.activo ? 'Activo' : 'Inactivo'}</p>     
+        `;
+        document.getElementById('btn_editar_usuario').href = "{{route('usuarios.crearEditar')}}?id="+usuario.id;
+        
+        document.getElementById('form_eliminar_usuario').action = "{{route('usuarios.eliminar')}}";
+        document.getElementById('id_usuario_eliminar').value = usuario.id;
+
+    }
+</script>
