@@ -2,28 +2,31 @@
 @section('title', 'Login')
 
 @section('content')
+<main class="auth bg-isometrico">
 
-<form method="POST" action="{{route('login.handleLogin')}}">
+<form method="POST" class="form auth__form-container pop-anim show" action="{{route('login.handleLogin')}}">
     @csrf
-    <h2>Iniciar Sesión</h2>
-    <div class="mb-3">
-        <label for="email" class="form-label">Email*</label>
-        <input type="email" class="form-control" name="email" required
+    <h2 class="login-page-new__main-form-title">Iniciar Sesión</h2>
+    <div >
+        <label for="email" class="label">Email*</label>
+        <input type="email" class="input" name="email" required
         value="{{ old('email')}}">
     </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password*</label>
-        <input type="password" class="form-control" name="password" required>
+    <div >
+        <label for="password" class="label">Password*</label>
+        <input type="password" class="input" name="password" required>
     </div>
-    <div class="mb-3">
-        <div class="form-check ">
+    <div class="form__container-flex mb-5">
+        <div class="form-check form-switch d-flex" ">
             <input class="form-check-input" type="checkbox" id="remember" name="remember" @checked(old('remember'))>
             <label class="form-check-label" for="remember">Recordarme</label>
         </div>
 
     </div>
-    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    
+    <div class="d-grid gap-2 py-2">
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <bu
+    </div>
 </form>
-
+</main>
 @endsection

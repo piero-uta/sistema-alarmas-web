@@ -1,0 +1,338 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.form {
+
+    &__container {
+        margin: 0 auto;
+        padding: 0.5rem;
+        width: 70%;
+        max-width: 80rem;
+        // achicar el alto
+        height: 100%;
+        margin-bottom: 2rem;
+    }
+
+    &__container-flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+
+        @include m.phone {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+
+        * {
+            flex: auto; // para que los elementos se expandan y ocupen todo el espacio disponible
+            width: 100%;
+
+            @include m.phone {
+                // width: auto;
+            }
+        }
+    }
+
+    &__btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 1rem;
+
+        @include m.phone {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+    }
+}
+
+.input, .textarea, .select {
+    font-size: 0.9rem;
+    padding: 1rem;
+    border: 1px solid v.$grisClaro;
+    border-bottom: 2px solid v.$blanco;
+    border-radius: .2rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    border-radius: 9px;
+
+    &:focus {
+        outline: none;
+        background-color: v.$grisAzuladoClaro;
+        border-bottom: .4rem solid v.$blanco;
+        // Tambien le ocurre a .hide-password cuando se hace focus
+        & + .hide-password {
+            outline: none;
+            background-color: v.$grisAzuladoClaro;
+            border-bottom: .4rem solid v.$azulOscuro;
+        }
+    }
+
+}
+
+.input.valid {
+    border-bottom: .4rem solid v.$verde;
+
+    & + .hide-password {
+        border-bottom: .4rem solid v.$verde;
+    }
+}
+
+.input.invalid {
+    // Cuando no se esta haciendo focus
+    &:not(:focus) {
+        border-bottom: .4rem solid v.$rojo;
+
+        & + .hide-password {
+            border-bottom: .4rem solid v.$rojo;
+        }
+    }
+}
+
+.hide-password {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid v.$gris;
+    border-radius: .2rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+}
+
+.input[type="submit"] {
+    @include m.boton(v.$negro, v.$blanco);
+}
+
+.input-time {
+    padding: .5rem;
+    border-radius: .5rem;
+    width: fit-content;
+    text-align: end;
+    margin: 0;
+    
+    // esconder calendar picker cuando esta deshabilitado
+    &[disabled] {
+        text-align: center;
+        &::-webkit-calendar-picker-indicator { 
+            background: none; 
+            display:none; 
+        }
+    }
+}
+
+.label {
+    display: block;
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: left;
+    font-weight: 700;
+    color: v.$primario;
+    font-weight: 500;
+    line-height: 11px;
+    padding: 0 0 8px 2px;
+}
+
+.table-container-scroll {
+    overflow-x: auto;
+    width: 100%;
+    max-height: 49vh;
+}
+
+.table {
+
+    &__container {
+
+        &__header {
+
+        }
+
+        &__body {
+            overflow: auto;
+            max-height: 40vh;
+            margin-block: 2rem;
+            // scrollbar
+            @include m.scrollbar;
+            width: 100%;
+            border-radius: .5rem;
+
+            @include m.phone {
+                max-height: 50vh
+            }
+
+            @include m.tablet {
+                max-height: 65vh;
+            }
+        }
+
+        &__footer {
+
+        }
+
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse; // para que no se vean los bordes de las celdas
+        border-spacing: 0;
+        position: relative;
+        display: flex;
+    }
+
+    th,
+    td {
+        border-style: none;
+        // padding: 1.3rem 1rem;
+        padding: .5rem;
+        vertical-align: middle;
+        font-size: 1.2rem;
+
+        @include m.phone {
+            font-size: 1.4rem;
+        }
+
+        @include m.tablet {
+            font-size: 1.5rem;
+        }
+    }
+
+    th {
+        position: relative;
+    }
+
+    thead {
+        background-color: v.$primario;
+        color: v.$blanco;
+        text-transform: uppercase;
+        font-weight: 700;
+        
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
+        // texto alineado arriba
+        vertical-align: top;
+
+        tr th {
+            position: relative;
+            cursor: pointer;
+            padding-right: 2rem;
+        }
+    }
+
+    tbody {
+        background-color: v.$blanco;
+        color: v.$negro;
+
+        tr {
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+
+
+            &:hover {
+                background-color: v.$grisClaro2;
+            }
+
+            &:nth-child(even) {
+                background-color: v.$grisClaro;
+                &:hover {
+                    background-color: v.$grisClaro2;
+                }
+            }
+        }
+    }
+
+    &__sort-icon {
+        position: absolute;
+        right: .5rem;
+        top: 35%;
+    }
+
+}
+
+// Barras de búsqueda
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    width: auto;
+    max-width: 50rem;
+
+    &--responsive {
+        display: none;
+        width: 50%;
+    }
+
+    @include m.tablet {
+        display: flex;
+    }
+
+    .search-bar__input {
+        width: 100%;
+        height: 3.5rem;
+        border: 1px solid v.$grisClaro;
+        border-radius: 2rem;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        outline: none;
+        font-size: 1.5rem;
+        padding: 0 .5rem 0 1.5rem;
+        transition: border .2s ease-out;
+        margin: 0;
+
+        &:focus {
+            border: 1px solid v.$primario;
+        }
+    }
+
+    .search-bar__button {
+        @include m.boton(v.$blanco, v.$negro);
+        border: 1px solid v.$grisClaro;
+        border-radius: 2rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: none;
+        font-size: 1.5rem;
+        height: 3.5rem;
+        padding: 0 1.5rem;
+
+        &:hover {
+            filter: brightness(1);
+            background-color: v.$grisClaro;
+        }
+    }
+}
+
+// filtros
+.filter {
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 1rem;
+        gap: 2rem;
+        
+        @include m.tablet {
+            gap: 2rem;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        .input {
+            width: auto;
+        }
+    }
+}

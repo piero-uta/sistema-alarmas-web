@@ -1,0 +1,183 @@
+@use 'variables' as v;
+
+@mixin phone {
+    @media (min-width: v.$telefono) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: v.$tablet) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: v.$desktop) {
+        @content;
+    }
+}
+
+@mixin grid ( $columnas , $espaciado ) {
+    display: grid;
+    grid-template-columns: repeat($columnas, 1fr);
+    gap: $espaciado;
+}
+
+@mixin boton ( $color , $colorTexto ) {
+    background-color: $color;
+    color: $colorTexto;
+    padding: 0.9rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    border-radius: .3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.5rem;
+
+    &:hover {
+        background-color: lighten($color, 10%);
+    }
+}
+
+@mixin animate($animation,$duration,$method,$times){
+    animation: $animation $duration $method $times;
+}
+
+@mixin keyframes($name){
+    @keyframes #{$name}{
+        @content;
+    }
+}
+
+@mixin alerta ( $color , $colorTexto ) {
+    background-color: $color;
+    color: $colorTexto;
+    margin: 0 0 1rem 0;
+    padding: .5rem;
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: none;
+    text-align: center;
+    transition: all .3s ease;
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    font-size: 1.6rem;
+}
+
+// scrollbar
+@mixin scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: v.$grisAzuladoClaro v.$grisAzulado;
+
+    // vertical
+    &::-webkit-scrollbar {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: v.$grisAzulado;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: v.$grisAzuladoClaro;
+        border-radius: 6px;
+        border: 3px solid v.$grisAzulado;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:active {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:window-inactive {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:disabled {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:disabled {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:active {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:active {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:hover {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:hover {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:window-inactive {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:window-inactive {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:vertical {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:horizontal {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:decrement {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:decrement {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical:increment {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal:increment {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+}
+
+// background gradient mixin
+@mixin bg-gradient ( $color1 , $color2 , $direction: 0deg, $alpha: 1 ) {
+    background-image: linear-gradient($direction, rgba($color1, $alpha) 0%, rgba($color2, $alpha) 100%);
+}
+
+// text gradient mixin
+@mixin text-gradient ( $color1 , $color2 , $direction: 0deg, $alpha: 1 ) {
+    background-image: linear-gradient($direction, rgba($color1, $alpha) 0%, rgba($color2, $alpha) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// bg isometric
+@mixin bg-isometric ( $color1: darken(v.$primario, 5%) , $color2: darken(v.$secundario, 5%) , $color3: darken(v.$secundario, 10%) ) {
+    background-color: $color1;
+    background-image:  linear-gradient(30deg, $color2 12%, transparent 12.5%, transparent 87%, $color2 87.5%, $color2), linear-gradient(150deg, $color2 12%, transparent 12.5%, transparent 87%, $color2 87.5%, $color2), linear-gradient(30deg, $color2 12%, transparent 12.5%, transparent 87%, $color2 87.5%, $color2), linear-gradient(150deg, $color2 12%, transparent 12.5%, transparent 87%, $color2 87.5%, $color2), linear-gradient(60deg, $color3 25%, transparent 25.5%, transparent 75%, $color3 75%, $color3), linear-gradient(60deg, $color3 25%, transparent 25.5%, transparent 75%, $color3 75%, $color3);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}

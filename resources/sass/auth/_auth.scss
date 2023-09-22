@@ -1,0 +1,42 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.auth {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    height: fit-content;
+
+    &__form-container {
+        background-color: rgba(255,255,255,.8);
+        padding: 2rem;
+        margin: 2rem auto;
+        width: 100%;
+        // max-width: 40rem;
+        
+        @include m.phone {
+            background-color: rgba(255,255,255,1);
+            height: auto;
+            max-width: 45rem;
+            padding-block: 3rem;
+            border-radius: 2.5rem;
+            box-shadow: 0 0 1rem rgba(0,0,0,.2);
+        }
+    }
+
+    &__forgot-password {
+        display: block;
+        text-align: center;
+        color: v.$primario;
+        font-size: 1.5rem;
+        text-decoration: none;
+        font-weight: 700;
+    }
+    
+    input {
+        background-color: rgba(255,255,255,.5);
+    }
+}

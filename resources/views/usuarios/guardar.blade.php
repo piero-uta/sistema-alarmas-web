@@ -2,9 +2,9 @@
 @section('title', 'Guardar usuario')
 
 @section('content')
-<h2>Crear usuario</h2>
+<h2  class="login-page-new__main-form-title">Crear usuario</h2>
 
-<form method="POST" action="{{route('usuarios.handleGuardar')}}">
+<form method="POST" class="form form__container" action="{{route('usuarios.handleGuardar')}}">
     @csrf
     @if(isset($usuario))
         <input type="hidden" name="id" value="{{$usuario->id}}">
@@ -48,7 +48,9 @@
 
 
 
+    <div class="d-grid gap-2 py-2">
     <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
 </form>
 
 
