@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Comunidad;
+use App\Models\Perfil;
 
 class Comunidad extends Model
 {
@@ -26,4 +28,28 @@ class Comunidad extends Model
         'logo',
         'activo',
     ];
+
+    public function perfilesPorDefecto()
+    {
+        $perfiles = [
+            [
+                'nombre' => 'Administrador',
+                'descripcion' => 'Administrador de la comunidad',
+            ],
+            [
+                'nombre' => 'Conserje',
+                'descripcion' => 'Conserje de la comunidad',
+            ],
+            [
+                'nombre' => 'Residente',
+                'descripcion' => 'Residente de la comunidad',
+            ],
+        ];
+        foreach ($perfiles as $perfil) {
+            $perfil['comunidad_id'] = $this->id;
+            Perfil::create($perfil);
+        }
+    }
+
+
 }

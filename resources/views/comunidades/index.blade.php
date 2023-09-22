@@ -85,6 +85,8 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 {{-- editar --}}
                 <a type="button" class="btn btn-primary" href="#" id="btn_editar_comunidad">Editar</a>
+                {{-- Crear admin --}}
+                <a type="button" class="btn btn-primary" href="#" id="btn_editar_comunidad">Gestionar comunidad</a>
                 {{-- eliminar form--}}
                 <form action="#" method="POST" id="form_eliminar_comunidad">
                     @csrf

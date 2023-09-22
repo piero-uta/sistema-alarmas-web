@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comunidad;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
+use App\Models\User;
+use App\Models\UsuarioComunidad;
+
 class Comunidades extends Controller
 {
     public function index()
@@ -73,6 +80,7 @@ class Comunidades extends Controller
         }
 
         $comunidad->save();
+        $comunidad->perfilesPorDefecto();
         $parametros['success'] = 'Comunidad' . $request->razon_social . 'guardada';
         return redirect()->route('comunidades.index')->with($parametros);
     }
@@ -96,4 +104,45 @@ class Comunidades extends Controller
     }
     
 
+
+    public function handleSeleccionarComunidad($comunidad_id)
+    {
+        if(!self::setComunidadActual($comunidad_id)){
+            return redirect()->route('login');
+        }
+        return redirect()->route('welcome');
+    }
+
+    static public function setComunidadActual($comunidad_id)
+    {
+        $usuario = Auth::user();
+        if(!$usuario){
+            return false;
+        }
+        if($usuario->esAdmin()){
+            Session::put('comunidad_id', $comunidad_id);
+            return true;
+        }
+
+        $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', $comunidad_id)->first();
+
+        if(!$usuarioComunidad){
+            return false;
+        }
+
+        Session::put('comunidad_id', $comunidad_id);
+        return true;
+    }
+
+    static public function getComundadActual()
+    {
+        if(!Session::has('comunidad_id')){
+            return null;
+        }
+
+        $comunidad_id = Session::get('comunidad_id');
+
+        return Comunidad::find($comunidad_id);
+
+    }
 }
