@@ -63,6 +63,9 @@ class User extends Authenticatable
 
     public function comunidades()
     {
+        if($this->esAdmin()){
+            return Comunidad::all();
+        }
         //return all comunidades of the user
         $usuarioComunidad = $this->usuarioComunidad();
         $comunidades = [];
@@ -122,7 +125,13 @@ class User extends Authenticatable
 
     public function esAdmin()
     {
-        
+        $usuarioComunidad = $this->usuarioComunidad();
+        foreach ($usuarioComunidad as $uc) {
+            if ($uc->perfil_id == 1) {
+                return true;
+            }
+        }
+        return false;        
     }
     
     public function tienePermiso(string $permiso)

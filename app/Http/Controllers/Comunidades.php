@@ -49,7 +49,7 @@ class Comunidades extends Controller
             'costo_mensual' => 'required',
 
         ]);
-        if($request->has('id')){
+        if($request->id != null){
             $comunidad = Comunidad::find($request->id);
             if(!$comunidad){
                 //agregar error a parametros
@@ -130,11 +130,10 @@ class Comunidades extends Controller
             return false;
         }
 
-        // TO DO
-        // if($usuario->esAdmin()){
-        //     Session::put('comunidad_id', $comunidad_id);
-        //     return true;
-        // }
+        if($usuario->esAdmin()){
+            Session::put('comunidad_id', $comunidad_id);
+            return true;
+        }
 
         $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', $comunidad_id)->first();
 
