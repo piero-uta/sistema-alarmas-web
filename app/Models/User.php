@@ -8,11 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Perfil;
-use App\Models\Permiso;
 use App\Models\UsuarioComunidad;
 use App\Models\Comunidad;
 use App\Models\Direccion;
-use App\Models\PermisoPerfil;
 
 
 class User extends Authenticatable
@@ -58,14 +56,68 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function getAllPerfiles()
+    public function usuarioComunidad()
+    {
+        return UsuarioComunidad::where('usuario_id', $this->id)->get();
+    }
+
+    public function comunidades()
+    {
+        //return all comunidades of the user
+        $usuarioComunidad = $this->usuarioComunidad();
+        $comunidades = [];
+        foreach ($usuarioComunidad as $uc) {
+            $comunidades[] = Comunidad::where('id', $uc->comunidad_id)->first();
+        }
+        return $comunidades;
+    }
+
+    public function perfiles()
     {
         //return all perfiles of the user
-        $usuarioComunidad = UsuarioComunidad::where('user_id', $this->id)->get();
+        $usuarioComunidad = $this->usuarioComunidad();
         $perfiles = [];
         foreach ($usuarioComunidad as $uc) {
             $perfiles[] = Perfil::where('id', $uc->perfil_id)->first();
         }
+        return $perfiles;
+    }
+
+    public function perfilesComunidad($comunidad_id)
+    {
+        //return all perfiles of the user
+        $usuarioComunidad = $this->usuarioComunidad();
+        $perfiles = [];
+        foreach ($usuarioComunidad as $uc) {
+            if ($uc->comunidad_id == $comunidad_id) {
+                $perfiles[] = Perfil::where('id', $uc->perfil_id)->first();
+            }
+        }
+        return $perfiles;
+    }
+
+    public function direcciones()
+    {
+        //return all direcciones of the user
+        $usuarioComunidad = $this->usuarioComunidad();
+        $direcciones = [];
+        foreach ($usuarioComunidad as $uc) {
+            $direcciones[] = Direccion::where('id', $uc->direccion_id)->first();
+        }
+        return $direcciones;
+    }
+
+    public function direccionesComunidad($comunidad_id)
+    {
+        //return all direcciones of the user
+        $usuarioComunidad = $this->usuarioComunidad();
+        $direcciones = [];
+        foreach ($usuarioComunidad as $uc) {
+            if ($uc->comunidad_id == $comunidad_id) {
+                $direcciones[] = Direccion::where('id', $uc->direccion_id)->first();
+            }
+        }
+        return $direcciones;
     }
 
     public function esAdmin()
