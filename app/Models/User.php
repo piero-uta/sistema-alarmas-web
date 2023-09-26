@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Perfil;
-use App\Models\Permiso;
-use App\Models\UsuarioComunidad;
-use App\Models\Comunidad;
-use App\Models\Direccion;
-use App\Models\PermisoPerfil;
-
 
 class User extends Authenticatable
 {
@@ -35,7 +28,7 @@ class User extends Authenticatable
         'tipo_usuario',
         'telefono',
         'celular',
-        'token_celular'
+        'token_celular',
     ];
 
     /**
@@ -70,9 +63,9 @@ class User extends Authenticatable
 
     public function esAdmin()
     {
-        
+
     }
-    
+
     public function tienePermiso(string $permiso)
     {
         return $this->perfil->permisos->contains('nombre', $permiso);

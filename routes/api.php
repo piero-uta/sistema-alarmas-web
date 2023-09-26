@@ -26,5 +26,10 @@ Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('se
 
 
 
-Route::group (['middleware' => ['auth:sanctum']], function () {    
-});   
+// return $request->user();
+
+// Route::middleware('auth:sanctum')->post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
+
+Route::group(['middleware' => ['auth:sanctum']], function () {    
+    Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
+});
