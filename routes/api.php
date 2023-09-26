@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Autenticacion;
+use App\Http\Controllers\Api\Alarmas;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
 
-Route::group (['middleware' => ['auth:sanctum']], function () {
-    
+Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
+
+
+
+Route::group (['middleware' => ['auth:sanctum']], function () {    
 });   
