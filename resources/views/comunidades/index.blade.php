@@ -29,11 +29,14 @@
                 <th scope="col">
                     Estado
                 </th>
+                <th scope="col">
+                    Acciones
+                </th>
             </tr>            
         </thead>
         <tbody>
             @foreach ($comunidades as $comunidad)
-            <tr onClick="modalComunidad({{$comunidad}})">
+            <tr>
                 <th scope="row">
                     {{$comunidad->id}}
                 </th>
@@ -59,6 +62,16 @@
                         Inactivo
                     @endif
                 </td>
+                <td>
+                    <button type="button" class="btn btn-primary" onClick="modalComunidad({{$comunidad}})">Ver</button>
+                    {{-- editar --}}
+                    <a type="button" class="btn btn-primary" href="{{route('comunidades.crearEditar')}}?id={{$comunidad->id}}">Editar</a>
+                    {{-- eliminar --}}
+                    <form method="POST" action="{{route('comunidades.eliminar')}}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$comunidad->id}}">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
             </tr>
                 
                 
@@ -131,3 +144,4 @@
 
     }
 </script>
+@endsection

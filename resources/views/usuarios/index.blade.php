@@ -23,11 +23,14 @@
                 <th scope="col">
                     Estado
                 </th>
+                <th scope="col">
+                    Acciones
+                </th>
             </tr>            
         </thead>
         <tbody>
             @foreach ($usuarios as $usuario)
-            <tr onClick="modalUsuario({{$usuario}})">
+            <tr>
                 <th scope="row">
                     {{$usuario->id}}
                 </th>
@@ -47,6 +50,18 @@
                         Inactivo
                     @endif
                 </td>
+                <td>
+                    {{-- ver --}}
+                    <button type="button" class="btn btn-primary" onClick="modalUsuario({{$usuario}})">Ver</button>
+                    {{-- editar --}}
+                    <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}?id={{$usuario->id}}">Editar</a>
+                    {{-- eliminar --}}
+                    <form method="POST" action="{{route('usuarios.eliminar')}}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$usuario->id}}">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
             </tr>
                 
                 
@@ -60,7 +75,7 @@
 <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
 
 
-
+{{-- TO DO: confirmar eliminar --}}
 <div class="modal" tabindex="-1" id="modalUsuario">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -71,9 +86,9 @@
             <div class="modal-body"></div>
             <div class="modal-footer">            
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                {{-- editar --}}
+                
                 <a type="button" class="btn btn-primary" href="#" id="btn_editar_usuario">Editar</a>
-                {{-- eliminar form--}}
+                
                 <form action="#" method="POST" id="form_eliminar_usuario">
                     @csrf
                     <input type="hidden" name="id" id="id_usuario_eliminar" required>
@@ -110,3 +125,4 @@
 
     }
 </script>
+@endsection

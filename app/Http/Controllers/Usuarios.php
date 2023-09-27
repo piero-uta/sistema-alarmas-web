@@ -73,6 +73,7 @@ class Usuarios extends Controller
         if($usuarioComunidad != null){
             // Obtener comunidad_id de session
             $usuarioComunidad->usuario_id = $usuario->id;
+            $usuarioComunidad->perfil_id = $request->perfil_id;
             $usuarioComunidad->comunidad_id = Session::get('comunidad_id');
             $usuarioComunidad->save();
         }
