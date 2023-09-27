@@ -4,7 +4,8 @@
 @section('content')
 
 <h2>Usuarios</h2>
-<div>
+<div class="container">
+<div class="table__container__body">
     <table class="table">
         <thead>
             <tr>
@@ -56,7 +57,7 @@
 
     </table>
 </div>
-
+</div>
 <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
 
 
