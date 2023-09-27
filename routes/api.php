@@ -16,20 +16,20 @@ use App\Http\Controllers\Api\Alarmas;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middlware'=>['cors']], function(){
+
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+    
+    Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
+    
+    Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
+    
+    Route::group(['middleware' => ['auth:sanctum']], function () {    
+        Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
+    });
 });
 
-Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
-
-Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
 
 
-
-// return $request->user();
-
-// Route::middleware('auth:sanctum')->post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
-
-Route::group(['middleware' => ['auth:sanctum']], function () {    
-    Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
-});
