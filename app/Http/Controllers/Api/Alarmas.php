@@ -13,18 +13,23 @@ class Alarmas extends Controller
     public function getDeviceTokens()
     {
         $deviceTokens = User::pluck('token_celular')->toArray();
-        array_push($deviceTokens, 'djtsQYjMR5SmFg6dooSefy:APA91bHOMmTjLPHBreYGY36P8oAvtryxZB8jg35UST2tvXRws4Mu5T1LVmpGrllnPJ1qSTeG-37UopvnU3NJUsxTsPFcEbjX5kxGy_pq-tA6TmSuKPbzNYhvU0ANwmK3FT-TfB2xhH89');
+        $deviceTokensUnique = array_unique($deviceTokens);
         return $deviceTokens;
     }    
 
-    public function sendNotification()
+    public function sendNotification(Request $request)
     {
-        return Larafirebase::withTitle('Test Title')
-            ->withBody('Test body')
+        $user = $request->user();
+        $title = "$user->nombre $user->apellido_paterno $user->apellido_materno";
+        $body = "El usuario $user->nombre esta en emergencia";
+        $avatar = isset($user->avatar) ? $user->avatar : 'https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png';
+
+        return Larafirebase::withTitle($title)
+            ->withBody($body)
             ->withImage('https://firebase.google.com/images/social.png')
-            ->withIcon('https://seeklogo.com/images/F/firebase-logo-402F407EE0-seeklogo.com.png')
-            ->withSound('notification')
-            ->withClickAction('https://www.google.com')
+            ->withIcon($avatar)
+            ->withSound('notification.ogg')
+            ->withClickAction('FLUTTER_NOTIFICATION_CLICK')
             ->withPriority('high')
             ->withAdditionalData([
                 'color' => '#rrggbb',

@@ -24,10 +24,9 @@ Route::group(['middlware'=>['cors']], function(){
     
     Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
     
-    Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
-    
     Route::group(['middleware' => ['auth:sanctum']], function () {    
         Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
+        Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
     });
 });
 
