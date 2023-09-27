@@ -50,6 +50,7 @@
 
     <div class="d-grid gap-2 py-2">
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-primary" href="#">Cancelar</a>
     </div>
 </form>
 

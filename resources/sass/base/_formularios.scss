@@ -202,9 +202,15 @@
             font-size: 1.5rem;
         }
     }
-
+    td {
+        background-color: v.$blanco;
+        color: v.$negro;
+        font-size: 1rem;
+    }
     th {
         position: relative;
+        background-color: v.$grisClaro;
+        font-size: 1.5rem;
     }
 
     thead {
