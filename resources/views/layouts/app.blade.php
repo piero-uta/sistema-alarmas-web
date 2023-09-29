@@ -39,7 +39,7 @@
     @stack('scripts')
     @include('includes.footer') --}}
 
-
+    {{-- del piero --}}
     <div class="container-fluid px-5 py-5">
         <div class="row">
 
