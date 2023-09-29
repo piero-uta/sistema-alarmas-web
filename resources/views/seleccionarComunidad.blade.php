@@ -18,11 +18,11 @@
         </div>  
     @endif 
 
-    @if(session('comunidad_id'))
+    {{-- @if(session('comunidad_id'))
         <div>
             Comunidad seleccionada: {{ session('comunidad_id') }}
         </div>
-    @endif
+    @endif --}}
     
 </div>
 @endsection

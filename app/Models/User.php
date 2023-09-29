@@ -122,6 +122,17 @@ class User extends Authenticatable
         }
         return $direcciones;
     }
+    
+    public function direccionIdComunidad($comunidad_id)
+    {
+        $usuarioComunidad = $this->usuarioComunidad();
+        foreach ($usuarioComunidad as $uc) {
+            if ($uc->comunidad_id == $comunidad_id) {
+                return $uc->direccion_id;
+            }
+        }
+        return null;
+    }
 
     public function esAdmin()
     {
@@ -138,5 +149,6 @@ class User extends Authenticatable
     {
         return $this->perfil->permisos->contains('nombre', $permiso);
     }
+    
 
 }

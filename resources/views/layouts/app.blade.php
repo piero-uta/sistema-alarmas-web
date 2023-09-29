@@ -14,15 +14,28 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @viteReactRefresh
     @vite(['resources/sass/app.scss']) --}}
+    @stack('head-scripts')
 </head>
 <body>
-   
+   <div class="container-fluid px-5 py-5">
+        <div class="row">
 
-    <div class="container py-5">
-        @yield('content')
+            @if ( auth()->user()!= null )
+                <div class="col-2">
+                    @include('includes.navbar')            
+                </div>
+            @endif
 
+    
+            
+            {{-- @include('includes.verComunidad') --}}
+            {{-- <div class="container py-5"> --}}
+            <div class="col-10">
+                @yield('content')
+
+            </div>
+        </div>
     </div>
-
     @include('includes.footer')
 
     {{--Scripts--}}

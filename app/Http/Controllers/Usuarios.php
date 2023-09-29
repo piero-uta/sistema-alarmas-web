@@ -8,6 +8,7 @@ use App\Models\UsuarioComunidad;
 use App\Models\Comunidad;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Direccion;
 
 class Usuarios extends Controller
 {
@@ -24,6 +25,7 @@ class Usuarios extends Controller
     public function formularioGuardar(Request $request)
     {
         $parametros = [];
+        $comunidad_id = Session::get('comunidad_id');
         if($request->has('id')){
             $usuario = User::find($request->id);
             if(!$usuario){
@@ -32,7 +34,12 @@ class Usuarios extends Controller
                 return redirect()->route('usuarios.index')->with($parametros);
             }
             $parametros['usuario'] = $usuario;
+            $parametros['direccion_id'] = $usuario->direccionIdComunidad($comunidad_id);
         }
+        
+        // obtener direcciones
+        $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
+        $parametros['direcciones'] = $direcciones;
         return view('usuarios.guardar', $parametros);
     }
 
@@ -55,6 +62,7 @@ class Usuarios extends Controller
                 $parametros['error'] = 'Usaurio no encontrada';
                 return redirect()->route('usuarios.index')->with($parametros);
             }
+            $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
         }else{
             $usuario = new User();
             $usuarioComunidad = new UsuarioComunidad();
@@ -70,13 +78,17 @@ class Usuarios extends Controller
             $usuario->activo = 0;
         }
         $usuario->save();
-        if($usuarioComunidad != null){
-            // Obtener comunidad_id de session
-            $usuarioComunidad->usuario_id = $usuario->id;
-            $usuarioComunidad->perfil_id = $request->perfil_id;
+        
+        // Obtener comunidad_id de session
+        $usuarioComunidad->usuario_id = $usuario->id;
+        $usuarioComunidad->perfil_id = $request->perfil_id;
+        $usuarioComunidad->direccion_id = $request->direccion_id;
+        if($usuarioComunidad->comunidad_id == null)
+        {
             $usuarioComunidad->comunidad_id = Session::get('comunidad_id');
-            $usuarioComunidad->save();
-        }
+        }        
+        $usuarioComunidad->save();
+        
         $parametros['success'] = 'Usuario' . $request->nombre . 'guardado';
         return redirect()->route('usuarios.index')->with($parametros);
         
