@@ -29,7 +29,7 @@ class Autenticacion extends Controller
         //verificar si el usuario existe
         if (Auth::attempt($credentials, $remember)) {
             // Authentication passed...
-            return redirect()->route('usuarios.index');
+            return redirect()->route('comunidades.ver');
         }
         //agregar error a parametros
         $parametros['error'] = 'Usuario o contraseña incorrectos';
