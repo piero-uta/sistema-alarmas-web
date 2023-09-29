@@ -15,9 +15,6 @@
                     Rut
                 </th>
                 <th scope="col">
-                    Digito
-                </th>
-                <th scope="col">
                     Calle
                 </th>
                 <th scope="col">
@@ -27,7 +24,7 @@
                     Representante
                 </th>
                 <th scope="col">
-                    Comunidad
+                    Acciones
                 </th>
             </tr>            
         </thead>
@@ -38,10 +35,7 @@
                     {{$direccion->id}}
                 </th>
                 <td>
-                    {{$direccion->rut}}
-                </td>
-                <td>
-                    {{$direccion->digito}}
+                    {{$direccion->rut}} - {{$direccion->digito}}
                 </td>
                 <td>
                     {{$direccion->calle}}
@@ -53,8 +47,15 @@
                     {{$direccion->representante}}
                 </td>
                 <td>
-                    {{$direccion->comunidad->nombre}}
+                    <a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar', ['id' => $direccion->id])}}">Editar</a>
+                    {{-- eliminar --}}
+                    <form method="POST" action="{{route('direcciones.eliminar')}}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$direccion->id}}">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
                 </td>
+
             </tr>
                 
                 

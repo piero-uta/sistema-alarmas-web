@@ -26,6 +26,15 @@
     <div class="container py-5">
         @yield('content')
 
+    
+            
+            {{-- @include('includes.verComunidad') --}}
+            {{-- <div class="container py-5"> --}}
+            <div class="col-10">
+                @yield('content')
+
+            </div>
+        </div>
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/buttons.js') }}"></script>

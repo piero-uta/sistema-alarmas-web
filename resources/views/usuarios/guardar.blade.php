@@ -3,7 +3,6 @@
 
 @section('content')
 <h2  class="login-page-new__main-form-title">Crear usuario</h2>
-
 <form method="POST" class="form form__container" action="{{route('usuarios.handleGuardar')}}">
     @csrf
     @if(isset($usuario))
@@ -34,6 +33,23 @@
         <label for="password" class="form-label">Password*</label>
         <input type="password" class="form-control" name="password" required>
     </div>
+
+    {{-- seleccionar direccion --}}
+    <div>
+        <label for="direccion_id" class="form-label">Direccion</label>
+        <select class="form-select" name="direccion_id">
+            <option value="">Seleccionar</option>
+            @foreach ($direcciones as $direccion)
+                <option value="{{$direccion->id}}" 
+                    {{ old('direccion_id')==null 
+                        ? ( isset($usuario) && $direccion_id==$direccion->id ? 'selected' : '' ) 
+                        : ( old('direccion_id')==$direccion->id ? 'selected' : '' ) }}>
+                    {{$direccion->calle}} {{$direccion->numero}} {{$direccion->piso}}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
     {{-- checkbox para saber si esta activo --}}
     <div class="form-check">
         <input class="form-check-input" type="checkbox" name="activo" id="activo" 

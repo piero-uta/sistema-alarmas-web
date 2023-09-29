@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UsuarioComunidad;
+use App\Models\Comunidad;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Direccion;
 
 class Usuarios extends Controller
 {
     //
     public function index()
     {
-        //obtener todos los usuarios
-        $usuarios = User::all();
+        $comunidad_id = Session::get('comunidad_id');
+        $comunidad = Comunidad::find($comunidad_id);
+        $usuarios = $comunidad->usuarios();
         //retornar la vista usuarios.index
         return view('usuarios.index', compact('usuarios'));
     }
@@ -19,6 +25,7 @@ class Usuarios extends Controller
     public function formularioGuardar(Request $request)
     {
         $parametros = [];
+        $comunidad_id = Session::get('comunidad_id');
         if($request->has('id')){
             $usuario = User::find($request->id);
             if(!$usuario){
@@ -27,7 +34,12 @@ class Usuarios extends Controller
                 return redirect()->route('usuarios.index')->with($parametros);
             }
             $parametros['usuario'] = $usuario;
+            $parametros['direccion_id'] = $usuario->direccionIdComunidad($comunidad_id);
         }
+        
+        // obtener direcciones
+        $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
+        $parametros['direcciones'] = $direcciones;
         return view('usuarios.guardar', $parametros);
     }
 
@@ -40,6 +52,9 @@ class Usuarios extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
+
+        $usuarioComunidad = null;
+
         if($request->has('id')){
             $usuario = User::find($request->id);
             if(!$usuario){
@@ -47,8 +62,10 @@ class Usuarios extends Controller
                 $parametros['error'] = 'Usaurio no encontrada';
                 return redirect()->route('usuarios.index')->with($parametros);
             }
+            $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
         }else{
             $usuario = new User();
+            $usuarioComunidad = new UsuarioComunidad();
         }
         $usuario->nombre = $request->nombre;
         $usuario->apellido_paterno = $request->apellido_paterno;
@@ -61,6 +78,17 @@ class Usuarios extends Controller
             $usuario->activo = 0;
         }
         $usuario->save();
+        
+        // Obtener comunidad_id de session
+        $usuarioComunidad->usuario_id = $usuario->id;
+        $usuarioComunidad->perfil_id = $request->perfil_id;
+        $usuarioComunidad->direccion_id = $request->direccion_id;
+        if($usuarioComunidad->comunidad_id == null)
+        {
+            $usuarioComunidad->comunidad_id = Session::get('comunidad_id');
+        }        
+        $usuarioComunidad->save();
+        
         $parametros['success'] = 'Usuario' . $request->nombre . 'guardado';
         return redirect()->route('usuarios.index')->with($parametros);
         
@@ -78,7 +106,11 @@ class Usuarios extends Controller
             return redirect()->route('usuarios.index')->with($parametros);
         }
         $nombre = $usuario->nombre;
-        $usuario->delete();
+        // buscar usuarioComunidad
+        $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
+        if($usuarioComunidad){
+            $usuarioComunidad->delete();
+        }        
         //success
         $parametros['success'] = 'Usuario' . $nombre . 'eliminada';
         return redirect()->route('usuarios.index')->with($parametros);

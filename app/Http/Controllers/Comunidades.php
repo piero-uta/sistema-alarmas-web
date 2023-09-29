@@ -49,7 +49,7 @@ class Comunidades extends Controller
             'costo_mensual' => 'required',
 
         ]);
-        if($request->has('id')){
+        if($request->id != null){
             $comunidad = Comunidad::find($request->id);
             if(!$comunidad){
                 //agregar error a parametros
@@ -102,6 +102,16 @@ class Comunidades extends Controller
         $parametros['success'] = 'Comunidad' . $razonSocial . 'eliminada';
         return redirect()->route('comunidades.index')->with($parametros);
     }
+
+    public function comunidadesUsuario()
+    {
+        $usuario = Auth::user();
+        if(!$usuario){
+            return redirect()->route('login');
+        }
+        $comunidades = $usuario->comunidades();
+        return view('seleccionarComunidad', compact('comunidades'));
+    }
     
 
 
@@ -110,7 +120,7 @@ class Comunidades extends Controller
         if(!self::setComunidadActual($comunidad_id)){
             return redirect()->route('login');
         }
-        return redirect()->route('welcome');
+        return redirect()->route('comunidades.ver');
     }
 
     static public function setComunidadActual($comunidad_id)
@@ -119,6 +129,7 @@ class Comunidades extends Controller
         if(!$usuario){
             return false;
         }
+
         if($usuario->esAdmin()){
             Session::put('comunidad_id', $comunidad_id);
             return true;

@@ -6,15 +6,34 @@
     
 </a>
 <hr>
-<ul class="nav nav-pills flex-column mb-auto">
-    <li>
-        <a href="/comunidades" class="nav-link">
-            Comunidades
-        </a>
-        <a href="/usuarios" class="nav-link active">
-            Usuarios
-        </a>
-    </li>
-
-</ul>
+@if(session('comunidad_id'))
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li>
+            <a href="/comunidades" class="nav-link">
+                Comunidades
+            </a>        
+        </li>
+        <li>
+            {{-- <a href="/usuarios" class="nav-link active"> --}}
+                <a href="/usuarios" class="nav-link">
+                Usuarios
+            </a>
+        </li>
+        <li>
+            <a href="/comunidades/ver" class="nav-link">
+                Comunidad seleccionada: {{ session('comunidad_id') }}
+            </a>
+        </li>    
+        <li>
+            <a href="/direcciones" class="nav-link">
+                Direcciones
+            </a>        
+        </li>   
+        <li>
+            <a href="/logout" class="nav-link">
+                Cerrar sesión
+            </a> 
+        </li>
+    </ul>
+@endif
 </div>

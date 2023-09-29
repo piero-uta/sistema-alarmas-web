@@ -21,7 +21,8 @@ return new class extends Migration
             //constraint comunidad
             $table->foreignId('comunidad_id')->constrained('comunidades');
             //constraint perfil
-            $table->foreignId('perfil_id')->constrained('perfiles');
+            // TO DO: quitar nullable
+            $table->foreignId('perfil_id')->nullable()->constrained('perfiles');
             //constraint direccion nullable
             $table->foreignId('direccion_id')->nullable()->constrained('direcciones');
 
