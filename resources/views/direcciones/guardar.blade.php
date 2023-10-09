@@ -37,12 +37,12 @@
     </div>
     <div class="mb-3">
         <label for="calle" class="form-label">Calle*</label>
-        <input type="text" class="form-control" name="calle" required
+        <input type="text" class="form-control" name="calle" required id ="calle"
         value="{{ old('calle')==null ? ( isset($direccion)?$direccion->calle:'' ) : old('calle') }}">
     </div>
     <div class="mb-3">
         <label for="numero" class="form-label">Numero*</label>
-        <input type="text" class="form-control" name="numero" required
+        <input type="text" class="form-control" name="numero" required id ="numero"
         value="{{ old('numero')==null ? ( isset($direccion)?$direccion->numero:'' ) : old('numero') }}">
     </div>
     <div class="mb-3">
@@ -69,7 +69,7 @@
     <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($sucursal)?$sucursal->latitud:'' ) : old('latitud') }}" hidden>
     <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($sucursal)?$sucursal->longitud:'' ) : old('longitud') }}" hidden>
 
-    <label class="label" for="radio">Radio en metros</label>
+    {{-- <label class="label" for="radio">Radio en metros</label>
     <div class="form__container-flex">
         <input class="input" type="text" name="radio" id="radio" value="{{ old('radio')==null ? ( isset($sucursal)?$sucursal->radio:'100' ) : old('radio') }}"
         placeholder="Ingresa el radio en metros" required>
@@ -77,7 +77,7 @@
         <button type="button" class="btn btn-primary" id="radio-button">
             Visualizar radio
         </button>
-    </div>
+    </div> --}}
 </form>
 
 
