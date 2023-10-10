@@ -59,6 +59,8 @@
             </div>
         </div>
     </div>
+    @yield('scripts')
+    @stack('scripts')
     @include('includes.footer')
 
     

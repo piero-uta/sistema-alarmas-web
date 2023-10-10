@@ -24,6 +24,9 @@
                     Representante
                 </th>
                 <th scope="col">
+                    Codigo
+                </th>
+                <th scope="col">
                     Acciones
                 </th>
             </tr>            
@@ -45,6 +48,9 @@
                 </td>
                 <td>
                     {{$direccion->representante}}
+                </td>
+                <td>
+                    {{$direccion->codigo}}
                 </td>
                 <td>
                     <a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar', ['id' => $direccion->id])}}">Editar</a>
