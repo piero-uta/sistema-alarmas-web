@@ -6,6 +6,7 @@ use App\Http\Controllers\Usuarios;
 use App\Http\Controllers\Autenticacion;
 use App\Http\Controllers\Direcciones;
 use App\Http\Controllers\Perfiles;
+use App\Http\Controllers\RedAviso;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,6 +71,10 @@ Route::middleware(['auth'])->group(function () {
     });
     
     
+    Route::controller(RedAviso::class)->group(function () {
+        Route::get('/redAviso', 'index')->name('redAviso.index');
+    });
+
 });
 
 
