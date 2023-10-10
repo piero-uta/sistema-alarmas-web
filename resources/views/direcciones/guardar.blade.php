@@ -51,13 +51,17 @@
         value="{{ old('representante')==null ? ( isset($direccion)?$direccion->representante:'' ) : old('representante') }}">
     </div>
 
-    <div class="d-grid gap-2 py-2">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+    {{-- codigo --}}
+    <div class="mb-3">
+        <label for="codigo" class="form-label">Codigo*</label>
+        <input type="text" class="form-control" name="codigo" required
+        value="{{ old('codigo')==null ? ( isset($direccion)?$direccion->codigo:'' ) : old('codigo') }}">
     </div>
+
 
     <label class="label" for="direccion">Dirección</label>
         <div class="form__container-flex">
-            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" required value="{{ old('direccion')==null ? ( isset($sucursal)?$sucursal->direccion:'' ) : old('direccion') }}">
+            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($sucursal)?$sucursal->direccion:'' ) : old('direccion') }}">
             <button type="button" class="btn btn-primary" id="btn-geolocalizacion">Obtener ubicación</button>
 
             {{-- Datalist --}}
@@ -69,15 +73,9 @@
     <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($sucursal)?$sucursal->latitud:'' ) : old('latitud') }}" hidden>
     <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($sucursal)?$sucursal->longitud:'' ) : old('longitud') }}" hidden>
 
-    {{-- <label class="label" for="radio">Radio en metros</label>
-    <div class="form__container-flex">
-        <input class="input" type="text" name="radio" id="radio" value="{{ old('radio')==null ? ( isset($sucursal)?$sucursal->radio:'100' ) : old('radio') }}"
-        placeholder="Ingresa el radio en metros" required>
-        <!--boton latitud y longitud-->
-        <button type="button" class="btn btn-primary" id="radio-button">
-            Visualizar radio
-        </button>
-    </div> --}}
+    <div class="d-grid gap-2 py-2">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
 </form>
 
 
