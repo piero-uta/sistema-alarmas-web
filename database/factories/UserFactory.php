@@ -17,25 +17,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $nombre = $this->faker->unique()->name();
+        $nombreUsuario = str_replace(' ', '', strtolower($nombre));
+        $correoElectronico = $nombreUsuario . '@example.com';
         return [
-
-            'email' => fake()->unique()->safeEmail(),
+            'email' => $correoElectronico,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'nombre' =>$this->faker->name(),
-            'apellido_paterno'=>$this->faker->name(),
-            'apellido_materno'=>$this->faker->name(),
+            'nombre' => $nombre,
+            'apellido_paterno'=>$this->faker->word(),
+            'apellido_materno'=>$this->faker->word(),
             'activo'=>true
 
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

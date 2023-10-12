@@ -17,15 +17,15 @@ class ComunidadFactory extends Factory
     public function definition(): array
     {
         return [
-            'rut'=>$this->faker->numberBetween(100,500),
+            'rut'=>$this->faker->numberBetween(10000000,999999999),
             'digito'=>$this->faker->numberBetween(1,9),
-            'razon_social'=>'Comunidad Nº'.$this->faker->numberBetween(1,100). $this->faker->word,
+            'razon_social'=>'Comunidad '.$this->faker->name(),
             'representante_legal'=> $this->faker->name(),
             'email'=> $this->faker->name().'@'.$this->faker->name().'.com',
-            'direccion'=>$this->faker->name().', '.$this->faker->name().$this->faker->numberBetween(1,100),
+            'direccion'=>'Calle '.$this->faker->name().', '.$this->faker->name().' # '.$this->faker->numberBetween(1,100),
             'giro'=>$this->faker->word(),
-            'tipo_servicio'=>$this->faker->numberBetween(1,4),
-            'costo_mensual'=>$this->faker->numberBetween(1000,5000),
+            'tipo_servicio'=>'Administracion',
+            'costo_mensual'=>$this->faker->numberBetween(100000,999999),
         ];
     }
 }

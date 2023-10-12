@@ -20,12 +20,14 @@ class UsuarioComunidadFactory extends Factory
      */
     public function definition(): array
     {
+        $comunidad = Comunidad::inRandomOrder()->first();
+
         return [
             'activo'=>true,
             'usuario_id'=> User::inRandomOrder()->first()->id,
-            'comunidad_id'=> Comunidad::inRandomOrder()->first()->id,
-            'perfil_id'=> Perfil::inRandomOrder()->first()->id,
-            'direccion_id'=> Direccion::inRandomOrder()->first()->id
+            'comunidad_id'=> $comunidad->id,
+            'perfil_id' => Perfil::where('comunidad_id', $comunidad->id)->inRandomOrder()->first()->id,
+            'direccion_id'=> Direccion::where('comunidad_id', $comunidad->id)->inRandomOrder()->first()->id,
         ];
     }
 }

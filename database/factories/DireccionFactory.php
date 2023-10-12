@@ -17,13 +17,16 @@ class DireccionFactory extends Factory
      */
     public function definition(): array
     {
+        $rut = $this->faker->unique()->numberBetween(10000000,99999999);
+        $calle = $this->faker->word();
+        $numero = $this->faker->numberBetween(1,999);
         return [
             'comunidad_id'=>Comunidad::inRandomOrder()->first()->id,
-            'rut'=>$this->faker->numberBetween(100,500),
+            'rut'=> $rut,
             'digito'=>$this->faker->numberBetween(1,9),
-            'codigo'=>'CDirección '.$this->faker->numberBetween(1,999).$this->faker->name(),
-            'calle'=> $this->faker->numberBetween(1,999).$this->faker->name(),
-            'numero'=> $this->faker->numberBetween(1,999),
+            'codigo'=>strtoupper($calle).'-'.$numero,
+            'calle'=> $calle,
+            'numero'=> $numero,
             'piso' => $this->faker->numberBetween(1,10),
             'longitud'=> $this->faker->randomFloat(2,50,10000),
             'latitud'=> $this->faker->randomFloat(2,50,10000),
