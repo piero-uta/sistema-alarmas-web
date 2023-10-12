@@ -20,12 +20,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        // Admin::create([
-        //     'nombre' => 'admin',
-        //     'email' => 'admin@correo.com',
-        //     'password' => bcrypt('12345678'),
-        // ]);
+
+        Admin::create([
+            'nombre' => 'admin',
+            'email' => 'admin@correo.com',
+            'password' => bcrypt('12345678'),
+        ]);
 
         // Crear usuario
         $user = User::create([
@@ -79,7 +79,7 @@ class AdminSeeder extends Seeder
             'perfil_id' => $perfil->id,
         ]);
 
-        
+
 
 
 
