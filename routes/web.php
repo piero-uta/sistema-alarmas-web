@@ -69,6 +69,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/usuarios/guardar', 'handleGuardar')->name('usuarios.handleGuardar');
         Route::post('/usuarios/eliminar', 'eliminar')->name('usuarios.eliminar');
     });
+
+    Route::controller(RedesAvisos::class)->group(function () {
+        Route::get('/red-avisos', 'index')->name('red-avisos.index');
+        Route::get('/red-avisos/crear', 'formularioGuardar')->name('red-avisos.crearEditar');
+        Route::post('/red-avisos/guardar', 'handleGuardar')->name('red-avisos.handleGuardar');
+        Route::post('/red-avisos/eliminar', 'eliminar')->name('red-avisos.eliminar');
+    });
     
     Route::controller(RedesAvisos::class)->group(function(){
         Route::get('/redesAvisos', 'index')->name('redesAvisos.index');
