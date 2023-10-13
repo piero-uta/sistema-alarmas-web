@@ -1,0 +1,11 @@
+kennediaufderhar@example.com 
+
+SELECT * FROM users u, usuarios_comunidad uc WHERE u.id = 2 and u.id = uc.usuario_id;
+
+SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE direcciones.id = 57 and redes_avisos.direccion_id = 57 ORDER BY `redes_avisos`.`direccion_vecino_id` ASC
+
+96
+
+SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (96) and uc.usuario_id = u.id;
+
+kodyernser@example.com

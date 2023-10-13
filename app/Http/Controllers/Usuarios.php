@@ -36,7 +36,7 @@ class Usuarios extends Controller
             $parametros['usuario'] = $usuario;
             $parametros['direccion_id'] = $usuario->direccionIdComunidad($comunidad_id);
         }
-        
+
         // obtener direcciones
         $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
         $parametros['direcciones'] = $direcciones;
@@ -78,7 +78,7 @@ class Usuarios extends Controller
             $usuario->activo = 0;
         }
         $usuario->save();
-        
+
         // Obtener comunidad_id de session
         $usuarioComunidad->usuario_id = $usuario->id;
         $usuarioComunidad->perfil_id = $request->perfil_id;
@@ -86,12 +86,12 @@ class Usuarios extends Controller
         if($usuarioComunidad->comunidad_id == null)
         {
             $usuarioComunidad->comunidad_id = Session::get('comunidad_id');
-        }        
+        }
         $usuarioComunidad->save();
-        
+
         $parametros['success'] = 'Usuario' . $request->nombre . 'guardado';
         return redirect()->route('usuarios.index')->with($parametros);
-        
+
     }
 
     public function eliminar(Request $request)
@@ -110,10 +110,10 @@ class Usuarios extends Controller
         $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
         if($usuarioComunidad){
             $usuarioComunidad->delete();
-        }        
+        }
         //success
         $parametros['success'] = 'Usuario' . $nombre . 'eliminada';
         return redirect()->route('usuarios.index')->with($parametros);
     }
-    
+
 }

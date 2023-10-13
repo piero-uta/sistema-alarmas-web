@@ -8,6 +8,7 @@ use App\Http\Controllers\Direcciones;
 use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
 
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -77,13 +78,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/red-avisos/eliminar', 'eliminar')->name('red-avisos.eliminar');
     });
     
-    Route::controller(RedesAvisos::class)->group(function(){
-        Route::get('/redesAvisos', 'index')->name('redesAvisos.index');
-        Route::get('/redesAvisos/crear', 'formularioGuardar')->name('redesAvisos.crearEditar');
-        Route::post('/redesAvisos/guardar', 'handleGuardar')->name('redesAvisos.handleGuardar');
-        Route::post('/redesAvisos/eliminar', 'eliminar')->name('redesAvisos.eliminar');
-
-    });
     
 });
 

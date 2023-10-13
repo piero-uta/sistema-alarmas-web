@@ -16,15 +16,21 @@ use App\Http\Controllers\Api\Alarmas;
 |
 */
 
-Route::group(['middlware'=>['cors']], function(){
+Route::group(['middleware'=>['cors']], function(){
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
     });
-    
+    Route::middleware('auth:sanctum')->get('/comunities', function (Request $request) {
+        $user = $request->user();
+        $comunities = $user->comunidades();
+        return $comunities;
+    });
+
+
     Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
-    
-    Route::group(['middleware' => ['auth:sanctum']], function () {    
+
+    Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
         Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
     });

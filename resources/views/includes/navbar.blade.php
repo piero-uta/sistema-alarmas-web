@@ -30,6 +30,12 @@
             </a>        
         </li>   
         <li>
+            <a href="/redAviso" class="nav-link">
+                Red de aviso
+            </a>        
+        </li>   
+
+        <li>
             <a href="/logout" class="nav-link">
                 Cerrar sesión
             </a> 
