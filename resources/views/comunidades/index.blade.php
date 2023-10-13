@@ -63,15 +63,17 @@
                     @endif
                 </td>
                 <td>
-                    <button type="button" class="btn btn-primary" onClick="modalComunidad({{$comunidad}})">Ver</button>
+                <div class="d-flex">   
+                    <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalComunidad({{$comunidad}})">Ver</button>
                     {{-- editar --}}
-                    <a type="button" class="btn btn-primary" href="{{route('comunidades.crearEditar')}}?id={{$comunidad->id}}">Editar</a>
+                    <a type="button" class="btn btn-primary"style="margin-right: 20px;" href="{{route('comunidades.crearEditar')}}?id={{$comunidad->id}}">Editar</a>
                     {{-- eliminar --}}
                     <form method="POST" action="{{route('comunidades.eliminar')}}">
                         @csrf
                         <input type="hidden" name="id" value="{{$comunidad->id}}">
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
+                </div>
             </tr>
                 
                 
@@ -80,11 +82,11 @@
         </tbody>
 
     </table>
+    <div class="d-flex justify-content-end py-2">
+        <a type="button" class="btn btn-primary" href="{{route('comunidades.crearEditar')}}">Crear</a>
+    </div>
 </div>
 
-
-
-<a type="button" class="btn btn-primary" href="{{route('comunidades.crearEditar')}}">Crear</a>
 
 <div class="modal" tabindex="-1" id="modalComunidad">
     <div class="modal-dialog">

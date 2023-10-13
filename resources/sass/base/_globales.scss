@@ -1,0 +1,297 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+
+    @include m.scrollbar;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: v.$fuentePrincipal;
+    font-size: 1.6rem;
+    background-color: v.$blanco;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+}
+
+main {
+    flex: 1;
+    height: 100%;
+}
+
+p {
+    color: v.$negro;
+    font-size: 1.6rem;
+    line-height: 2;
+}
+
+.contenedor {
+    width: 95%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+.section {
+    padding: 2rem;
+    background-color: v.$blanco;
+    box-shadow: 0 0 .7rem rgba(0, 0, 0, 0.1);
+    
+    @include m.phone {
+        padding: 2rem;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+}
+
+.section--round {
+    border-radius: 0;
+
+    @include m.phone {
+        border-radius: 1rem;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul, ol{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+// Utilities
+// max height 28rem
+.max-height-28 {
+    max-height: 28rem !important;
+}
+
+.text-dark {
+    color: v.$grisClaro;
+    font-weight: 700;
+}
+
+.text-primario {
+    color: v.$primario !important;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-small {
+    font-size: 1.2rem;
+    margin-top: -1rem;
+    color: v.$gris;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.separator {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    
+    &-text {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: v.$gris;
+        padding: 0 1rem;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: v.$gris;
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: v.$gris;
+    }
+
+}
+
+.separator--light {
+    
+    &-text {
+        color: v.$grisAzuladoClaro;
+    }
+
+    &::before {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+    &::after {
+        background-color: v.$grisAzuladoClaro;
+    }
+
+}
+
+.only-sm {
+
+    @include m.phone {
+        display: none !important;
+    }
+
+}
+
+.heading {
+    font-family: v.$fuenteSecundaria;
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: v.$negro;
+    margin: 3rem 0 3rem 0;
+    text-align: center;
+    line-height: 1.1;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 10rem;
+        height: .5rem;
+        background-color: v.$secundario;
+        margin: 0 auto;
+    }
+
+    @include m.phone {
+        font-size: 2.5rem;
+    }
+
+    @include m.tablet {
+        font-size: 3rem;
+    }
+}
+
+.subheading {
+    font-family: v.$fuenteSecundaria;
+    font-weight: 700;
+    font-size: 2rem;
+    color: v.$secundario;
+    text-transform: capitalize;
+    margin: 2rem 0 2rem 0;
+    text-align: start;
+    line-height: 1.1;
+}
+
+// texto resaltado
+.highlighted {
+    font-family: v.$fuenteSecundaria;
+    font-weight: 700;
+    // font-size: 2rem;
+    color: v.$secundario;
+    text-transform: capitalize;
+    margin: 0 0 2rem 0;
+    text-align: start;
+    line-height: 1.1;
+}
+
+//.bg-isometrico {   @include m.bg-isometric(); }
+
+.bg-primario {
+    background-color: v.$primario;
+}
+
+.bg-gray {
+    background-color: darken(v.$grisAzuladoClaro, 5%);
+}
+
+.bg-lt-blue-gray{
+    background-color: v.$grisAzuladoClaro;
+}
+
+// horizontal scroll
+.horizontal-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 1rem 0;
+    margin: 0 -1rem;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    scrollbar-width: none;
+    @include m.scrollbar;
+}
+
+.auto-height {
+    display: block;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.auto-height.active {
+    transform: scaleY(1);
+}
+
+.desplegable {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.desplegable.active {
+    max-height: 100vh;
+}
+
+.responsive-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    @include m.tablet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 2rem;
+
+        .section {
+            flex: 1 0 30rem;
+            // flex-grow: 1; => permite que el elemento crezca
+            // flex-shrink: 0; => permite que el elemento no se encoja
+            // flex-basis: 30rem; => permite que el elemento tenga un tamaño base
+            min-width: 30rem;
+        }
+
+        .section--full {
+            flex: 1 0 100%;
+            min-width: 100%;
+        }
+
+    }
+}

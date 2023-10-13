@@ -8,15 +8,29 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 1.5rem 1rem 0.5rem;
-    background-color: v.$grisAzuladoClaro;
+    background-color: v.$blanco;
     width: 100%;
     position: fixed;
-    height: 6rem;
-    box-shadow: 0 0 .5rem rgba(0,0,0,0.1);
+    height: 8.4rem;
+    box-shadow: 0 0 .5rem rgba(17, 93, 49, 0.1);
     z-index: 100;
 
     &--auth {
         flex-direction: row;
+    }
+    .header__section--left {
+        text-align: right; /* Alinea el título de la empresa a la izquierda */
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translate(60px, 1px); /* Ajusta estos valores según sea necesario */
+    }
+    .header__section--right {
+        text-align: right; /* Alinea el título del software a la derecha */
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate(-20px, 1px); /* Ajusta estos valores según sea necesario */
     }
 
     &__section {
@@ -27,7 +41,7 @@
     }
 
     &__logo {
-        max-width: 4rem;
+        max-width: 6rem;
     }
 
     &__title {
@@ -213,7 +227,7 @@
     z-index: 101;
 
     &__menu {
-        background-color: v.$grisAzuladoClaro;
+        background-color: v.$blanco;
         height: calc(100% - 5.9rem);
         position: fixed;
         top: 5.9rem;
@@ -235,6 +249,11 @@
     &__item {
         display: block;
         min-width: max-content;
+        width: 100%;
+        padding: 1rem;
+        //border-bottom: 1px solid v.$grisClaro;
+        transition: all .3s ease-in-out;
+
     }
 
     &__item-icon {
@@ -249,7 +268,7 @@
         text-align: center;
 
         &:hover {
-            background-color: v.$grisClaro2;
+            background-color: v.$blanco;
             transform: scale(1.2);
         }
 
@@ -264,6 +283,11 @@
         border: none;
         background-color: transparent;
         text-align: left;
+        font-size: 1.5rem;
+        color: v.$gris;
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+
         
 
         &:hover {
@@ -284,6 +308,7 @@
                 
                 &:hover {
                     background-color: v.$grisClaro2;
+                    transform: scale(1.2);
                 }
             }
         

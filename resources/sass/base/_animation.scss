@@ -1,0 +1,122 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.theater-animated {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+
+    $start: 1;
+    $end: 7;
+
+    @for $i from $start through $end {
+        // hijos
+        *:nth-child(#{$i}) {
+            height: 200%;
+            width: 20%;
+            position: absolute;
+            top: -20%;
+            left: calc(19% * #{$i - 1} - 10% );
+            // rotar 20 grados
+            @include m.phone {
+                transform: rotate(-20deg);
+            }
+
+            // darken
+            background-color: darken(v.$primario , $i * 1%);
+            // keyframe animation
+            @keyframes barra {
+                0% {
+                    height: 200%;
+                }
+                100% {
+                    height: 0%;
+                }
+            }
+            // animation 
+            animation: barra .4s ease-in-out #{$i * 0.2}s;
+            // animation-fill-mode
+            animation-fill-mode: forwards;
+        }
+    }
+}
+
+// contenedor sobretoda la pantalla
+.container-theater {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    // z-index
+    z-index: 1000;
+    // no interactua
+    pointer-events: none;
+}
+
+
+// animacion multiple pop
+// empezar de tamaño 0 a 110%, 100% a 90%, 90% a 100%
+@keyframes pop {
+    
+    from {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    70% {
+        transform: scale(0.85);
+    }
+
+    to {
+        transform: scale(1);
+    }
+        
+}
+
+.pop-anim {
+    opacity: 0;
+    transition: opacity .4s ease-in;
+}
+
+.pop-anim.show,
+.show .pop-anim {
+    animation: pop 1s ease-in;
+    opacity: 1;
+}
+
+// pop anim container
+.pop-anim-container > * {
+    opacity: 0;
+    transition: opacity .4s ease-in;
+    overflow: hidden;
+}
+
+.pop-anim-container.show > * {
+    animation: pop 1s ease-in;
+    opacity: 1;
+}
+
+// multipop, pop hasta los nietos
+.pop-multi-anim,
+.pop-multi-anim *,
+.pop-multi-anim * * {
+    opacity: 0;
+    transition: opacity .4s ease-in;
+}
+.pop-multi-anim.show,
+.show .pop-multi-anim,
+.pop-multi-anim.show *,
+.show .pop-multi-anim *,
+.pop-multi-anim.show * *,
+.show .pop-multi-anim * * {
+    animation: pop .8s ease-in;
+    opacity: 1;
+}
+

@@ -71,9 +71,12 @@
         </tbody>
 
     </table>
+
+    <div class="d-flex justify-content-end py-2">
+        <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
+    </div>
 </div>
 </div>
-<a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
 
 
 {{-- TO DO: confirmar eliminar --}}

@@ -70,9 +70,11 @@
         </tbody>
 
     </table>
+    <div class="d-flex justify-content-end py-2">
+        <a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar')}}">Crear</a>
+    </div>
 </div>
 
-<a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar')}}">Crear</a>
 
 @endsection
 

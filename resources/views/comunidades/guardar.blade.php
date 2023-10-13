@@ -75,10 +75,11 @@
         </label>
 
     </div>
-    <div class="d-grid gap-2 py-2">
-    <button type="submit" class="btn btn-primary">Guardar</button>
+
+    <div class="d-flex justify-content-end py-2">
+    <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
     <input type="hidden" name="id" id="id_comunidad_eliminar" required>
-    <button type="submit" class="btn btn-danger" id="btn_eliminar_comunidad">Cerrar</button>
+    <button type="submit" class="btn btn-danger data-dismiss="modal" id="btn_eliminar_comunidad">Cancelar</button>
                
     </div>
 </form>
