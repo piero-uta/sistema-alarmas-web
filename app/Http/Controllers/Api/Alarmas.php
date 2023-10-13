@@ -8,6 +8,8 @@ use Kutia\Larafirebase\Facades\Larafirebase;
 use App\Models\User;
 use App\Models\UsuarioComunidad;
 use Illuminate\Support\Facades\DB;
+use App\Models\Comunidad;
+use App\Models\Direccion;
 
 
 class Alarmas extends Controller
@@ -36,12 +38,23 @@ class Alarmas extends Controller
     {
         $user = $request->user();
         $comunidad_id = $request['comunidad_id'];
+        $comunidad = Comunidad::where('id', $comunidad_id)->first();
+
+        $usuarioComunidad = UsuarioComunidad::where('comunidad_id',$comunidad_id)
+        ->where('usuario_id', $user->id)
+        ->first();
+        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
+
 
         $title = "$user->nombre $user->apellido_paterno $user->apellido_materno";
         $body = "El usuario $user->nombre esta en emergencia";
         $avatar = isset($user->avatar) ? $user->avatar : 'https://cdn-icons-png.flaticon.com/512/4140/4140060.png';
 
         $tokens = $this->getDeviceTokens($user, $comunidad_id);
+
+        date_default_timezone_set('America/Santiago');
+        $fecha = strftime('Fecha %d-%m-%Y');
+        $hora = strftime('%H:%M Horas');
 
         if(empty($tokens)){
             return "No se pueden enviar notificaciones, no hay tokens disponibles.";
@@ -56,10 +69,26 @@ class Alarmas extends Controller
             ->withAdditionalData([
                 'color' => '#rrggbb',
                 'badge' => 0,
+                'id' => "id",
+                'fecha' => $fecha,
+                'hora' => $hora,
+                'titulo' => $comunidad->razon_social,
+                'direccion' => 'Calle: '.$direccion->calle.' '.$direccion->numero.', piso'.$direccion->piso,
+                'direccion_cod' => 'Codigo: '.$direccion->codigo,
+                'latitud' => $direccion->latitud,
+                'longitud' => $direccion->longitud,
+                'nombre' => 'De '.$user->nombre,
             ])
             ->sendNotification($tokens);
         }
     }
+
+    public function getComunities(Request $request)
+    {
+        $user = $request->user();
+        return $user;
+    }
+
 
     public function saveFCMToken(Request $request)
     {

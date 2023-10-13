@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         Perfil::factory(100)->create();
         User::factory(1000)->create();
         UsuarioComunidad::factory(1000)->create();
-        RedAviso::factory(1000)->create();
+        RedAviso::factory(100)->create();
         // Direccion::factory(100)->create();
         // \App\Models\User::factory(10)->create();
     }

@@ -20,7 +20,7 @@ class RedAvisoFactory extends Factory
         $UsuarioComunidad = UsuarioComunidad::inRandomOrder()->first();
         $comunidad_id = $UsuarioComunidad->comunidad_id;
         $direccion_id = $UsuarioComunidad->direccion_id;
-        $direccion_vecino = UsuarioComunidad::where('comunidad_id', $comunidad_id)->inRandomOrder()->first()->direccion_id;
+        $direccion_vecino = UsuarioComunidad::where('comunidad_id', $comunidad_id)->where('direccion_id','!=',$direccion_id)->inRandomOrder()->first()->direccion_id;
 
         return [
             'direccion_id'=>$direccion_id,
