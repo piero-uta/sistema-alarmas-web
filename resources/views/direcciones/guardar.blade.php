@@ -14,7 +14,7 @@
         });
       </script>
 
-    @endpush
+@endpush
 
 @section('content')
 <h2  class="login-page-new__main-form-title">Crear dirección</h2>
