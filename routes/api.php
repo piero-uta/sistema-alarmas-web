@@ -28,7 +28,10 @@ Route::group(['middleware'=>['cors']], function(){
     });
 
 
+
     Route::post('/login', [Autenticacion::class, 'login'])->name('api.login');
+    Route::get('/getAlarms', [Alarmas::class,'getAlarms'])->name('getAlarms');
+
 
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');

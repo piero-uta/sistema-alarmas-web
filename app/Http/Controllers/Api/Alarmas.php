@@ -14,6 +14,18 @@ use App\Models\Alarma;
 
 class Alarmas extends Controller
 {
+    public function getAlarms(Request $request)
+    {
+        $comunidad_id = $request['comunidad_id'];
+       $alarmas = Alarma::join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
+        ->join('comunidades', 'comunidades.id', '=', 'direcciones.comunidad_id')
+        ->where('comunidades.id', $comunidad_id)
+        ->select('alarmas.*') //, 'direcciones.*', 'comunidades.*'
+        ->get()
+        ->toArray();
+
+        return $alarmas;
+    }
 
     public function getDeviceTokens($user, $comunidad_id)
     {
