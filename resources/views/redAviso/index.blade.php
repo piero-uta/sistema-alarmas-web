@@ -2,7 +2,6 @@
 @section('title', 'Red de Aviso')
 
 @section('content')
-{{$direccion_id}}
 
 <h2>Red de aviso</h2>
 {{-- seleccionar direccion --}}

@@ -30,7 +30,7 @@
             </a>        
         </li>   
         <li>
-            <a href="/redAviso" class="nav-link">
+            <a href="/red-avisos" class="nav-link">
                 Red de aviso
             </a>        
         </li>   
