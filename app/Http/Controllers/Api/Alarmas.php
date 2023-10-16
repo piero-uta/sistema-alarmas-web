@@ -10,7 +10,7 @@ use App\Models\UsuarioComunidad;
 use Illuminate\Support\Facades\DB;
 use App\Models\Comunidad;
 use App\Models\Direccion;
-
+use App\Models\Alarma;
 
 class Alarmas extends Controller
 {
@@ -55,10 +55,20 @@ class Alarmas extends Controller
         date_default_timezone_set('America/Santiago');
         $fecha = strftime('Fecha %d-%m-%Y');
         $hora = strftime('%H:%M Horas');
+        $fecha_sql = date('Y-m-d');
+        $hora_sql = date('H:i:s');
 
         if(empty($tokens)){
             return "No se pueden enviar notificaciones, no hay tokens disponibles.";
         }else{
+            $alarma = new Alarma;
+            $alarma->direccion_id = $direccion->id;
+            $alarma->fecha = $fecha_sql;
+            $alarma->hora = $hora_sql;
+            $alarma->nombre_usuario = $user->nombre;
+            $alarma->codigo = $direccion->codigo;
+            $alarma->save();
+
             return Larafirebase::withTitle($title)
             ->withBody($body)
             ->withImage('https://img.freepik.com/vector-gratis/senal-advertencia-triangulo-rojo-ilustracion-arte-vectorial_56104-865.jpg?w=740&t=st=1695986238~exp=1695986838~hmac=e4584b1d466880abfdd0ff55f35ca1150b61a04a48cad577ea888fdf4ef02e8c')
