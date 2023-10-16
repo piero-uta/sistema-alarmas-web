@@ -342,3 +342,46 @@
         }
     }
 }
+/* Estilo para el contenedor de la casilla de verificación */
+.checkbox {
+    position: relative;
+}
+.checkbox { 
+    
+    /* Ocultar la casilla de verificación nativa */
+    input[type="checkbox"] {
+      display: none;
+    }
+    
+    /* Establecer el estilo del contenedor de la casilla de verificación */
+    label {
+      display: block;
+      position: relative;
+      padding-left: 30px; /* Espacio para el icono de verificación personalizado */
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    
+    /* Establecer el icono de verificación personalizado */
+    label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px; /* Ajusta el tamaño del icono según sea necesario */
+      height: 20px; /* Ajusta el tamaño del icono según sea necesario */
+      border: 2px solid #333; /* Color del borde del icono */
+      background-color: #fff; /* Color de fondo del icono */
+      border-radius: 4px; /* Redondear los bordes del icono */
+    }
+    
+    /* Cambiar el color de fondo del icono cuando la casilla está marcada */
+    input[type="checkbox"]:checked + label::before {
+      background-color: #140b71; /* Color de fondo cuando está marcado */
+    }
+
+    /* Establecer un estilo para la etiqueta de texto junto a la casilla de verificación */
+    label span {
+      padding-left: 40px; /* Ajusta el espacio entre el icono y el texto según sea necesario */
+    }
+  }

@@ -65,8 +65,8 @@
         value="{{ old('celular')==null ? ( isset($comunidad)?$comunidad->celular:'' ) : old('celular') }}">
     </div>
     {{-- checkbox para saber si esta activo --}}
-    <div >
-        <input class="form-check-input" type="checkbox" name="activo" id="activo" 
+    <div class="checkbox">
+        <input class="checkbox" type="checkbox" name="activo" id="activo" 
         {{ old('activo')==null 
             ? ( isset($comunidad) && $comunidad->activo==0 ? '' : 'checked' ) 
             : ( old('activo')==1 ? 'checked' : '' ) }}>
@@ -77,10 +77,10 @@
     </div>
 
     <div class="d-flex justify-content-end py-2">
-    <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
-    <input type="hidden" name="id" id="id_comunidad_eliminar" required>
-    <button type="submit" class="btn btn-danger data-dismiss="modal" id="btn_eliminar_comunidad">Cancelar</button>
-               
+        <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
+        <input type="hidden" name="id" id="id_comunidad_eliminar" required>
+        <button type="submit" class="btn btn-danger data-dismiss="modal" id="btn_eliminar_comunidad">Cancelar</button>
+                
     </div>
 </form>
 

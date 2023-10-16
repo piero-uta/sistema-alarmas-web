@@ -52,10 +52,11 @@
                     @endif
                 </td>
                 <td>
+                <div class="d-flex">  
                     {{-- ver --}}
-                    <button type="button" class="btn btn-primary" onClick="modalUsuario({{$usuario}})">Ver</button>
+                    <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalUsuario({{$usuario}})">Ver</button>
                     {{-- editar --}}
-                    <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}?id={{$usuario->id}}">Editar</a>
+                    <a type="button" class="btn btn-primary" style="margin-right: 20px;" href="{{route('usuarios.crearEditar')}}?id={{$usuario->id}}">Editar</a>
                     {{-- eliminar --}}
                     <form method="POST" action="{{route('usuarios.eliminar')}}">
                         @csrf
@@ -63,6 +64,7 @@
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </td>
+                </div>
             </tr>
                 
                 
