@@ -39,11 +39,27 @@ class Alarmas extends Controller
         ->where('uc1.usuario_id', $user->id)
         ->pluck('u2.token_celular')
         ->toArray();
-        $tokensFiltrados = array_filter($tokens, function($token){
-            return !empty($token);
+
+        $usuarioComunidad = UsuarioComunidad::where('comunidad_id',$comunidad_id)
+        ->where('usuario_id', $user->id)
+        ->first();
+        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
+
+        $tokens_mi_direccion = DB::table('usuarios_comunidad as uc')
+        ->select('u.token_celular')
+        ->join('users as u', 'uc.usuario_id', '=', 'u.id')
+        ->where('uc.direccion_id', $direccion->id)
+        ->pluck('u.token_celular')
+        ->toArray();
+
+        $tokens_total = array_merge($tokens, $tokens_mi_direccion);
+
+        $tokensFiltrados = array_filter($tokens_total, function($value) {
+            return $value !== null;
         });
+
         $finalTokens = array_unique($tokensFiltrados);
-        return $finalTokens;
+        return array_values($finalTokens);
     }
 
     public function sendNotification(Request $request)
@@ -91,7 +107,7 @@ class Alarmas extends Controller
             ->withAdditionalData([
                 'color' => '#rrggbb',
                 'badge' => 0,
-                'id' => "id",
+                'id' => $alarma->id,
                 'fecha' => $fecha,
                 'hora' => $hora,
                 'titulo' => $comunidad->razon_social,
@@ -100,6 +116,7 @@ class Alarmas extends Controller
                 'latitud' => $direccion->latitud,
                 'longitud' => $direccion->longitud,
                 'nombre' => 'De '.$user->nombre,
+                'logo' => $comunidad->logo
             ])
             ->sendNotification($tokens);
         }
