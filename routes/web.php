@@ -7,7 +7,8 @@ use App\Http\Controllers\Autenticacion;
 use App\Http\Controllers\Direcciones;
 use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
-
+use App\Http\Controllers\Chequeos;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,7 +32,6 @@ Route::controller(Autenticacion::class)->group(function () {
 Route::middleware(['auth:admin'])->group(function () {
     
 });   
-
 
 
 // Rutas de usuarios
@@ -77,7 +77,12 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/red-avisos/guardar', 'handleGuardar')->name('red-avisos.handleGuardar');
         Route::post('/red-avisos/eliminar', 'eliminar')->name('red-avisos.eliminar');
     });
-    
+    Route::controller(Chequeos::class)->group(function () {
+        Route::get('/chequeos', 'index')->name('chequeos.index');
+        Route::get('/chequeos/crear', 'formularioGuardar')->name('chequeos.crearEditar');
+        Route::post('/chequeos/guardar', 'handleGuardar')->name('chequeos.handleGuardar');
+        Route::post('/chequeos/eliminar', 'eliminar')->name('chequeos.eliminar');
+    });
     
 });
 

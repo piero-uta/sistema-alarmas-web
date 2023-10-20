@@ -2,9 +2,9 @@
 @section('title', 'Guardar comunidad')
 
 @section('content')
-<h1 class="login-page-new__main-form-title">Crear comunidad</h1>
+<h1 class="login-page-new__main-form-title"style="padding-top: 5rem;">Crear comunidad</h1>
 
-<form method="POST" class="form form__container"action="{{route('comunidades.handleGuardar')}}">
+<form method="POST" class="form form__container" action="{{route('comunidades.handleGuardar')}}">
     @csrf
     @if(isset($comunidad))
         <input type="hidden" name="id" value="{{$comunidad->id}}">

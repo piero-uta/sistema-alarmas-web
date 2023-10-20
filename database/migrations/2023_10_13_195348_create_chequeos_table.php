@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('chequeos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('alarma_id')->constrained('alarmas');
+
             $table->date('fecha');
             $table->time('hora');
             // guardia
