@@ -1,11 +1,13 @@
-dr.rexmurray@example.com
-SELECT * FROM users u, usuarios_comunidad uc WHERE u.id = 2 and u.id = uc.usuario_id;
+ivahreichel@example.com
+Ivah Reichel
 
-SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE direcciones.id = 79 and redes_avisos.direccion_id = 79 ORDER BY `redes_avisos`.`direccion_vecino_id` ASC
+SELECT * FROM users u, usuarios_comunidad uc WHERE u.id = 25 and u.id = uc.usuario_id;
 
-40
-89
+SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE direcciones.id = 96 and redes_avisos.direccion_id = 96 ORDER BY `redes_avisos`.`direccion_vecino_id` ASC;
 
-SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (40,89) and uc.usuario_id = u.id;
+Comunidad Prof. Gaston Kassuelke...
 
-dorrisglover@example.com
+SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (17,21,24) and uc.usuario_id = u.id;
+
+luisazulauf@example.com
+Luisa Zulauf
