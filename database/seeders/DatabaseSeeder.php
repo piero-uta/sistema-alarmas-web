@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(AdminSeeder::class);
 
         Comunidad::factory(10)->create();
         Direccion::factory(100)->create();
@@ -26,6 +25,8 @@ class DatabaseSeeder extends Seeder
         User::factory(1000)->create();
         UsuarioComunidad::factory(1000)->create();
         RedAviso::factory(100)->create();
+        $this->call(AdminSeeder::class);
+
         // Direccion::factory(100)->create();
         // \App\Models\User::factory(10)->create();
     }
