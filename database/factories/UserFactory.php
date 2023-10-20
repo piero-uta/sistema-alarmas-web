@@ -20,12 +20,15 @@ class UserFactory extends Factory
         $nombre = $this->faker->unique()->name();
         $nombreUsuario = str_replace(' ', '', strtolower($nombre));
         $correoElectronico = $nombreUsuario . '@example.com';
+        $avatar ='https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->faker->email()))).'?d=identicon';
+
         return [
             'email' => $correoElectronico,
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'nombre' => $nombre,
             'apellido_paterno'=>$this->faker->word(),
             'apellido_materno'=>$this->faker->word(),
+            'avatar'=>$avatar,
             'activo'=>true
 
         ];

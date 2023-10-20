@@ -16,6 +16,8 @@ class ComunidadFactory extends Factory
      */
     public function definition(): array
     {
+        $logo ='https://www.gravatar.com/avatar/'.md5(strtolower(trim($this->faker->email()))).'?d=identicon';
+
         return [
             'rut'=>$this->faker->numberBetween(10000000,999999999),
             'digito'=>$this->faker->numberBetween(1,9),
@@ -25,6 +27,7 @@ class ComunidadFactory extends Factory
             'direccion'=>'Calle '.$this->faker->name().', '.$this->faker->name().' # '.$this->faker->numberBetween(1,100),
             'giro'=>$this->faker->word(),
             'tipo_servicio'=>'Administracion',
+            'logo'=>$logo,
             'costo_mensual'=>$this->faker->numberBetween(100000,999999),
         ];
     }

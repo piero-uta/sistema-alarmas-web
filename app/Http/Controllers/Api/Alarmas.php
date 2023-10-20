@@ -10,10 +10,22 @@ use App\Models\UsuarioComunidad;
 use Illuminate\Support\Facades\DB;
 use App\Models\Comunidad;
 use App\Models\Direccion;
-
+use App\Models\Alarma;
 
 class Alarmas extends Controller
 {
+    public function getAlarms(Request $request)
+    {
+        $comunidad_id = $request['comunidad_id'];
+       $alarmas = Alarma::join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
+        ->join('comunidades', 'comunidades.id', '=', 'direcciones.comunidad_id')
+        ->where('comunidades.id', $comunidad_id)
+        ->select('alarmas.*') //, 'direcciones.*', 'comunidades.*'
+        ->get()
+        ->toArray();
+
+        return $alarmas;
+    }
 
     public function getDeviceTokens($user, $comunidad_id)
     {
@@ -27,11 +39,27 @@ class Alarmas extends Controller
         ->where('uc1.usuario_id', $user->id)
         ->pluck('u2.token_celular')
         ->toArray();
-        $tokensFiltrados = array_filter($tokens, function($token){
-            return !empty($token);
+
+        $usuarioComunidad = UsuarioComunidad::where('comunidad_id',$comunidad_id)
+        ->where('usuario_id', $user->id)
+        ->first();
+        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
+
+        $tokens_mi_direccion = DB::table('usuarios_comunidad as uc')
+        ->select('u.token_celular')
+        ->join('users as u', 'uc.usuario_id', '=', 'u.id')
+        ->where('uc.direccion_id', $direccion->id)
+        ->pluck('u.token_celular')
+        ->toArray();
+
+        $tokens_total = array_merge($tokens, $tokens_mi_direccion);
+
+        $tokensFiltrados = array_filter($tokens_total, function($value) {
+            return $value !== null;
         });
+
         $finalTokens = array_unique($tokensFiltrados);
-        return $finalTokens;
+        return array_values($finalTokens);
     }
 
     public function sendNotification(Request $request)
@@ -55,10 +83,20 @@ class Alarmas extends Controller
         date_default_timezone_set('America/Santiago');
         $fecha = strftime('Fecha %d-%m-%Y');
         $hora = strftime('%H:%M Horas');
+        $fecha_sql = date('Y-m-d');
+        $hora_sql = date('H:i:s');
 
         if(empty($tokens)){
             return "No se pueden enviar notificaciones, no hay tokens disponibles.";
         }else{
+            $alarma = new Alarma;
+            $alarma->direccion_id = $direccion->id;
+            $alarma->fecha = $fecha_sql;
+            $alarma->hora = $hora_sql;
+            $alarma->nombre_usuario = $user->nombre;
+            $alarma->codigo = $direccion->codigo;
+            $alarma->save();
+
             return Larafirebase::withTitle($title)
             ->withBody($body)
             ->withImage('https://img.freepik.com/vector-gratis/senal-advertencia-triangulo-rojo-ilustracion-arte-vectorial_56104-865.jpg?w=740&t=st=1695986238~exp=1695986838~hmac=e4584b1d466880abfdd0ff55f35ca1150b61a04a48cad577ea888fdf4ef02e8c')
@@ -69,7 +107,7 @@ class Alarmas extends Controller
             ->withAdditionalData([
                 'color' => '#rrggbb',
                 'badge' => 0,
-                'id' => "id",
+                'id' => $alarma->id,
                 'fecha' => $fecha,
                 'hora' => $hora,
                 'titulo' => $comunidad->razon_social,
@@ -78,6 +116,7 @@ class Alarmas extends Controller
                 'latitud' => $direccion->latitud,
                 'longitud' => $direccion->longitud,
                 'nombre' => 'De '.$user->nombre,
+                'logo' => $comunidad->logo
             ])
             ->sendNotification($tokens);
         }
