@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Perfil;
 use App\Models\UsuarioComunidad;
 use App\Models\RedAviso;
+use App\Models\Alarma;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,9 +25,9 @@ class DatabaseSeeder extends Seeder
         Perfil::factory(100)->create();
         User::factory(1000)->create();
         UsuarioComunidad::factory(1000)->create();
-        RedAviso::factory(100)->create();
+        RedAviso::factory(300)->create();
         $this->call(AdminSeeder::class);
-
+        Alarma::factory(70)->create();
         // Direccion::factory(100)->create();
         // \App\Models\User::factory(10)->create();
     }
