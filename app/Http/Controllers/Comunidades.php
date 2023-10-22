@@ -120,7 +120,8 @@ class Comunidades extends Controller
         if(!self::setComunidadActual($comunidad_id)){
             return redirect()->route('login');
         }
-        return redirect()->route('comunidades.ver');
+        // regresar a la misma pagina
+        return redirect()->back();
     }
 
     static public function setComunidadActual($comunidad_id)
