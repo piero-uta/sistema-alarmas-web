@@ -15,15 +15,14 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('alarma_id')->constrained('alarmas');
-
-            $table->date('fecha');
-            $table->time('hora');
+            $table->date('fecha')->nullable();
+            $table->time('hora')->nullable();
             // guardia
-            $table->string('usuario_chequeo');   
+            $table->string('usuario_chequeo')->nullable()->default(null);   
             // bool chequeo
             $table->boolean('estado_chequeo')->default(false);
-            // vecino
-            $table->string('vecino_chequeo');   
+            // usuario que activo la alarma
+            $table->string('vecino_chequeo')->nullable()->default(null);
             $table->string('observacion');   
 
             // TO DO: crear las tablas y agregar las restricciones

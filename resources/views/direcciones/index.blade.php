@@ -68,7 +68,6 @@
             @endforeach
 
         </tbody>
-
     </table>
     <div class="d-flex justify-content-end py-2">
         <a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar')}}">Crear</a>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Comunidad;
 use App\Models\Direccion;
 use App\Models\Alarma;
+use App\Models\Chequeo;
 
 class Alarmas extends Controller
 {
@@ -95,7 +96,21 @@ class Alarmas extends Controller
             $alarma->hora = $hora_sql;
             $alarma->nombre_usuario = $user->nombre;
             $alarma->codigo = $direccion->codigo;
+      
+            /// Crear los datos de chequeos
+            $chequeo = new Chequeo;
+            $chequeo->alarma_id = $alarma->id;
+            $chequeo->fecha = '';
+            $chequeo->hora = '';
+            $chequeo->usuario_chequeo = null;
+            $chequeo->estado_chequeo = 0;
+            $chequeo->vecino_chequeo = $alarma->nombre_usuario;
+            $chequeo->observacion = '';
+            $chequeo->tipo_chequeo = null;
+            $chequeo->tipo_evento = null;    
+
             $alarma->save();
+            $chequeo->save();
 
             return Larafirebase::withTitle($title)
             ->withBody($body)
