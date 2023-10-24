@@ -4,8 +4,8 @@
 @section('content')
 
 <h2>Comunidades</h2>
-<div>
-    <table class="table">
+<div class="table-responsive">
+    <table id="myTable" class="display"  width="100%" ellspacing="0">
         <thead>
             <tr>
                 <th scope="col">
@@ -145,5 +145,12 @@
         document.getElementById('id_comunidad_eliminar').value = comunidad.id;
 
     }
+</script>
+<script>
+    var table = new DataTable('#myTable', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+});
 </script>
 @endsection
