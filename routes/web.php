@@ -9,6 +9,7 @@ use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
 use App\Http\Controllers\Chequeos;
 use Carbon\Carbon;
+use App\Http\Controllers\Monitoreo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,9 +36,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
 // Rutas de usuarios
-Route::middleware(['auth'])->group(function () {
-
-    
+Route::middleware(['auth'])->group(function () {    
         
     
     Route::controller(Comunidades::class)->group(function () {
@@ -82,6 +81,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/chequeos/crear', 'formularioGuardar')->name('chequeos.crearEditar');
         Route::post('/chequeos/guardar', 'handleGuardar')->name('chequeos.handleGuardar');
         Route::post('/chequeos/eliminar', 'eliminar')->name('chequeos.eliminar');
+    });
+
+    Route::controller(Monitoreo::class)->group(function(){
+        Route::get('/monitoreo', 'index')->name('monitoreo.index');
+        Route::post('/monitoreo/getAlarmas', 'getAlarmas')->name('monitoreo.getAlarmas');
     });
     
 });
