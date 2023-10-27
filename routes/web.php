@@ -8,6 +8,8 @@ use App\Http\Controllers\Direcciones;
 use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
 use App\Http\Controllers\Chequeos;
+use App\Http\Controllers\Mensajes;
+
 use Carbon\Carbon;
 
 Route::get('/', function () {
@@ -30,16 +32,16 @@ Route::controller(Autenticacion::class)->group(function () {
 
 // Rutas de administrador
 Route::middleware(['auth:admin'])->group(function () {
-    
-});   
+
+});
 
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function () {
 
-    
-        
-    
+
+
+
     Route::controller(Comunidades::class)->group(function () {
         // Route::middleware('permisos:admin')->group(function () {
             Route::get('/comunidades', 'index')->name('comunidades.index');
@@ -63,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/direcciones/guardar', 'handleGuardar')->name('direcciones.handleGuardar');
         Route::post('/direcciones/eliminar', 'eliminar')->name('direcciones.eliminar');
     });
-    
+
     Route::controller(Usuarios::class)->group(function () {
         Route::get('/usuarios', 'index')->name('usuarios.index');
         Route::get('/usuarios/crear', 'formularioGuardar')->name('usuarios.crearEditar');
@@ -83,7 +85,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/chequeos/guardar', 'handleGuardar')->name('chequeos.handleGuardar');
         Route::post('/chequeos/eliminar', 'eliminar')->name('chequeos.eliminar');
     });
-    
+    Route::patch('/fcm-token', [Mensajes::class, 'updateToken'])->name('fcmToken');
+
 });
 
 
