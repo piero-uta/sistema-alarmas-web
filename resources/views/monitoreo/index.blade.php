@@ -22,9 +22,10 @@
     const direcciones = <?php echo json_encode($direcciones); ?>;
     const csrf_token = <?php echo json_encode(csrf_token()); ?>;
 
-    function reload(){
-        let alarmas = obtenerAlarmas();
-        console.log(alarmas);
+    async function reload(){
+        const alarmas = await obtenerAlarmas();
+        
+        
         generarMarcadores(alarmas);
 
     }
@@ -38,16 +39,16 @@
                 'X-CSRF-TOKEN': csrf_token,
             },
             body: JSON.stringify({comunidad_id: comunidad.id})
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+            return response.alarmas;
         });
 
-        // Si la respuesta es correcta
-        if (respuesta.ok) {
-            const alarmas = await respuesta.json();
-            return alarmas.alarmas;
-        }
         
         // Devuelve el error
-        return await respuesta.json();
+        return await respuesta;
     }
 
     

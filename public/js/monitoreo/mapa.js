@@ -14,28 +14,45 @@ async function initMap() {
 
     map = new google.maps.Map(mapDiv, {
         center: { 
-            lat: -33.4569400,
-            lng: -70.6482700 },
-        zoom: 13,
+            lat: comunidad.latitud,
+            lng: comunidad.longitud },
+        zoom: comunidad.zoom,
         mapId:'eff1eb88ba92ef89',
     });
+
+    generarMarcadores();
 }
 
 
 function generarMarcadores(alarmas = null){
     console.log("dentro de funcion: "+ alarmas);
     direcciones.forEach(direccion => {
-        const greyBackground = new google.maps.marker.PinView({
+
+        const pinBackground = new google.maps.marker.PinView({
             borderColor: "#808080",
             background: "#808080",
             glyphColor: "#000000",
         });
+
+        if( alarmas !== null ){
+
+            for (let i = 0; i < alarmas.length; i++) {
+                const alarma = alarmas[i];
+                console.log(alarma);
+                if( alarma.direccion_id === direccion.id ){
+                    pinBackground.borderColor = "#FF0000";
+                    pinBackground.background = "#FF0000";
+                    pinBackground.glyphColor = "#FFFFFF";
+                }
+            }
+        }
+        
         // create the marker
         const marker = new google.maps.marker.AdvancedMarkerView({
             position: {lat:direccion.latitud, lng:direccion.longitud},
             map: map,
             title: direccion.codigo,
-            content: greyBackground.element,
+            content: pinBackground.element,
         });
         markers.push(marker);
     });
