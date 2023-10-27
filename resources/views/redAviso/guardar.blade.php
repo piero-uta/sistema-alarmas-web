@@ -73,6 +73,7 @@
     const direccionSeleccionada=<?php echo json_encode($direccionSeleccionada); ?>;
     const idDireccionVecinoInput = document.getElementById('direccion');
     const direccionesVecinos = <?php echo json_encode($direcciones); ?>;
+    const comunidad = <?php echo json_encode($comunidad); ?>;
 </script>
     <script type="text/javascript" src="{{ asset('js/redAviso/guardarMapa.js') }}"></script>
 @endsection

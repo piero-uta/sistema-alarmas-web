@@ -51,6 +51,9 @@ class AdminSeeder extends Seeder
             'celular' => '12345678',
             'logo' => 'logo.png',
             'activo' => true,
+            'zoom' => 13,
+            'latitud' => -33.4569400,
+            'longitud' => -70.6482700,
         ]);
 
         // Crear perfil

@@ -109,6 +109,7 @@
     const direccion_id = <?php echo $direccion_id; ?>;
     const redes = <?php echo json_encode($redes); ?>;
     const direcciones = <?php echo json_encode($direcciones); ?>;
+    const comunidad = <?php echo json_encode($comunidad); ?>;
 </script>
 <script type="text/javascript" src="{{ asset('js/redAviso/indexMapa.js') }}"></script>
 @endsection

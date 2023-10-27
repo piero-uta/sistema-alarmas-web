@@ -12,9 +12,9 @@ async function initMap() {
 
     const map = new google.maps.Map(mapDiv, {
         center: { 
-            lat: -33.4569400,
-            lng: -70.6482700 },
-        zoom: 13,
+            lat: comunidad.latitud,
+            lng: comunidad.longitud },
+        zoom: comunidad.zoom,
         mapId:'eff1eb88ba92ef89',
     });
 

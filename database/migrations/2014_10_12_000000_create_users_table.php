@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('telefono')->nullable();
             $table->string('celular')->nullable();
             $table->string('token_celular')->nullable(); //token de celular para push notification
+            //token web para push notificaction 
+            $table->string('token_web')->nullable();
         });
     }
 

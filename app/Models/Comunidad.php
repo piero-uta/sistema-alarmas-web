@@ -30,6 +30,9 @@ class Comunidad extends Model
         'celular',
         'logo',
         'activo',
+        'zoom',
+        'latitud',
+        'longitud',
     ];
 
     public function perfilesPorDefecto()

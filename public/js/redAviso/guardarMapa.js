@@ -6,9 +6,9 @@ async function initMap() {
 
     map = new Map(document.getElementById("map"), {
         center: { 
-            lat: -33.4569400,
-            lng: -70.6482700 },
-        zoom: 13,
+            lat: comunidad.latitud,
+            lng: comunidad.longitud },
+        zoom: comunidad.zoom,
     });
 
     // actualizar mapa cuando cambie vecinoInput
@@ -21,8 +21,8 @@ async function initMap() {
         const vecino = idDireccionVecinoInput.value;
         if( vecino === "" ){
             map.setCenter({ 
-                lat: -33.4569400,
-                lng: -70.6482700 });
+                lat: comunidad.latitud,
+                lng: comunidad.longitud });
             return;
         }
         // buscar vecino en vecinos, donde vecinos[n].id === vecino

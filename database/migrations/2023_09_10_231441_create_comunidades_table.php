@@ -29,6 +29,13 @@ return new class extends Migration
             $table->string('celular')->nullable()->default(null);
             $table->string('logo')->nullable()->default(null);
             $table->boolean('activo')->default(true);
+
+            // zoom level
+            $table->integer('zoom')->default(13);
+            // create latitude
+            $table->float('latitud', 10, 6)->default(null);
+            // create longitude
+            $table->float('longitud', 10, 6)->default(null);
         });
     }
 

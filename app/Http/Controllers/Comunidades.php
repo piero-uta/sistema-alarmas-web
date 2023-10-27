@@ -44,9 +44,12 @@ class Comunidades extends Controller
             'razon_social' => 'required',
             'rut' => 'required',
             'digito' => 'required',
-            'direccion' => 'required',
+            'calle' => 'required',
+            'numero' => 'required',
             'tipo_servicio' => 'required',
             'costo_mensual' => 'required',
+            'latitud' => 'required',
+            'longitud' => 'required',
 
         ]);
         if($request->id != null){
@@ -62,9 +65,12 @@ class Comunidades extends Controller
         $comunidad->razon_social = $request->razon_social;
         $comunidad->rut = $request->rut;
         $comunidad->digito = $request->digito;
-        $comunidad->direccion = $request->direccion;
+        $comunidad->direccion = $request->calle . ' ' . $request->numero;
         $comunidad->tipo_servicio = $request->tipo_servicio;
         $comunidad->costo_mensual = $request->costo_mensual;
+        $comunidad->latitud = $request->latitud;
+        $comunidad->longitud = $request->longitud;
+        
 
         $comunidad->representante_legal = $request->representante_legal;        
         $comunidad->email = $request->email;        

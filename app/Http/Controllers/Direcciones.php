@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Direccion;
 use Illuminate\Support\Facades\Session;
+use App\Models\Comunidad;
 
 
 class Direcciones extends Controller
@@ -23,15 +24,19 @@ class Direcciones extends Controller
     public function formularioGuardar(Request $request)
     {
         $parametros = [];
+        $comunidad_id = Session::get('comunidad_id');
+        $comunidad = Comunidad::where('id', $comunidad_id)->first();
+        $parametros['comunidad'] = $comunidad;
         if($request->has('id')){
             // verificar comunidad 
-            $comunidad = Session::get('comunidad_id');
-            $direccion = Direccion::where('id', $request->id)->where('comunidad_id', $comunidad)->first();
+            
+            $direccion = Direccion::where('id', $request->id)->where('comunidad_id', $comunidad_id)->first();
             if(!$direccion){
                 //agregar error a parametros
                 $parametros['error'] = 'Direccion no encontrada';
                 return redirect()->route('direcciones.index')->with($parametros);
             }
+            
             $parametros['direccion'] = $direccion;
         }
         return view('direcciones.guardar', $parametros);

@@ -84,5 +84,8 @@
 
 
 @section('scripts')
-    <script src="{{ asset('js/direcciones/mapa.js') }}"></script>
+<script>
+    const comunidad = <?php echo json_encode($comunidad); ?>;
+</script>
+<script type="text/javascript" src="{{ asset('js/direcciones/mapa.js') }}"></script>
 @endsection

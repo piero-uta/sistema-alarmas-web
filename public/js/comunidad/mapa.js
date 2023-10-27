@@ -42,9 +42,9 @@ async function initMap() {
 
     map = new Map(document.getElementById("map"), {
         center: { 
-            lat: comunidad.latitud,
-            lng: comunidad.longitud },
-        zoom: comunidad.zoom,
+            lat: -33.4569400,
+            lng: -70.6482700 },
+        zoom: 13,
     });
 
     const input = document.getElementById("direccion");

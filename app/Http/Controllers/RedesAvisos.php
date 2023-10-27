@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Direccion;
 use Illuminate\Support\Facades\Session;
 use App\Models\RedAviso;
+use App\Models\Comunidad;
 
 class RedesAvisos extends Controller
 {
@@ -14,6 +15,8 @@ class RedesAvisos extends Controller
     {
         // obtener comunidad en session
         $comunidad_id = Session::get('comunidad_id');
+        //obtener comunidad
+        $comunidad = Comunidad::where('id', $comunidad_id)->first();
         // obtener todas las direcciones de la comunidad
         $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
         // obtener redes de aviso con direccion_id = $request->direccion_id
@@ -22,6 +25,7 @@ class RedesAvisos extends Controller
             'direccion_id' => $request->direccion_id,
             'direcciones' => $direcciones,
             'redes' => $redes,
+            'comunidad' => $comunidad,
         ];
         // retornar la vista red-avisos.index
         return view('redAviso.index', $parametros);
@@ -31,6 +35,15 @@ class RedesAvisos extends Controller
     {
         $parametros = [];
         $direccionSeleccionada = Direccion::where('id', $request->direccion_id)->first();
+        //comunidad 
+        $comunidad_id = Session::get('comunidad_id');
+        if(!$direccionSeleccionada || $direccionSeleccionada->comunidad_id != $comunidad_id){
+            //agregar error a parametros
+            $parametros['error'] = 'Direccion no encontrada';
+            return redirect()->route('redAviso.index')->with($parametros);
+        }
+        $comunidad = Comunidad::where('id', $comunidad_id)->first();
+        $parametros['comunidad'] = $comunidad;
         if(!$direccionSeleccionada){
             //agregar error a parametros
             $parametros['error'] = 'Direccion no encontrada';
