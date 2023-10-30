@@ -1,0 +1,185 @@
+@extends('layouts.app')
+@section('title', 'AsignacionPerfiles')
+
+@section('content')
+    <h2>Asignacion de Perfiles</h2>
+    <div>{{ json_encode($permisos) }}</div>
+    <hr>
+    <label>selección Perfiles: </label>
+    <select id="redireccionarSelect">
+        @foreach ($perfiles_comunidad as $perfil_comunidad)
+            <option value={{ $perfil_comunidad->id }} @if ($perfil_comunidad->id == $perfil_aux) selected @endif>
+                {{ $perfil_comunidad->nombre }}</option>
+        @endforeach
+    </select>
+    <hr>
+
+    <div class="table-responsive">
+        <table id="myTable" class="display" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        #
+                    </th>
+                    <th scope="col">
+                        Menú
+                    </th>
+                    <th scope="col">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($comunidad_permisos as $permiso)
+                    <tr>
+                        <th scope="row">
+                            {{ $permiso->id }}
+                        </th>
+                        <td>
+                            {{ $permiso->opcion }}
+                        </td>
+                        <td>
+                            @php
+                                $array = explode('-', $permiso->acciones_concatenadas);
+                            @endphp
+                            @foreach (['c' => 'Crear', 'r' => 'Leer', 'u' => 'Actualizar', 'd' => 'Eliminar'] as $letter => $action)
+                                @if (in_array($letter, $array))
+                                    {{-- {{ $action }} está en el array --}}
+                                    <input type="checkbox"
+                                        name="{{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}"
+                                        value="{{ $letter }}" checked>
+                                @else
+                                    {{-- {{ $action }} no está en el array --}}
+                                    <input type="checkbox"
+                                        name="{{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}"
+                                        value="{{ $letter }}">
+                                @endif
+                                {{ $action }}
+                            @endforeach
+
+                            {{-- @foreach (['c', 'r', 'u', 'd'] as $letter)
+                                @if (in_array($letter, $array)) --}}
+                            {{-- {{ $letter }} está en el array --}}
+                            {{-- <input type="checkbox"
+                                        name={{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}
+                                        value={{ $letter }} checked> --}}
+                            {{-- @else --}}
+                            {{-- {{ $letter }} no está en el array --}}
+                            {{-- <input type="checkbox"
+                                        name={{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}
+                                        value={{ $letter }}>
+                                @endif
+                                {{ $letter }}
+                            @endforeach --}}
+
+                            {{-- <div class="d-flex"> --}}
+                            {{-- {{ $permiso->acciones_concatenadas }} --}}
+                            {{-- ver --}}
+                            {{-- @if (in_array('AsignacionPerfiles-r', $permisos))
+                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;">Ver</button>
+                                @endif --}}
+                            {{-- editar --}}
+                            {{-- @if (in_array('AsignacionPerfiles-u', $permisos))
+                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;">Editar</a>
+                                @endif --}}
+                            {{-- eliminar --}}
+                            {{-- @if (in_array('AsignacionPerfiles-d', $permisos))
+                                    <form method="POST" action="{{ route('usuarios.eliminar') }}">
+                                        @csrf
+                                        <input type="hidden" name="id">
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                @endif --}}
+                        </td>
+    </div>
+    </tr>
+    @endforeach
+
+    </tbody>
+
+    </table>
+    </div>
+    {{-- @if (in_array('AsignacionPerfiles-c', $permisos))
+        <div class="d-flex justify-content-end py-2">
+            <a type="button" class="btn btn-primary">Crear</a>
+        </div>
+    @endif --}}
+
+
+
+
+    {{-- TO DO: confirmar eliminar --}}
+    <div class="modal" tabindex="-1" id="modalUsuario">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    <a type="button" class="btn btn-primary" href="#" id="btn_editar_usuario">Editar</a>
+
+                    <form action="#" method="POST" id="form_eliminar_usuario">
+                        @csrf
+                        <input type="hidden" name="id" id="id_usuario_eliminar" required>
+                        <button type="submit" class="btn btn-danger" id="btn_eliminar_usuario">Eliminar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('scripts')
+    {{-- <script>
+        function modalUsuario(usuario) {
+            console.log(usuario)
+
+            const modal = new bootstrap.Modal(document.getElementById('modalUsuario'));
+            modal.show();
+            document.getElementById('modalUsuario').querySelector('.modal-body').innerHTML = `
+        <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+        <p><strong>Apellido paterno:</strong> ${usuario.apellido_paterno}</p>
+        <p><strong>Apellido materno:</strong> ${usuario.apellido_materno}</p>
+        <p><strong>Email:</strong> ${usuario.email}</p>
+        <p><strong>Estado:</strong> ${usuario.activo ? 'Activo' : 'Inactivo'}</p>
+        `;
+            document.getElementById('btn_editar_usuario').href = "{{ route('usuarios.crearEditar') }}?id=" + usuario.id;
+
+            document.getElementById('form_eliminar_usuario').action = "{{ route('usuarios.eliminar') }}";
+            document.getElementById('id_usuario_eliminar').value = usuario.id;
+
+        }
+    </script> --}}
+
+    <script>
+        var table = new DataTable('#myTable', {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+            },
+        });
+    </script>
+    <script type="text/javascript">
+        // Obtén una referencia al elemento <select>
+        var select = document.getElementById("redireccionarSelect");
+
+        // Agrega un evento onchange al elemento <select>
+        select.addEventListener("change", function() {
+            // Obtiene el valor seleccionado
+            var selectedValue = select.value;
+
+
+
+
+            // Verifica que el valor no esté vacío
+            if (selectedValue) {
+                // Redirige a la URL seleccionada
+                var url = `/asignacionPerfiles/${selectedValue}`;
+                window.location.href = url;
+            }
+        });
+    </script>
+@endsection

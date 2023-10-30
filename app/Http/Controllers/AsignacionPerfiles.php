@@ -12,9 +12,10 @@ use App\Models\Comunidad;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Direccion;
+use Illuminate\Support\Facades\DB;
 
 
-class Perfiles extends Controller
+class AsignacionPerfiles extends Controller
 {
     //
     public function getPermisos($comunidad){
@@ -39,23 +40,102 @@ class Perfiles extends Controller
         return $total_result;
 
     }
-    public function index()
+    public function index(Request $request)
     {
+
         $comunidad_id = Session::get('comunidad_id');
         $comunidad = Comunidad::find($comunidad_id);
 
-        $perfiles = Perfil::where('comunidad_id',$comunidad_id)
+        $perfiles_comunidad = Perfil::where('comunidad_id',$comunidad_id)
+        ->get();
+
+
+        $perfil_aux = $perfiles_comunidad->first()->id;
+
+        $perfiles = UsuarioComunidad::select('perfiles.*')
+        ->join('comunidades', 'comunidades.id', '=', 'usuarios_comunidad.comunidad_id')
+        ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
+        ->where('comunidades.id', $comunidad_id)
         ->distinct()
         ->get();
 
 
+        $permisos_perfil = DB::table('permisos')
+        ->select('permisos.nombre')
+        ->join('permisos_perfil', 'permisos.id', '=', 'permisos_perfil.permiso_id')
+        ->join('perfiles', 'permisos_perfil.perfil_id', '=', 'perfiles.id')
+        ->join('comunidades', 'perfiles.comunidad_id', '=', 'comunidades.id')
+        ->where('comunidades.id', $comunidad_id)
+        ->where('perfiles.id', $perfil_aux)
+        ->distinct();
+
+
+        $comunidad_permisos = $permisos_perfil
+        ->select(DB::raw("count(*) as id, SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
+        ->groupBy('opcion')
+        ->get();
+
         $permisos = $this->getPermisos($comunidad);
 
-        if(in_array('Perfiles-c', $permisos)||
-        in_array('Perfiles-r', $permisos)||
-        in_array('Perfiles-u', $permisos)||
-        in_array('Perfiles-d', $permisos)){
-        return view('perfiles.index', compact('perfiles','permisos'));
+        if(in_array('AsignacionPerfiles-c', $permisos)||
+        in_array('AsignacionPerfiles-r', $permisos)||
+        in_array('AsignacionPerfiles-u', $permisos)||
+        in_array('AsignacionPerfiles-d', $permisos)){
+        return view('asignacionPerfiles.index', compact('comunidad_permisos','permisos','perfiles_comunidad','perfil_aux'));
+        }else{
+            return view('main-dashboard');
+            // return redirect()->route('login');
+        }
+
+
+    }
+    public function seleccionar(Request $request, $id)
+    {
+        $perfil_aux = $id;
+        $comunidad_id = Session::get('comunidad_id');
+        $comunidad = Comunidad::find($comunidad_id);
+
+        $perfiles_comunidad = Perfil::where('comunidad_id',$comunidad_id)
+        ->get();
+
+
+
+        $perfiles = UsuarioComunidad::select('perfiles.*')
+        ->join('comunidades', 'comunidades.id', '=', 'usuarios_comunidad.comunidad_id')
+        ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
+        ->where('comunidades.id', $comunidad_id)
+        ->distinct()
+        ->get();
+
+
+        $permisos_perfil = DB::table('permisos')
+        ->select('permisos.nombre')
+        ->join('permisos_perfil', 'permisos.id', '=', 'permisos_perfil.permiso_id')
+        ->join('perfiles', 'permisos_perfil.perfil_id', '=', 'perfiles.id')
+        ->join('comunidades', 'perfiles.comunidad_id', '=', 'comunidades.id')
+        ->where('comunidades.id', $comunidad_id)
+        ->where('perfiles.id', $id)
+        ->distinct();
+
+
+        $comunidad_permisos = $permisos_perfil
+        ->select(DB::raw("count(*) as id, SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
+        ->groupBy('opcion')
+        ->get();
+
+        if ($comunidad_permisos->isEmpty()) {
+            return redirect()->route('asignacionPerfiles.index');
+        }
+
+
+        $permisos = $this->getPermisos($comunidad);
+
+
+        if(in_array('AsignacionPerfiles-c', $permisos)||
+        in_array('AsignacionPerfiles-r', $permisos)||
+        in_array('AsignacionPerfiles-u', $permisos)||
+        in_array('AsignacionPerfiles-d', $permisos)){
+        return view('asignacionPerfiles.index', compact('comunidad_permisos','permisos','perfiles_comunidad','perfil_aux'));
         }else{
             return view('main-dashboard');
             // return redirect()->route('login');
@@ -74,7 +154,7 @@ class Perfiles extends Controller
     //         $usuario = User::select('users.*', 'perfiles.id as perfil_id')
     //             ->join('usuarios_comunidad', 'users.id', '=', 'usuarios_comunidad.usuario_id')
     //             ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
-    //             ->where('usuarios_comunidad.comunidad_id', $comunidad_id)
+    //             ->where('usuario_comunidad.comunidad_id', $comunidad_id)
     //             ->where('users.id', $request->id)
     //             ->first();
 
@@ -92,7 +172,10 @@ class Perfiles extends Controller
     //     // obtener direcciones
     //     $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
 
-    //     $perfiles = Perfil::where('comunidad_id', $comunidad_id)
+    //     $perfiles = UsuarioComunidad::select('perfiles.*')
+    //     ->join('comunidades', 'comunidades.id', '=', 'usuarios_comunidad.comunidad_id')
+    //     ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
+    //     ->where('comunidades.id', $comunidad_id)
     //     ->distinct()
     //     ->get();
 

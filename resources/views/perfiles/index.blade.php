@@ -1,9 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Usuarios')
+@section('title', 'Perfiles')
 
 @section('content')
-
-    <h2>Usuarios</h2>
+    <h2>Perfiles</h2>
     <div>{{ json_encode($permisos) }}</div>
 
     <div class="table-responsive">
@@ -12,15 +11,6 @@
                 <tr>
                     <th scope="col">
                         #
-                    </th>
-                    <th scope="col">
-                        Nombre
-                    </th>
-                    <th scope="col">
-                        Apellidos
-                    </th>
-                    <th scope="col">
-                        Email
                     </th>
                     <th scope="col">
                         Perfil
@@ -34,25 +24,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($usuarios as $usuario)
+                @foreach ($perfiles as $perfil)
                     <tr>
                         <th scope="row">
-                            {{ $usuario->id }}
+                            {{ $perfil->id }}
                         </th>
                         <td>
-                            {{ $usuario->nombre }}
+                            {{ $perfil->nombre }}
                         </td>
                         <td>
-                            {{ $usuario->apellido_paterno }} {{ $usuario->apellido_materno }}
-                        </td>
-                        <td>
-                            {{ $usuario->email }}
-                        </td>
-                        <td>
-                            {{ $usuario->perfil }}
-                        </td>
-                        <td>
-                            @if ($usuario->activo)
+                            @if ($perfil->activo)
                                 Activo
                             @else
                                 Inactivo
@@ -61,20 +42,18 @@
                         <td>
                             <div class="d-flex">
                                 {{-- ver --}}
-                                @if (in_array('Usuarios-r', $permisos))
-                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                        onClick="modalUsuario({{ $usuario }})">Ver</button>
+                                @if (in_array('Perfiles-r', $permisos))
+                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;">Ver</button>
                                 @endif
                                 {{-- editar --}}
-                                @if (in_array('Usuarios-u', $permisos))
-                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                        href="{{ route('usuarios.crearEditar') }}?id={{ $usuario->id }}">Editar</a>
+                                @if (in_array('Perfiles-u', $permisos))
+                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;">Editar</a>
                                 @endif
                                 {{-- eliminar --}}
-                                @if (in_array('Usuarios-d', $permisos))
+                                @if (in_array('Perfiles-d', $permisos))
                                     <form method="POST" action="{{ route('usuarios.eliminar') }}">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{ $usuario->id }}">
+                                        <input type="hidden" name="id">
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
                                     </form>
                                 @endif
@@ -87,9 +66,9 @@
 
     </table>
     </div>
-    @if (in_array('Usuarios-c', $permisos))
+    @if (in_array('Perfiles-c', $permisos))
         <div class="d-flex justify-content-end py-2">
-            <a type="button" class="btn btn-primary" href="{{ route('usuarios.crearEditar') }}">Crear</a>
+            <a type="button" class="btn btn-primary">Crear</a>
         </div>
     @endif
 
@@ -120,12 +99,9 @@
             </div>
         </div>
     </div>
-
-
 @endsection
-
 @section('scripts')
-    <script>
+    {{-- <script>
         function modalUsuario(usuario) {
             console.log(usuario)
 
@@ -144,7 +120,7 @@
             document.getElementById('id_usuario_eliminar').value = usuario.id;
 
         }
-    </script>
+    </script> --}}
 
     <script>
         var table = new DataTable('#myTable', {

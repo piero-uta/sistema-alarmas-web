@@ -9,6 +9,7 @@ use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
 use App\Http\Controllers\Chequeos;
 use App\Http\Controllers\Mensajes;
+use App\Http\Controllers\AsignacionPerfiles;
 
 use Carbon\Carbon;
 
@@ -53,6 +54,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/comunidades/seleccionar/{comunidad_id}', 'handleSeleccionarComunidad')->name('comunidades.seleccionar');
     });
 
+    Route::controller(AsignacionPerfiles::class)->group(function () {
+        Route::get('/asignacionPerfiles/{id}', 'seleccionar')->name('asignacionPerfiles.seleccionar');
+        Route::get('/asignacionPerfiles', 'index')->name('asignacionPerfiles.index');
+
+
+    });
     Route::controller(Perfiles::class)->group(function () {
         Route::get('/perfiles', 'index')->name('perfiles.index');
         Route::post('/perfiles/guardar', 'handleGuardar')->name('perfiles.handleGuardar');

@@ -64,7 +64,15 @@ class Usuarios extends Controller
         $parametros = [];
         $comunidad_id = Session::get('comunidad_id');
         if($request->has('id')){
-            $usuario = User::find($request->id);
+            // $usuario = User::find($request->id);
+
+            $usuario = User::select('users.*', 'perfiles.id as perfil_id')
+                ->join('usuarios_comunidad', 'users.id', '=', 'usuarios_comunidad.usuario_id')
+                ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
+                ->where('usuarios_comunidad.comunidad_id', $comunidad_id)
+                ->where('users.id', $request->id)
+                ->first();
+
             if(!$usuario){
                 //agregar error a parametros
                 $parametros['error'] = 'Usaurio no encontrada';
@@ -72,11 +80,19 @@ class Usuarios extends Controller
             }
             $parametros['usuario'] = $usuario;
             $parametros['direccion_id'] = $usuario->direccionIdComunidad($comunidad_id);
+            $parametros['perfil_id'] = $usuario->perfil_id;
+
         }
 
         // obtener direcciones
         $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
+
+        $perfiles = Perfil::where('comunidad_id', $comunidad_id)
+        ->distinct()
+        ->get();
+
         $parametros['direcciones'] = $direcciones;
+        $parametros['perfiles'] = $perfiles;
         return view('usuarios.guardar', $parametros);
     }
 
@@ -120,6 +136,7 @@ class Usuarios extends Controller
         $usuarioComunidad->usuario_id = $usuario->id;
         $usuarioComunidad->perfil_id = $request->perfil_id;
         $usuarioComunidad->direccion_id = $request->direccion_id;
+
         if($usuarioComunidad->comunidad_id == null)
         {
             $usuarioComunidad->comunidad_id = Session::get('comunidad_id');

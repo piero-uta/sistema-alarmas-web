@@ -106,9 +106,9 @@
 
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/asignacionPerfiles">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span><s>Asignacion de Perfiles</s></span></a>
+                    <span>Asignacion de Perfiles</span></a>
             </li>
         @endif
 
@@ -121,9 +121,9 @@
 
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/perfiles">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span><s>Perfiles</s></span></a>
+                    <span>Perfiles</span></a>
             </li>
         @endif
 

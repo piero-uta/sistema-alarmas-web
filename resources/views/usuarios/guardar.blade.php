@@ -2,7 +2,7 @@
 @section('title', 'Guardar usuario')
 
 @section('content')
-    <h2 >Crear usuario</h2>
+    <h2>Crear usuario</h2>
     <form method="POST" action="{{ route('usuarios.handleGuardar') }}">
         @csrf
         @if (isset($usuario))
@@ -56,21 +56,45 @@
             </select>
         </div>
 
-        <div class="form-check py-2">
-           <input class="form-check-input" type="checkbox" name="activo" id="activo"
-                        {{ old('activo') == null
-                            ? (isset($usuario) && $usuario->activo == 0
-                                ? ''
-                                : 'checked')
-                            : (old('activo') == 1
-                                ? 'checked'
+        <hr>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="perfil_id">Perfil</label>
+            </div>
+            <select class="custom-select" name="perfil_id">
+                <option value="">Seleccionar</option>
+                @foreach ($perfiles as $perfil)
+                    <option value="{{ $perfil->id }}"
+                        {{ old('perfil_id') == null
+                            ? (isset($usuario) && $perfil_id == $perfil->id
+                                ? 'selected'
+                                : '')
+                            : (old('perfil_id') == $perfil->id
+                                ? 'selected'
                                 : '') }}>
-            
+                        {{ $perfil->nombre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+
+        <div class="form-check py-2">
+            <input class="form-check-input" type="checkbox" name="activo" id="activo"
+                {{ old('activo') == null
+                    ? (isset($usuario) && $usuario->activo == 0
+                        ? ''
+                        : 'checked')
+                    : (old('activo') == 1
+                        ? 'checked'
+                        : '') }}>
+
             <label class="form-check-label" for="flexCheckDefault">
                 Activo
             </label>
-          </div>   
-    
+        </div>
+
 
         <div class="d-flex justify-content-end py-2">
             <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
@@ -80,4 +104,3 @@
 
 
 @endsection
-
