@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/chequeos/eliminar', 'eliminar')->name('chequeos.eliminar');
     });
     Route::patch('/fcm-token', [Mensajes::class, 'updateToken'])->name('fcmToken');
+    Route::post('/getAlarmas', [Mensajes::class, 'getAlarmas'])->name('getAlarmas');
 
 });
 
