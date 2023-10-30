@@ -4,8 +4,8 @@
 @section('content')
 
 <h2>Direcciones</h2>
-<div>
-    <table class="table">
+<div class="table-responsive">
+    <table id="myTable" class="display"  width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col">
@@ -73,8 +73,15 @@
         <a type="button" class="btn btn-primary" href="{{route('direcciones.crearEditar')}}">Crear</a>
     </div>
 </div>
-
-
+@section('scripts')
+<script>
+    var table = new DataTable('#myTable', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+});
+</script>
+@endsection
 @endsection
 
 

@@ -27,7 +27,9 @@ Route::group(['middleware'=>['cors']], function(){
     Route::middleware('auth:sanctum')->get('/comunities', function (Request $request) {
         $user = $request->user();
         $comunities = $user->comunidades();
-        return $comunities;
+
+        $Filter_comunities = array_unique($comunities);
+        return $Filter_comunities;
     });
 
     Route::middleware('auth:sanctum')->post('/checkAlarms', function (Request $request) {

@@ -11,7 +11,7 @@ class Autenticacion extends Controller
     public function formularioLogin()
     {
         if(Auth::check()){
-            return redirect()->route('usuarios.index');
+            return view('main-dashboard');
         }
         return view('autenticacion.login');
     }
@@ -29,7 +29,7 @@ class Autenticacion extends Controller
         //verificar si el usuario existe
         if (Auth::attempt($credentials, $remember)) {
             // Authentication passed...
-            return redirect()->route('comunidades.ver');
+            return view('main-dashboard');
         }
         //agregar error a parametros
         $parametros['error'] = 'Usuario o contraseña incorrectos';

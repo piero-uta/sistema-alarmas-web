@@ -4,9 +4,9 @@
 @section('content')
 
 <h2>Usuarios</h2>
-<div class="container">
-<div class="table__container__body">
-    <table class="table">
+
+<div class="table-responsive">
+    <table id="myTable" class="display"  width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col">
@@ -73,12 +73,12 @@
         </tbody>
 
     </table>
+</div>
+<div class="d-flex justify-content-end py-2">
+    <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
+</div>
 
-    <div class="d-flex justify-content-end py-2">
-        <a type="button" class="btn btn-primary" href="{{route('usuarios.crearEditar')}}">Crear</a>
-    </div>
-</div>
-</div>
+
 
 
 {{-- TO DO: confirmar eliminar --}}
@@ -130,5 +130,13 @@
         document.getElementById('id_usuario_eliminar').value = usuario.id;
 
     }
+</script>
+
+<script>
+    var table = new DataTable('#myTable', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+});
 </script>
 @endsection

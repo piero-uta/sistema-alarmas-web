@@ -14,7 +14,7 @@
         });
       </script>
 
-    @endpush
+@endpush
 
 @section('content')
 <h2  class="login-page-new__main-form-title">Crear dirección</h2>
@@ -61,7 +61,7 @@
 
     <label class="label" for="direccion">Dirección</label>
         <div class="form__container-flex">
-            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($sucursal)?$sucursal->direccion:'' ) : old('direccion') }}">
+            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($direccion)?$direccion->calle .' '. strval($direccion->numero):'' ) : old('direccion') }}">
             <button type="button" class="btn btn-primary" id="btn-geolocalizacion">Obtener ubicación</button>
 
             {{-- Datalist --}}
@@ -70,8 +70,8 @@
         
         <div id="map" style="height: 400px; width: 100%; z-index: 0; margin: 3rem 0"></div>
     
-    <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($sucursal)?$sucursal->latitud:'' ) : old('latitud') }}" hidden>
-    <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($sucursal)?$sucursal->longitud:'' ) : old('longitud') }}" hidden>
+    <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($direccion)?$direccion->latitud:'' ) : old('latitud') }}" hidden>
+    <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($direccion)?$direccion->longitud:'' ) : old('longitud') }}" hidden>
 
     <div class="d-grid gap-2 py-2">
         <button type="submit" class="btn btn-primary">Guardar</button>

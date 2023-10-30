@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Red de Aviso')
 
+@push('head-scripts')
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap"></script>
+@endpush
+
 @section('content')
 
 <h2>Red de aviso</h2>
@@ -29,6 +33,9 @@
 </form>
 
 @if($redes->count() > 0)
+    <div id="map" style="height: 400px; width: 100%; z-index: 0; margin: 3rem 0"></div>
+
+
     
     <table class="table">
         <thead>
@@ -95,6 +102,15 @@
 @else
     <h3>Debes seleccionar una dirección</h3>
 @endif
+@endsection
+
+@section('scripts')
+<script>
+    const direccion_id = <?php echo $direccion_id; ?>;
+    const redes = <?php echo json_encode($redes); ?>;
+    const direcciones = <?php echo json_encode($direcciones); ?>;
+</script>
+<script type="text/javascript" src="{{ asset('js/redAviso/indexMapa.js') }}"></script>
 @endsection
 
 

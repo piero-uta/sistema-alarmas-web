@@ -68,10 +68,12 @@ class User extends Authenticatable
         }
         //return all comunidades of the user
         $usuarioComunidad = $this->usuarioComunidad();
-        $comunidades = [];
-        foreach ($usuarioComunidad as $uc) {
-            $comunidades[] = Comunidad::where('id', $uc->comunidad_id)->first();
-        }
+        // $comunidades = [];
+        // foreach ($usuarioComunidad as $uc) {
+        //     $comunidades[] = Comunidad::where('id', $uc->comunidad_id)->first();
+        // }
+        //con una sola peticion eloquent seria
+        $comunidades = Comunidad::whereIn('id', $usuarioComunidad->pluck('comunidad_id'))->get();
         return $comunidades;
     }
 
