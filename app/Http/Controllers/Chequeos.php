@@ -64,10 +64,11 @@ class Chequeos extends Controller
         if($chequeo->usuario_chequeo == null){
             $user = Auth::user();
             $chequeo->usuario_chequeo = $user->nombre;
+            $chequeo->estado_chequeo = 1;
+            $chequeo->fecha = $fechaChile;
+            $chequeo->hora = $horaChile;
         }
-        $chequeo->estado_chequeo = 1;
-        $chequeo->fecha = $fechaChile;
-        $chequeo->hora = $horaChile;
+
         
         $chequeo->save();
         $parametros['chequeo'] = $chequeo;            
