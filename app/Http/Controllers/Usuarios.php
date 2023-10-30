@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Perfil;
-use App\Models\PermisoPerfil;
-use App\Models\Permiso;
 use App\Models\UsuarioComunidad;
 use App\Models\Comunidad;
 use Illuminate\Support\Facades\Session;
@@ -16,47 +13,13 @@ use App\Models\Direccion;
 class Usuarios extends Controller
 {
     //
-    public function getPermisos($comunidad){
-        $user = Auth::user();
-        $usuarioComunidad = UsuarioComunidad::where('usuario_id',$user->id)
-        ->where('comunidad_id', $comunidad->id)
-        ->get()
-        ->toArray();
-        $total_result = [];
-        foreach ($usuarioComunidad as $uc) {
-            $perfil = Perfil::where('id',$uc["perfil_id"])->first();
-            $permisoPerfil = PermisoPerfil::where('perfil_id', $perfil->id)
-            ->get()
-            ->toArray();
-            $result = [];
-            foreach($permisoPerfil as $pp) {
-                $permiso = Permiso::where('id', $pp["permiso_id"])->first();
-                array_push($result, $permiso->nombre);
-            }
-            $total_result = array_merge($result, $total_result);
-        }
-        return $total_result;
-
-    }
     public function index()
     {
         $comunidad_id = Session::get('comunidad_id');
         $comunidad = Comunidad::find($comunidad_id);
         $usuarios = $comunidad->usuarios();
-
-        $permisos = $this->getPermisos($comunidad);
-
-        if(in_array('Usuarios-c', $permisos)||
-        in_array('Usuarios-r', $permisos)||
-        in_array('Usuarios-u', $permisos)||
-        in_array('Usuarios-d', $permisos)){
-        return view('usuarios.index', compact('usuarios','permisos'));
-        }else{
-            return view('main-dashboard');
-            // return redirect()->route('login');
-        }
-
-
+        //retornar la vista usuarios.index
+        return view('usuarios.index', compact('usuarios'));
     }
 
     public function formularioGuardar(Request $request)

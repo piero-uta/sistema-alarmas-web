@@ -1,11 +1,13 @@
-dr.ovalittelv@example.com
+ivahreichel@example.com
+Ivah Reichel
 
 SELECT * FROM users u, usuarios_comunidad uc WHERE u.id = 25 and u.id = uc.usuario_id;
 
-SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE direcciones.id = 91 and redes_avisos.direccion_id = 91 ORDER BY `redes_avisos`.`direccion_vecino_id` ASC;
+SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE direcciones.id = 96 and redes_avisos.direccion_id = 96 ORDER BY `redes_avisos`.`direccion_vecino_id` ASC;
 
-6 Comunidad Louvenia Ruecker
+Comunidad Prof. Gaston Kassuelke...
 
-SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (1) and uc.usuario_id = u.id;
+SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (17,21,24) and uc.usuario_id = u.id;
 
-addiepaucek@example.com
+luisazulauf@example.com
+Luisa Zulauf
