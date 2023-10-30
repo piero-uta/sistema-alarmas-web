@@ -11,15 +11,54 @@ use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 use App\Models\UsuarioComunidad;
+use App\Models\Perfil;
+use App\Models\Permiso;
+use App\Models\permisoPerfil;
 
 class Comunidades extends Controller
 {
+    public function getPermisos($comunidad){
+        $user = Auth::user();
+        $usuarioComunidad = UsuarioComunidad::where('usuario_id',$user->id)
+        ->where('comunidad_id', $comunidad->id)
+        ->get()
+        ->toArray();
+        $total_result = [];
+        foreach ($usuarioComunidad as $uc) {
+            $perfil = Perfil::where('id',$uc["perfil_id"])->first();
+            $permisoPerfil = PermisoPerfil::where('perfil_id', $perfil->id)
+            ->get()
+            ->toArray();
+            $result = [];
+            foreach($permisoPerfil as $pp) {
+                $permiso = Permiso::where('id', $pp["permiso_id"])->first();
+                array_push($result, $permiso->nombre);
+            }
+            $total_result = array_merge($result, $total_result);
+        }
+        return $total_result;
+    }
+
     public function index()
     {
         //obtener todas las comunidades
+        $comunidad_id = Session::get('comunidad_id');
+        $comunidad = Comunidad::find($comunidad_id);
+        $permisos = $this->getPermisos($comunidad);
+
         $comunidades = Comunidad::all();
-        //retornar la vista comunidades.index
-        return view('comunidades.index', compact('comunidades'));
+
+
+        if(in_array('Comunidad-c', $permisos)||
+        in_array('Comunidad-r', $permisos)||
+        in_array('Comunidad-u', $permisos)||
+        in_array('Comunidad-d', $permisos)){
+        return view('comunidades.index', compact('comunidades','permisos'));
+        }else{
+            return view('main-dashboard');
+            // return redirect()->route('login');
+        }
+
     }
 
     public function formularioGuardar(Request $request)
@@ -72,8 +111,8 @@ class Comunidades extends Controller
         $comunidad->longitud = $request->longitud;
         
 
-        $comunidad->representante_legal = $request->representante_legal;        
-        $comunidad->email = $request->email;        
+        $comunidad->representante_legal = $request->representante_legal;
+        $comunidad->email = $request->email;
         $comunidad->giro = $request->giro;
         $comunidad->telefono = $request->telefono;
         $comunidad->celular = $request->celular;
@@ -118,7 +157,7 @@ class Comunidades extends Controller
         $comunidades = $usuario->comunidades();
         return view('seleccionarComunidad', compact('comunidades'));
     }
-    
+
 
 
     public function handleSeleccionarComunidad($comunidad_id)
@@ -127,6 +166,8 @@ class Comunidades extends Controller
             return redirect()->route('login');
         }
         // regresar a la misma pagina
+        $comunidad = Comunidad::find($comunidad_id);
+        Session::put('permisos', $this->getPermisos($comunidad));
         return redirect()->back();
     }
 
@@ -149,6 +190,7 @@ class Comunidades extends Controller
         }
 
         Session::put('comunidad_id', $comunidad_id);
+
         return true;
     }
 
