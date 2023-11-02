@@ -115,8 +115,7 @@
 
 
 
-    @yield('scripts')
-    @stack('scripts')
+    
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -194,7 +193,8 @@
             };
         });
     </script>
-
+    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>
