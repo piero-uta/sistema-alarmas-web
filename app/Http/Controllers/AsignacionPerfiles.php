@@ -69,11 +69,34 @@ class AsignacionPerfiles extends Controller
         ->where('perfiles.id', $perfil_aux)
         ->distinct();
 
+        $opciones = ['DashboardMonitoreo', 'BotonAlarma', 'Comunidad','DireccionesUsuario','Usuarios','AsignacionPerfiles','Perfiles','RedAviso'];
 
         $comunidad_permisos = $permisos_perfil
-        ->select(DB::raw("count(*) as id, SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
+        ->select(DB::raw("SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
         ->groupBy('opcion')
-        ->get();
+        ->get()
+        ->toArray();
+
+        $todasLasOpciones = [];
+        foreach ($opciones as $opcion) {
+            $opcionEncontrada = false;
+            foreach ($comunidad_permisos as $permiso) {
+                if ($permiso->opcion === $opcion) { // Utiliza -> en lugar de []
+                    $todasLasOpciones[] = [
+                        'opcion' => $permiso->opcion,
+                        'acciones_concatenadas' => $permiso->acciones_concatenadas,
+                    ];
+                    $opcionEncontrada = true;
+                    break;
+                }
+            }
+            if (!$opcionEncontrada) {
+                $todasLasOpciones[] = [
+                    'opcion' => $opcion,
+                    'acciones_concatenadas' => '',
+                ];
+            }
+        }
 
         $permisos = $this->getPermisos($comunidad);
 
@@ -81,7 +104,7 @@ class AsignacionPerfiles extends Controller
         in_array('AsignacionPerfiles-r', $permisos)||
         in_array('AsignacionPerfiles-u', $permisos)||
         in_array('AsignacionPerfiles-d', $permisos)){
-        return view('asignacionPerfiles.index', compact('comunidad_permisos','permisos','perfiles_comunidad','perfil_aux'));
+        return view('asignacionPerfiles.index', compact('todasLasOpciones','permisos','perfiles_comunidad','perfil_aux'));
         }else{
             return view('main-dashboard');
             // return redirect()->route('login');
@@ -116,16 +139,41 @@ class AsignacionPerfiles extends Controller
         ->where('comunidades.id', $comunidad_id)
         ->where('perfiles.id', $id)
         ->distinct();
+        // $acciones = ['c', 'r', 'u','d'];
 
+
+        $opciones = ['DashboardMonitoreo', 'BotonAlarma', 'Comunidad','DireccionesUsuario','Usuarios','AsignacionPerfiles','Perfiles','RedAviso'];
 
         $comunidad_permisos = $permisos_perfil
-        ->select(DB::raw("count(*) as id, SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
+        ->select(DB::raw("SUBSTRING_INDEX(permisos.nombre, '-', 1) as opcion, GROUP_CONCAT(SUBSTRING_INDEX(permisos.nombre, '-', -1) SEPARATOR '-') as acciones_concatenadas"))
         ->groupBy('opcion')
-        ->get();
+        ->get()
+        ->toArray();
 
-        if ($comunidad_permisos->isEmpty()) {
-            return redirect()->route('asignacionPerfiles.index');
+        $todasLasOpciones = [];
+        foreach ($opciones as $opcion) {
+            $opcionEncontrada = false;
+            foreach ($comunidad_permisos as $permiso) {
+                if ($permiso->opcion === $opcion) { // Utiliza -> en lugar de []
+                    $todasLasOpciones[] = [
+                        'opcion' => $permiso->opcion,
+                        'acciones_concatenadas' => $permiso->acciones_concatenadas,
+                    ];
+                    $opcionEncontrada = true;
+                    break;
+                }
+            }
+            if (!$opcionEncontrada) {
+                $todasLasOpciones[] = [
+                    'opcion' => $opcion,
+                    'acciones_concatenadas' => '',
+                ];
+            }
         }
+
+        // if ($comunidad_permisos->isEmpty()) {
+        //     return redirect()->route('asignacionPerfiles.index');
+        // }
 
 
         $permisos = $this->getPermisos($comunidad);
@@ -135,12 +183,38 @@ class AsignacionPerfiles extends Controller
         in_array('AsignacionPerfiles-r', $permisos)||
         in_array('AsignacionPerfiles-u', $permisos)||
         in_array('AsignacionPerfiles-d', $permisos)){
-        return view('asignacionPerfiles.index', compact('comunidad_permisos','permisos','perfiles_comunidad','perfil_aux'));
+        return view('asignacionPerfiles.index', compact('todasLasOpciones','permisos','perfiles_comunidad','perfil_aux'));
         }else{
             return view('main-dashboard');
             // return redirect()->route('login');
         }
 
+
+    }
+
+    public function onCheckedPermiso(Request $request)
+    {
+        $checkbox = $request["checkboxName"];
+        $parts = explode("-", $checkbox,2);
+        $isChecked = $request["isChecked"];
+        if($isChecked == 'true'){
+            $permiso_actual = Permiso::where('nombre', $parts[1])->first();
+            $permisoPerfil = new PermisoPerfil();
+            $permisoPerfil->permiso_id = $permiso_actual->id;
+            $permisoPerfil->perfil_id = intval($parts[0]);
+            $permisoPerfil->save();
+            return response()->json(['permisoPerfil' => $permisoPerfil]);
+        }
+        else{
+            $permiso = Permiso::where('nombre', $parts[1])
+                   ->first();
+            $result = DB::table('permisos_perfil')
+            ->where('permiso_id', $permiso->id)
+            ->where('perfil_id', intval($parts[0]))
+            ->delete();
+            return response()->json(['result' => $result, 'permiso_id'=>$permiso->id, 'perfil_id'=>intval($parts[0])]);
+            // return response()->json(['permiso_id' => $permiso->id, 'perfil_id'=> $parts[0]]);
+        }
 
     }
 

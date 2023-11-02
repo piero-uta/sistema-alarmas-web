@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Direccion;
 
+
 class Usuarios extends Controller
 {
     //
@@ -67,8 +68,8 @@ class Usuarios extends Controller
             // $usuario = User::find($request->id);
 
             $usuario = User::select('users.*', 'perfiles.id as perfil_id')
-                ->join('usuarios_comunidad', 'users.id', '=', 'usuarios_comunidad.usuario_id')
-                ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
+                ->leftjoin('usuarios_comunidad', 'users.id', '=', 'usuarios_comunidad.usuario_id')
+                ->leftjoin('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
                 ->where('usuarios_comunidad.comunidad_id', $comunidad_id)
                 ->where('users.id', $request->id)
                 ->first();

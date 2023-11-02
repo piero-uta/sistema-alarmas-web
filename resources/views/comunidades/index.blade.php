@@ -4,7 +4,7 @@
 @section('content')
 
     <h2>Comunidades</h2>
-    <div>{{ json_encode($permisos) }}</div>
+    {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">
         <table id="myTable" class="display" width="100%" ellspacing="0">

@@ -9,3 +9,12 @@ SELECT redes_avisos.direccion_vecino_id FROM `direcciones`, redes_avisos WHERE d
 SELECT * FROM usuarios_comunidad uc, users u where uc.direccion_id in (1) and uc.usuario_id = u.id;
 
 addiepaucek@example.com
+
+
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+admin addiepaucek@example.com (todo)
+manager dr.oliverkassulke@example.com (crear pero no modificar)
+resident eladiohalvorson@example.com (solo ver nada mas)
+

@@ -32,6 +32,7 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
     https://firebase.google.com/docs/web/setup#available-libraries -->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     {{-- Scripts --}}

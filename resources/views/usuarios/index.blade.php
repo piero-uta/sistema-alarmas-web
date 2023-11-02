@@ -4,7 +4,7 @@
 @section('content')
 
     <h2>Usuarios</h2>
-    <div>{{ json_encode($permisos) }}</div>
+    {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">
         <table id="myTable" class="display" width="100%" cellspacing="0">
@@ -49,7 +49,28 @@
                             {{ $usuario->email }}
                         </td>
                         <td>
-                            {{ $usuario->perfil }}
+                            @php
+                                $colorHexadecimal = substr(md5($usuario->perfil), 0, 3);
+                                [$r, $g, $b] = sscanf($colorHexadecimal, '%02x%02x%02x');
+                                // Calculamos la luminancia del color de fondo
+                                $luminancia = (0.299 * $r + 0.587 * $g + 0.114 * $b) / 255;
+
+                                // Determinamos si el texto debe ser oscuro o claro
+                                $colorTexto = $luminancia > 0.5 ? '#000000' : '#FFFFFF';
+                            @endphp
+                            <style>
+                                .badge-color-{{ $colorHexadecimal }} {
+                                    border: 2px solid #{{ $colorHexadecimal }};
+                                    color: #000;
+
+                                }
+                            </style>
+                            <h4><span class="badge badge-color-{{ $colorHexadecimal }}">{{ $usuario->perfil }}</span>
+                                <h4>
+
+                                    {{-- {{ $usuario->perfil }} --}}
+
+
                         </td>
                         <td>
                             @if ($usuario->activo)

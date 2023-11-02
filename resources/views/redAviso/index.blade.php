@@ -10,7 +10,7 @@
 @section('content')
 
     <h2>Red de aviso</h2>
-    <div>{{ json_encode($permisos) }}</div>
+    {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     {{-- seleccionar direccion --}}
     <form method="GET" class="form form__container" action="{{ route('red-avisos.index') }}">

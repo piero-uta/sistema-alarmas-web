@@ -160,7 +160,15 @@ class Comunidades extends Controller
             return redirect()->route('login');
         }
         // regresar a la misma pagina
+        $usuario = Auth::user();
         $comunidad = Comunidad::find($comunidad_id);
+
+        $usuarioComunidad = UsuarioComunidad::where('comunidad_id', $comunidad_id)
+        ->where('usuario_id', $usuario->id)
+        ->first();
+        $perfil = Perfil::find($usuarioComunidad->perfil_id);
+        Session::put('comunidad_logo', $comunidad->logo);
+        Session::put('perfil_actual', $perfil->nombre);
         Session::put('permisos', $this->getPermisos($comunidad));
         return redirect()->back();
     }

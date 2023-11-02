@@ -64,115 +64,71 @@ class Perfiles extends Controller
 
     }
 
-    // public function formularioGuardar(Request $request)
-    // {
-    //     $parametros = [];
-    //     $comunidad_id = Session::get('comunidad_id');
-    //     if($request->has('id')){
-    //         // $usuario = User::find($request->id);
+    public function formularioGuardar(Request $request)
+    {
+        $parametros = [];
+        $comunidad_id = Session::get('comunidad_id');
+        if($request->has('id')){
+            $perfil = Perfil::find($request->id);
+            $parametros['perfil'] = $perfil;
 
-    //         $usuario = User::select('users.*', 'perfiles.id as perfil_id')
-    //             ->join('usuarios_comunidad', 'users.id', '=', 'usuarios_comunidad.usuario_id')
-    //             ->join('perfiles', 'perfiles.id', '=', 'usuarios_comunidad.perfil_id')
-    //             ->where('usuarios_comunidad.comunidad_id', $comunidad_id)
-    //             ->where('users.id', $request->id)
-    //             ->first();
+        }
 
-    //         if(!$usuario){
-    //             //agregar error a parametros
-    //             $parametros['error'] = 'Usaurio no encontrada';
-    //             return redirect()->route('usuarios.index')->with($parametros);
-    //         }
-    //         $parametros['usuario'] = $usuario;
-    //         $parametros['direccion_id'] = $usuario->direccionIdComunidad($comunidad_id);
-    //         $parametros['perfil_id'] = $usuario->perfil_id;
+        return view('perfiles.guardar', $parametros);
+    }
 
-    //     }
+    public function handleGuardar(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ]);
+        $comunidad_id = session('comunidad_id');
 
-    //     // obtener direcciones
-    //     $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
 
-    //     $perfiles = Perfil::where('comunidad_id', $comunidad_id)
-    //     ->distinct()
-    //     ->get();
+        $perfil = null;
 
-    //     $parametros['direcciones'] = $direcciones;
-    //     $parametros['perfiles'] = $perfiles;
-    //     return view('usuarios.guardar', $parametros);
-    // }
+        if($request->has('id')){
+            $perfil = Perfil::find($request->id);
+            if(!$perfil){
+                //agregar error a parametros
+                $parametros['error'] = 'Perfil no encontrada';
+                return redirect()->route('perfiles.index')->with($parametros);
+            }
+        }else{
+            $perfil = new Perfil();
+        }
+        $perfil->nombre = $request->nombre;
+        $perfil->descripcion = $request->descripcion;
+        $perfil->comunidad_id = $comunidad_id;
+        if($request->has('activo')){
+            $perfil->activo = 1;
+        }else{
+            $perfil->activo = 0;
+        }
+        $perfil->save();
 
-    // public function handleGuardar(Request $request)
-    // {
-    //     $request->validate([
-    //         'nombre' => 'required',
-    //         'apellido_paterno' => 'required',
-    //         'apellido_materno' => 'required',
-    //         'email' => 'required',
-    //         'password' => 'required',
-    //     ]);
 
-    //     $usuarioComunidad = null;
+        $parametros['success'] = 'Perfil' . $request->nombre . 'guardado';
+        return redirect()->route('perfiles.index')->with($parametros);
 
-    //     if($request->has('id')){
-    //         $usuario = User::find($request->id);
-    //         if(!$usuario){
-    //             //agregar error a parametros
-    //             $parametros['error'] = 'Usaurio no encontrada';
-    //             return redirect()->route('usuarios.index')->with($parametros);
-    //         }
-    //         $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
-    //     }else{
-    //         $usuario = new User();
-    //         $usuarioComunidad = new UsuarioComunidad();
-    //     }
-    //     $usuario->nombre = $request->nombre;
-    //     $usuario->apellido_paterno = $request->apellido_paterno;
-    //     $usuario->apellido_materno = $request->apellido_materno;
-    //     $usuario->email = $request->email;
-    //     $usuario->password = $request->password;
-    //     if($request->has('activo')){
-    //         $usuario->activo = 1;
-    //     }else{
-    //         $usuario->activo = 0;
-    //     }
-    //     $usuario->save();
+    }
 
-    //     // Obtener comunidad_id de session
-    //     $usuarioComunidad->usuario_id = $usuario->id;
-    //     $usuarioComunidad->perfil_id = $request->perfil_id;
-    //     $usuarioComunidad->direccion_id = $request->direccion_id;
+    public function eliminar(Request $request)
+    {
+        $id = $request["id"];
+        $perfil = Perfil::find($id);
+        if ($perfil) {
+            UsuarioComunidad::where('perfil_id', $id)->update(['perfil_id' => null]);
+            PermisoPerfil::where('perfil_id', $id)->delete();
+            $perfil->delete();
+            $parametros['success'] = 'Perfil' . $perfil . 'eliminada';
+        } else {
+            $parametros['error'] = 'Perfil no encontrada';
+        }
 
-    //     if($usuarioComunidad->comunidad_id == null)
-    //     {
-    //         $usuarioComunidad->comunidad_id = Session::get('comunidad_id');
-    //     }
-    //     $usuarioComunidad->save();
 
-    //     $parametros['success'] = 'Usuario' . $request->nombre . 'guardado';
-    //     return redirect()->route('usuarios.index')->with($parametros);
-
-    // }
-
-    // public function eliminar(Request $request)
-    // {
-    //     $request->validate([
-    //         'id' => 'required',
-    //     ]);
-    //     $usuario = User::find($request->id);
-    //     if(!$usuario){
-    //         //agregar error a parametros
-    //         $parametros['error'] = 'Usuario no encontrada';
-    //         return redirect()->route('usuarios.index')->with($parametros);
-    //     }
-    //     $nombre = $usuario->nombre;
-    //     // buscar usuarioComunidad
-    //     $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
-    //     if($usuarioComunidad){
-    //         $usuarioComunidad->delete();
-    //     }
-    //     //success
-    //     $parametros['success'] = 'Usuario' . $nombre . 'eliminada';
-    //     return redirect()->route('usuarios.index')->with($parametros);
-    // }
+        return redirect()->route('perfiles.index')->with($parametros);
+    }
 
 }

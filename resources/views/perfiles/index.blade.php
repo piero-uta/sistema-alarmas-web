@@ -3,7 +3,7 @@
 
 @section('content')
     <h2>Perfiles</h2>
-    <div>{{ json_encode($permisos) }}</div>
+    {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">
         <table id="myTable" class="display" width="100%" cellspacing="0">
@@ -42,18 +42,19 @@
                         <td>
                             <div class="d-flex">
                                 {{-- ver --}}
-                                @if (in_array('Perfiles-r', $permisos))
+                                {{-- @if (in_array('Perfiles-r', $permisos))
                                     <button type="button" class="btn btn-primary" style="margin-right: 20px;">Ver</button>
-                                @endif
+                                @endif --}}
                                 {{-- editar --}}
                                 @if (in_array('Perfiles-u', $permisos))
-                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;">Editar</a>
+                                    <a href="{{ route('perfiles.crearEditar') }}?id={{ $perfil->id }}" type="button"
+                                        class="btn btn-primary" style="margin-right: 20px;">Editar</a>
                                 @endif
                                 {{-- eliminar --}}
                                 @if (in_array('Perfiles-d', $permisos))
-                                    <form method="POST" action="{{ route('usuarios.eliminar') }}">
+                                    <form method="POST" action="{{ route('perfiles.eliminar') }}">
                                         @csrf
-                                        <input type="hidden" name="id">
+                                        <input type="hidden" name="id" value={{ $perfil->id }}>
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
                                     </form>
                                 @endif
@@ -68,7 +69,7 @@
     </div>
     @if (in_array('Perfiles-c', $permisos))
         <div class="d-flex justify-content-end py-2">
-            <a type="button" class="btn btn-primary">Crear</a>
+            <a href="{{ route('perfiles.crearEditar') }}" type="button" class="btn btn-primary">Crear</a>
         </div>
     @endif
 

@@ -57,11 +57,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(AsignacionPerfiles::class)->group(function () {
         Route::get('/asignacionPerfiles/{id}', 'seleccionar')->name('asignacionPerfiles.seleccionar');
         Route::get('/asignacionPerfiles', 'index')->name('asignacionPerfiles.index');
-
-
+        Route::post('/asignacionPerfiles', 'onCheckedPermiso')->name('asignacionPerfiles.onCheckedPermiso');
     });
     Route::controller(Perfiles::class)->group(function () {
         Route::get('/perfiles', 'index')->name('perfiles.index');
+        Route::get('/perfiles/crear', 'formularioGuardar')->name('perfiles.crearEditar');
         Route::post('/perfiles/guardar', 'handleGuardar')->name('perfiles.handleGuardar');
         Route::post('/perfiles/eliminar', 'eliminar')->name('perfiles.eliminar');
     });

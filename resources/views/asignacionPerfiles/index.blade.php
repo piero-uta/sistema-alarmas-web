@@ -3,7 +3,7 @@
 
 @section('content')
     <h2>Asignacion de Perfiles</h2>
-    <div>{{ json_encode($permisos) }}</div>
+    {{-- <div>{{ json_encode($permisos) }}</div> --}}
     <hr>
     <label>selección Perfiles: </label>
     <select id="redireccionarSelect">
@@ -15,6 +15,7 @@
     <hr>
 
     <div class="table-responsive">
+        {{-- <b>{{ json_encode($todasLasOpciones) }}</b> --}}
         <table id="myTable" class="display" width="100%" cellspacing="0">
             <thead>
                 <tr>
@@ -30,81 +31,39 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($comunidad_permisos as $permiso)
+                @foreach ($todasLasOpciones as $permiso)
                     <tr>
                         <th scope="row">
-                            {{ $permiso->id }}
                         </th>
                         <td>
-                            {{ $permiso->opcion }}
+                            {{ $permiso['opcion'] }}
                         </td>
                         <td>
                             @php
-                                $array = explode('-', $permiso->acciones_concatenadas);
+                                $array = explode('-', $permiso['acciones_concatenadas']);
                             @endphp
                             @foreach (['c' => 'Crear', 'r' => 'Leer', 'u' => 'Actualizar', 'd' => 'Eliminar'] as $letter => $action)
                                 @if (in_array($letter, $array))
                                     {{-- {{ $action }} está en el array --}}
-                                    <input type="checkbox"
-                                        name="{{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}"
+                                    <input type="checkbox" class="checkbox-perfiles"
+                                        name="{{ $perfil_aux . '-' . $permiso['opcion'] . '-' . $letter }}"
                                         value="{{ $letter }}" checked>
                                 @else
                                     {{-- {{ $action }} no está en el array --}}
-                                    <input type="checkbox"
-                                        name="{{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}"
+                                    <input type="checkbox" class="checkbox-perfiles"
+                                        name="{{ $perfil_aux . '-' . $permiso['opcion'] . '-' . $letter }}"
                                         value="{{ $letter }}">
                                 @endif
                                 {{ $action }}
                             @endforeach
-
-                            {{-- @foreach (['c', 'r', 'u', 'd'] as $letter)
-                                @if (in_array($letter, $array)) --}}
-                            {{-- {{ $letter }} está en el array --}}
-                            {{-- <input type="checkbox"
-                                        name={{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}
-                                        value={{ $letter }} checked> --}}
-                            {{-- @else --}}
-                            {{-- {{ $letter }} no está en el array --}}
-                            {{-- <input type="checkbox"
-                                        name={{ $perfiles_comunidad->first()->id . '-' . $permiso->opcion . '-' . $letter }}
-                                        value={{ $letter }}>
-                                @endif
-                                {{ $letter }}
-                            @endforeach --}}
-
-                            {{-- <div class="d-flex"> --}}
-                            {{-- {{ $permiso->acciones_concatenadas }} --}}
-                            {{-- ver --}}
-                            {{-- @if (in_array('AsignacionPerfiles-r', $permisos))
-                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;">Ver</button>
-                                @endif --}}
-                            {{-- editar --}}
-                            {{-- @if (in_array('AsignacionPerfiles-u', $permisos))
-                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;">Editar</a>
-                                @endif --}}
-                            {{-- eliminar --}}
-                            {{-- @if (in_array('AsignacionPerfiles-d', $permisos))
-                                    <form method="POST" action="{{ route('usuarios.eliminar') }}">
-                                        @csrf
-                                        <input type="hidden" name="id">
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                @endif --}}
                         </td>
     </div>
     </tr>
     @endforeach
-
     </tbody>
 
     </table>
     </div>
-    {{-- @if (in_array('AsignacionPerfiles-c', $permisos))
-        <div class="d-flex justify-content-end py-2">
-            <a type="button" class="btn btn-primary">Crear</a>
-        </div>
-    @endif --}}
-
 
 
 
@@ -134,27 +93,6 @@
     </div>
 @endsection
 @section('scripts')
-    {{-- <script>
-        function modalUsuario(usuario) {
-            console.log(usuario)
-
-            const modal = new bootstrap.Modal(document.getElementById('modalUsuario'));
-            modal.show();
-            document.getElementById('modalUsuario').querySelector('.modal-body').innerHTML = `
-        <p><strong>Nombre:</strong> ${usuario.nombre}</p>
-        <p><strong>Apellido paterno:</strong> ${usuario.apellido_paterno}</p>
-        <p><strong>Apellido materno:</strong> ${usuario.apellido_materno}</p>
-        <p><strong>Email:</strong> ${usuario.email}</p>
-        <p><strong>Estado:</strong> ${usuario.activo ? 'Activo' : 'Inactivo'}</p>
-        `;
-            document.getElementById('btn_editar_usuario').href = "{{ route('usuarios.crearEditar') }}?id=" + usuario.id;
-
-            document.getElementById('form_eliminar_usuario').action = "{{ route('usuarios.eliminar') }}";
-            document.getElementById('id_usuario_eliminar').value = usuario.id;
-
-        }
-    </script> --}}
-
     <script>
         var table = new DataTable('#myTable', {
             language: {
@@ -180,6 +118,31 @@
                 var url = `/asignacionPerfiles/${selectedValue}`;
                 window.location.href = url;
             }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.checkbox-perfiles').change(function() {
+                // Obtener el atributo "name" del checkbox
+                var checkboxName = $(this).attr('name');
+
+                // Hacer una solicitud AJAX cuando cambia el estado del checkbox
+                var isChecked = $(this).is(':checked');
+                $.ajax({
+                    url: '{{ route('asignacionPerfiles.onCheckedPermiso') }}', // La URL de la ruta en Laravel
+                    type: 'POST', // Puedes cambiar el método HTTP según tus necesidades
+                    data: {
+                        _token: '{{ csrf_token() }}', // Agregar el token CSRF
+                        checkboxName: checkboxName, // Enviar el atributo "name" del checkbox
+                        isChecked: isChecked, // Enviar el estado del checkbox (marcado o desmarcado)
+                        // Otra información que desees enviar al controlador
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Maneja la respuesta del controlador aquí
+                    }
+                });
+            });
         });
     </script>
 @endsection
