@@ -23,9 +23,9 @@ return new class extends Migration
             
             $table->integer('piso')->nullable();
             // create latitude
-            $table->float('latitud', 10, 6)->nullable()->default(null);
+            $table->float('latitud', 10, 6)->default(-33.4569400);
             // create longitude
-            $table->float('longitud', 10, 6)->nullable()->default(null);
+            $table->float('longitud', 10, 6)->default(-70.6482700);
 
             $table->string('representante');
             $table->string('telefono')->nullable();
