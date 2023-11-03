@@ -18,3 +18,6 @@ admin addiepaucek@example.com (todo)
 manager dr.oliverkassulke@example.com (crear pero no modificar)
 resident eladiohalvorson@example.com (solo ver nada mas)
 
+mariokuphal@example.com	
+
+
