@@ -50,7 +50,7 @@
                     {{$chequeo->id}}
                 </th>
                 <td>
-                    {{$chequeo->codigo_alarma}}
+                    {{$chequeo->codigo}}
                 </td>
                 <td>
                     {{$chequeo->fecha}}
@@ -59,7 +59,7 @@
                     {{$chequeo->hora}}
                 </td>
                 <td>
-                    {{$chequeo->usuario_chqueo}}
+                    {{$chequeo->usuario_chequeo}}
                 </td>
                 <td>
                     {{$chequeo->estado_chequeo}}

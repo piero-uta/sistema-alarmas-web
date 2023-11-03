@@ -29,15 +29,15 @@ class Chequeos extends Controller
         $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
         // obtener chqueos de las alarmas
         //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
-        $chequeos = Chequeo::all();
-        // Agregar el código de alarma a cada chequeo
-        $chequeos->each(function ($chequeo) use ($alarmas) 
-        {  
-            $codigoAlarma = $alarmas->where('id', $chequeo->alarma_id)->first()->codigo;
-            $chequeo->codigo_alarma = $codigoAlarma; // Agrega el código de alarma al objeto chequeo
-        });
+        // join de alarmas y chequeos
+        $chequeos = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')
+        ->select('chequeos.*', 'alarmas.codigo','alarmas.nombre_usuario')
+        ->get();
+        //dd($chequeos);
+
+
         // retornar la vista chequeos.index
-        return view('chequeos.index', compact('chequeos'));
+        return view('chequeos.index', ['chequeos' => $chequeos]);
     }
 
     // create

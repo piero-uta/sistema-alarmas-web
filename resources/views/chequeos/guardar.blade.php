@@ -34,17 +34,17 @@
     </div>
     <div >
         <label for="observacion" class="label">Observacion*</label>
-        <input type="text" class="input" name="observacion" required
+        <input type="text" class="input" name="observacion" 
         value="{{ old('observacion')==null ? ( isset($chequeo)?$chequeo->observacion:'' ) : old('observacion') }}">
     </div>
     <div >
         <label for="tipo_chequeo" class="label">Tipo chequeo*</label>
-        <input type="text" class="input" name="tipo_chequeo" required
+        <input type="text" class="input" name="tipo_chequeo" 
         value="{{ old('tipo_chequeo')==null ? ( isset($chequeo)?$chequeo->tipo_chequeo:'' ) : old('tipo_chequeo') }}">
     </div>
     <div >
         <label for="tipo_evento" class="label">Tipo evento*</label>
-        <input type="text" class="input" name="tipo_evento" required
+        <input type="text" class="input" name="tipo_evento" 
         value="{{ old('tipo_evento')==null ? ( isset($chequeo)?$chequeo->tipo_evento:'' ) : old('tipo_evento') }}">
     </div>
     <div class="d-flex justify-content-end py-2">
