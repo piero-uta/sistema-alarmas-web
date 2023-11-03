@@ -9,6 +9,7 @@ use App\Http\Controllers\Perfiles;
 use App\Http\Controllers\RedesAvisos;
 use App\Http\Controllers\Chequeos;
 use App\Http\Controllers\Mensajes;
+use App\Http\Controllers\AsignacionPerfiles;
 
 use Carbon\Carbon;
 use App\Http\Controllers\Monitoreo;
@@ -52,8 +53,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/comunidades/seleccionar/{comunidad_id}', 'handleSeleccionarComunidad')->name('comunidades.seleccionar');
     });
 
+    Route::controller(AsignacionPerfiles::class)->group(function () {
+        Route::get('/asignacionPerfiles/{id}', 'seleccionar')->name('asignacionPerfiles.seleccionar');
+        Route::get('/asignacionPerfiles', 'index')->name('asignacionPerfiles.index');
+        Route::post('/asignacionPerfiles', 'onCheckedPermiso')->name('asignacionPerfiles.onCheckedPermiso');
+    });
     Route::controller(Perfiles::class)->group(function () {
         Route::get('/perfiles', 'index')->name('perfiles.index');
+        Route::get('/perfiles/crear', 'formularioGuardar')->name('perfiles.crearEditar');
         Route::post('/perfiles/guardar', 'handleGuardar')->name('perfiles.handleGuardar');
         Route::post('/perfiles/eliminar', 'eliminar')->name('perfiles.eliminar');
     });
@@ -91,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
     Route::patch('/fcm-token', [Mensajes::class, 'updateToken'])->name('fcmToken');
+    Route::post('/getAlarmas', [Mensajes::class, 'getAlarmas'])->name('getAlarmas');
 
 });
 

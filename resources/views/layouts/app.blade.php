@@ -32,6 +32,7 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
     https://firebase.google.com/docs/web/setup#available-libraries -->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     {{-- Scripts --}}
@@ -115,84 +116,6 @@
 
 
 
-    
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAMVS3wzQL30I9DyGV85IC9CDfVDsM6ah0",
-            authDomain: "proyecto4-ac1de.firebaseapp.com",
-            projectId: "proyecto4-ac1de",
-            storageBucket: "proyecto4-ac1de.appspot.com",
-            messagingSenderId: "54211334008",
-            appId: "1:54211334008:web:68c232361068a07148028d"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        const messaging = firebase.messaging();
-
-        function initFirebaseMessagingRegistration() {
-            messaging.requestPermission().then(function() {
-                return messaging.getToken()
-            }).then(function(token) {
-
-                axios.post("{{ route('fcmToken') }}", {
-                    _method: "PATCH",
-                    token
-                }).then(({
-                    data
-                }) => {
-                    console.log(data)
-                }).catch(({
-                    response: {
-                        data
-                    }
-                }) => {
-                    console.error(data)
-                })
-
-            }).catch(function(err) {
-                console.log(`Token Error :: ${err}`);
-            });
-        }
-        initFirebaseMessagingRegistration();
-
-
-        messaging.onMessage(function(message) {
-            const {
-                notification,
-                data
-            } = message;
-
-            // Extract data from the message
-            const title = notification.title;
-            const body = notification.body;
-            const logo = data.logo;
-            const userAddress = data.direccion;
-            const latitude = data.latitud;
-            const longitude = data.longitud;
-
-            // Create a notification
-            const notificationOptions = {
-                body: body,
-                icon: logo, // Set the logo as the notification icon
-                image: data.image, // Set an image in the notification
-            };
-            // Additional information to display
-            const additionalInfo = `Dirección: ${userAddress}\nCoordenadas: ${latitude}, ${longitude}`;
-
-            // Combine body and additional information
-            notificationOptions.body = `${body}\n${additionalInfo}`;
-
-            const redirectTo = '/monitoreo';
-
-            const not = new Notification(title, notificationOptions);
-            not.onclick = function() {
-                // Redirigir a la ruta deseada
-                window.location.href = redirectTo;
-            };
-        });
-    </script>
     @yield('scripts')
     @stack('scripts')
 </body>

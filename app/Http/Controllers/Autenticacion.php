@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 
 class Autenticacion extends Controller
 {
@@ -25,7 +27,7 @@ class Autenticacion extends Controller
         //obtener los datos del request
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
-        
+
         //verificar si el usuario existe
         if (Auth::attempt($credentials, $remember)) {
             // Authentication passed...
@@ -39,6 +41,13 @@ class Autenticacion extends Controller
     public function handleLogout()
     {
         Auth::logout();
+        // Eliminar 'permisos' de la sesión
+        Session::forget('permisos');
+        // Eliminar 'comunidad_id' de la sesión
+        Session::forget('comunidad_id');
+        Session::forget('comunidad_logo');
+        Session::forget('perfil_actual');
+
         return redirect()->route('login');
     }
 
@@ -59,7 +68,7 @@ class Autenticacion extends Controller
         //obtener los datos del request
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
-        
+
         //verificar si el usuario existe
         if (Auth::guard('admin')->attempt($credentials, $remember)) {
             // Authentication passed...
