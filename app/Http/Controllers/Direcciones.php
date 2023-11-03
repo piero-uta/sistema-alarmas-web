@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Permiso;
 
 use Illuminate\Support\Facades\Session;
-use App\Models\Comunidad;
 
 
 class Direcciones extends Controller

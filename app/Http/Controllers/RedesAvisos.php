@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\RedAviso;
 use App\Models\Perfil;
 use App\Models\Permiso;
-use App\Models\permisoPerfil;
+use App\Models\PermisoPerfil;
 
 class RedesAvisos extends Controller
 {

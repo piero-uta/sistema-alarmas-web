@@ -140,7 +140,7 @@ class User extends Authenticatable
     {
         $usuarioComunidad = $this->usuarioComunidad();
         foreach ($usuarioComunidad as $uc) {
-            if ($uc->perfil_id == 1) {
+            if ($uc->perfil_id == 1001) {
                 return true;
             }
         }

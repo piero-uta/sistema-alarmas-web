@@ -33,9 +33,9 @@ return new class extends Migration
             // zoom level
             $table->integer('zoom')->default(13);
             // create latitude
-            $table->float('latitud', 10, 6)->default(null);
+            $table->float('latitud', 10, 6)->default(-33.4569400);
             // create longitude
-            $table->float('longitud', 10, 6)->default(null);
+            $table->float('longitud', 10, 6)->default(-70.6482700);
         });
     }
 

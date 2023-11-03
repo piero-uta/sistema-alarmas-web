@@ -89,9 +89,9 @@
 
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/monitoreo">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span><s>Dashboard de Monitoreo</s></span></a>
+                    <span>Dashboard de Monitoreo</span></a>
             </li>
         @endif
 

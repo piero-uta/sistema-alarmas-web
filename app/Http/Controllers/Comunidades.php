@@ -13,7 +13,7 @@ use App\Models\User;
 use App\Models\UsuarioComunidad;
 use App\Models\Perfil;
 use App\Models\Permiso;
-use App\Models\permisoPerfil;
+use App\Models\PermisoPerfil;
 
 class Comunidades extends Controller
 {
