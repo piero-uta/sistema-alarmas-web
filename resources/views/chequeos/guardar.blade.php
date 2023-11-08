@@ -2,6 +2,41 @@
 @section('title', 'Guardar $chequeo')
 
 @section('content')
+
+
+<h1 class="login-page-new__main-form-title" style="padding-top: 1rem;">Datos de la Alarma</h1>
+
+
+<div>
+    <label for="hora_alarma" class "label">Hora</label>
+    <input type="text" class="input" name="hora_alarma" 
+    value="{{ old('hora_alarma')==null ? ( isset($chequeo)?$chequeo->hora_alarma:'' ) : old('hora_alarma') }}" readonly>
+</div>
+    <div>
+    <label for="fecha_alarma" class "label">Fecha</label>
+    <input type="text" class="input" name="fecha_alarma" 
+    value="{{ old('fecha_alarma')==null ? ( isset($chequeo)?$chequeo->fecha_alarma:'' ) : old('fecha_alarma') }}" readonly>
+</div>
+<div>
+    <label for="codigo" class "label">Codigo</label>
+    <input type="text" class="input" name="codigo" 
+    value="{{ old('codigo')==null ? ( isset($chequeo)?$chequeo->codigo:'' ) : old('codigo') }}" readonly>
+</div>
+<div>
+    <label for="nombre_usuario" class "label">nombre de usaurio</label>
+    <input type="text" class="input" name="nombre_usuario"
+    value="{{ old('nombre_usuario')==null ? ( isset($chequeo)?$chequeo->nombre_usuario:'' ) : old('nombre_usuario') }}" readonly>
+</div>
+<div>
+    <label for="calle" class "label">Calle</label>
+    <input type="text" class="input" name="calle" 
+    value="{{ old('calle')==null ? ( isset($chequeo)?$chequeo->calle:'' ) : old('calle') }}" readonly>
+</div>
+<div>
+    <label for="numero" class "label">Numero</label>
+    <input type="text" class="input" name="numero" 
+    value="{{ old('numero')==null ? ( isset($chequeo)?$chequeo->numero:'' ) : old('numero') }}" readonly>
+</div>
 <h1 class="login-page-new__main-form-title"style="padding-top: 5rem;">modificar Chequeo</h1>
 
 <form method="POST" class="form form__container" action ="{{route('chequeos.handleGuardar')}}">

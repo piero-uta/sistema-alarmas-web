@@ -22,16 +22,16 @@ class Chequeos extends Controller
     public function index()
     {
         //obtener comunidad en session
-        $comunidad_id = Session::get('comunidad_id');
+        $comunidadId = Session::get('comunidad_id');
         // obtener direccion de la comunidad
-        $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
+        $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
         // obtener las alarmas de la dirreciones
         $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
         // obtener chqueos de las alarmas
         //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
         // join de alarmas y chequeos
         $chequeos = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')
-        ->select('chequeos.*', 'alarmas.codigo','alarmas.nombre_usuario')
+        ->select('chequeos.*', 'alarmas.*', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
         ->get();
         //dd($chequeos);
 
@@ -42,36 +42,52 @@ class Chequeos extends Controller
 
     // create
     public function formularioGuardar(Request $request)
-    {
+    {   
         $parametros = [];
-        if($request->has('id')){    
-            // verificar comunidad 
-            $comunidad = Session::get('comunidad_id');
-            $chequeo = Chequeo::all()->first();
+        if($request->has('id'))
+        {        
+            $chequeoId = $request->input('id'); // Obtén el valor del parámetro "chequeo_id" de la solicitud
+
+            // Ahora que tienes el ID del chequeo, puedes buscarlo en la base de datos
+            $chequeo = Chequeo::find($chequeoId);
+            $comunidadId = Session::get('comunidad_id'); // Obtén el ID de la comunidad desde la sesión
+            // Obtener direcciones de la comunidad
+            $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
+            // Obtener las alarmas de las direcciones
+            $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
+            // obtener chqueos de las alarmas
+            //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
+            // join de alarmas y chequeos
+            $chequeo = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')    
+            ->join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
+            ->where('chequeos.id', $chequeoId)
+            ->select('chequeos.*', 'alarmas.*','alarmas.id as id_alarma' ,  'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma', 'direcciones.*')
+            ->first();
+            //dd($chequeo);
             if(!$chequeo)
             {
                 //agregar error a parametros
                 $parametros['error'] = 'Chequeo no encontrada';
                 return redirect()->route('chequeos.index')->with($parametros);
             }       
-        // Compara el estado actual con el estado enviado desde el formulario
-        $parametros['chequeo'] = new Chequeo();
-        // Obtener la fecha y hora actual de Chile
-        $fechaChile = Carbon::now('America/Santiago')->toDateString(); // Obtiene la fecha en formato 'Y-m-d'
-        // Puedes formatear la fecha y hora según tus necesidades
-        $horaChile = Carbon::now('America/Santiago')->toTimeString(); // Obtiene la hora en formato 'H:i:s'
-        //dd($fechaChile, $horaChile)
-        if($chequeo->usuario_chequeo == null){
-            $user = Auth::user();
-            $chequeo->usuario_chequeo = $user->nombre;
-            $chequeo->estado_chequeo = 1;
-            $chequeo->fecha = $fechaChile;
-            $chequeo->hora = $horaChile;
-        }
+            // Compara el estado actual con el estado enviado desde el formulario
+            $parametros['chequeo'] = new Chequeo();
+            // Obtener la fecha y hora actual de Chile
+            $fechaChile = Carbon::now('America/Santiago')->toDateString(); // Obtiene la fecha en formato 'Y-m-d'
+            // Puedes formatear la fecha y hora según tus necesidades
+            $horaChile = Carbon::now('America/Santiago')->toTimeString(); // Obtiene la hora en formato 'H:i:s'
+            //dd($fechaChile, $horaChile)
+            if($chequeo->usuario_chequeo == null){
+                $user = Auth::user();
+                $chequeo->usuario_chequeo = $user->nombre;
+                $chequeo->estado_chequeo = 1;
+                $chequeo->fecha = $fechaChile;
+                $chequeo->hora = $horaChile;
+            }
 
-        
-        $chequeo->save();
-        $parametros['chequeo'] = $chequeo;            
+            
+            $chequeo->save();
+            $parametros['chequeo'] = $chequeo;            
         }
 
         return view('chequeos.guardar', $parametros);
