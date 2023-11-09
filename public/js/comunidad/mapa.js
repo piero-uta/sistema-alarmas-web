@@ -5,8 +5,10 @@ const latitudInput = document.getElementById("latitud");
 const longitudInput = document.getElementById("longitud");
 
 //obtener calle
-const calleInput = document.getElementById("calle");
-const numeroInput = document.getElementById("numero");
+// const calleInput = document.getElementById("calle");
+// const numeroInput = document.getElementById("numero");
+// direccion
+const calleInput = document.getElementById("direccion");
 
 // Formulario
 handleEnviarFormulario = (event) => {
@@ -24,15 +26,17 @@ let map;
 function setCalleNumero(arreglo){
     // update calleInput and numeroInput
     calleInput.value = "";
-    numeroInput.value = "";
+    var calle;
+    var numero;
     arreglo.forEach( (address_component) => {
         if( address_component.types.includes("route") ){
-            calleInput.value = address_component.long_name;
+            calle = address_component.long_name;
         }
         if( address_component.types.includes("street_number") ){
-            numeroInput.value = address_component.long_name;
+            numero = address_component.long_name;
         }
     });
+    calleInput.value = calle+" "+numero;
 }
 
 

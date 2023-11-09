@@ -22,7 +22,7 @@
 <form method="POST"  action="{{route('comunidades.handleGuardar')}}">
     @csrf
     @if(isset($comunidad))
-        <input type="hidden" name="id" value="{{$comunidad->id}}">
+        <input type="" name="id" value="{{$comunidad->id}}">
     @endif
 
     <div class="form-group">
@@ -50,15 +50,20 @@
         <input type="email" class="form-control" name="email"
         value="{{ old('email')==null ? ( isset($comunidad)?$comunidad->email:'' ) : old('email') }}">
     </div>
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         <label for="calle" class="form-label">Calle*</label>
         <input type="text" class="form-control" name="calle" required id ="calle"
-        value="{{ old('calle')==null ? ( isset($direccion)?$direccion->calle:'' ) : old('calle') }}">
+        value="{{ old('calle')==null ? ( isset($comunidad)?$comunidad->calle:'' ) : old('calle') }}">
     </div>
     <div class="mb-3">
         <label for="numero" class="form-label">Numero*</label>
         <input type="text" class="form-control" name="numero" required id ="numero"
-        value="{{ old('numero')==null ? ( isset($direccion)?$direccion->numero:'' ) : old('numero') }}">
+        value="{{ old('numero')==null ? ( isset($comunidad)?$comunidad->numero:'' ) : old('numero') }}">
+    </div> --}}
+    <div class="mb-3">
+        <label for="direccion" class="form-label">Direccion*</label>
+        <input type="text" class="form-control" name="direccion" required id ="direccion"
+        value="{{ old('direccion')==null ? ( isset($comunidad)?$comunidad->direccion:'' ) : old('direccion') }}">
     </div>
     <div class="form-group">
         <label for="giro" class="label">Giro</label>
@@ -98,7 +103,7 @@
 
     <label class="label" for="direccion">Buscar dirección</label>
         <div class="form__container-flex">
-            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($direccion)?$direccion->calle .' '. strval($direccion->numero):'' ) : old('direccion') }}">
+            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($comunidad)?$comunidad->direccion:'' ) : old('direccion') }}">
             <button type="button" class="btn btn-primary" id="btn-geolocalizacion">Obtener ubicación</button>
 
             {{-- Datalist --}}
@@ -107,13 +112,12 @@
         
         <div id="map" style="height: 400px; width: 100%; z-index: 0; margin: 3rem 0"></div>
     
-    <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($direccion)?$direccion->latitud:'' ) : old('latitud') }}" hidden required>
-    <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($direccion)?$direccion->longitud:'' ) : old('longitud') }}" hidden required>
+    <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($comunidad)?$comunidad->latitud:'' ) : old('latitud') }}" hidden required>
+    <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($comunidad)?$comunidad->longitud:'' ) : old('longitud') }}" hidden required>
 
 
     <div class="d-flex justify-content-end py-2">
         <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
-        <input type="hidden" name="id" id="id_comunidad_eliminar" required>
         <button type="submit" class="btn btn-danger">Cancelar</button>
                 
     </div>

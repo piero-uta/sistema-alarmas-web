@@ -83,8 +83,7 @@ class Comunidades extends Controller
             'razon_social' => 'required',
             'rut' => 'required',
             'digito' => 'required',
-            'calle' => 'required',
-            'numero' => 'required',
+            'direccion' => 'required',
             'tipo_servicio' => 'required',
             'costo_mensual' => 'required',
             'latitud' => 'required',
@@ -104,7 +103,7 @@ class Comunidades extends Controller
         $comunidad->razon_social = $request->razon_social;
         $comunidad->rut = $request->rut;
         $comunidad->digito = $request->digito;
-        $comunidad->direccion = $request->calle . ' ' . $request->numero;
+        $comunidad->direccion = $request->direccion;
         $comunidad->tipo_servicio = $request->tipo_servicio;
         $comunidad->costo_mensual = $request->costo_mensual;
         $comunidad->latitud = $request->latitud;
