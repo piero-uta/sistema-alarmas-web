@@ -103,7 +103,7 @@
 
     <label class="label" for="direccion">Buscar dirección</label>
         <div class="form__container-flex">
-            <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($comunidad)?$comunidad->direccion:'' ) : old('direccion') }}">
+            <input class="input" type="text" list="direcciones" name="direccion" id="input" value="{{ old('direccion')==null ? ( isset($comunidad)?$comunidad->direccion:'' ) : old('direccion') }}">
             <button type="button" class="btn btn-primary" id="btn-geolocalizacion">Obtener ubicación</button>
 
             {{-- Datalist --}}

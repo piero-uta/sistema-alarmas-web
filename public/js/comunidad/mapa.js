@@ -1,6 +1,5 @@
 // Obtener html
 const geoButton = document.getElementById("btn-geolocalizacion");
-const input = document.getElementById("direccion");
 const latitudInput = document.getElementById("latitud");
 const longitudInput = document.getElementById("longitud");
 
@@ -13,7 +12,7 @@ const calleInput = document.getElementById("direccion");
 // Formulario
 handleEnviarFormulario = (event) => {
     // Verificar enter y  si direccion esta focuseado
-    if(event.keyCode == 13 && document.getElementById("direccion").matches(":focus")){
+    if(event.keyCode == 13 && document.getElementById("input").matches(":focus")){
         event.preventDefault();
         return;
     }
@@ -51,7 +50,7 @@ async function initMap() {
         zoom: 13,
     });
 
-    const input = document.getElementById("direccion");
+    const input = document.getElementById("input");
 
     const autocomplete = new google.maps.places.Autocomplete(
         input
@@ -171,8 +170,7 @@ async function initMap() {
         handleUpdatePosition( 
             parseFloat(latitudInput.value), 
             parseFloat(longitudInput.value),
-            calleInput.value,
-            numeroInput.value );
+            calleInput.value,);
     }
     
 }
