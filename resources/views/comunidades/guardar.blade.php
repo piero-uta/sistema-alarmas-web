@@ -22,7 +22,7 @@
 <form method="POST"  action="{{route('comunidades.handleGuardar')}}">
     @csrf
     @if(isset($comunidad))
-        <input type="" name="id" value="{{$comunidad->id}}">
+        <input type="hidden" name="id" value="{{$comunidad->id}}">
     @endif
 
     <div class="form-group">
