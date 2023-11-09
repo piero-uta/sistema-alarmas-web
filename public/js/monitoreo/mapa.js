@@ -21,6 +21,7 @@ async function initMap() {
     });
 
     generarMarcadores();
+    reload();
 }
 
 

@@ -1,11 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Dashboard monitoreo')
 
-@push('head-scripts')
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap"></script>
-@endpush
-
-
 @section('content')
 
 <h2>Dashboard de monitoreo</h2>
@@ -17,6 +12,7 @@
 @endsection
 
 @section('scripts')
+{{-- TO DO: mover todo al mismo archivo de script --}}
 <script>
     const comunidad = <?php echo json_encode($comunidad); ?>;
     const direcciones = <?php echo json_encode($direcciones); ?>;
@@ -59,12 +55,13 @@
         return await respuesta;
     }
 
-    reload();
     
 
 
 </script>
 
 <script type="text/javascript" src="{{ asset('js/monitoreo/mapa.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap"></script>
+
 
 @endsection

@@ -2,9 +2,7 @@
 @section('title', 'Red de Aviso')
 
 @push('head-scripts')
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap">
-    </script>
+    
 @endpush
 
 @section('content')
@@ -123,4 +121,7 @@
     const comunidad = <?php echo json_encode($comunidad); ?>;
 </script>
 <script type="text/javascript" src="{{ asset('js/redAviso/indexMapa.js') }}"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap">
+</script>
 @endsection
