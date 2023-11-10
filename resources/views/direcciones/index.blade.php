@@ -56,7 +56,7 @@
                         </td>
                         <td>
                             @if (in_array('DireccionesUsuario-u', $permisos))
-                                <a type="button" class="btn btn-primary"
+                                <a type="button" class="btn btn-primary" style="margin-right: 20px;
                                     href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">Editar</a>
                             @endif
                             {{-- eliminar --}}
