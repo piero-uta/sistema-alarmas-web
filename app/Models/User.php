@@ -73,7 +73,7 @@ class User extends Authenticatable
         //     $comunidades[] = Comunidad::where('id', $uc->comunidad_id)->first();
         // }
         //con una sola peticion eloquent seria
-        $comunidades = Comunidad::whereIn('id', $usuarioComunidad->pluck('comunidad_id'))->get();
+        $comunidades = Comunidad::whereIn('id', $usuarioComunidad->pluck('comunidad_id'))->distinct()->get();
         return $comunidades;
     }
 
@@ -124,7 +124,7 @@ class User extends Authenticatable
         }
         return $direcciones;
     }
-    
+
     public function direccionIdComunidad($comunidad_id)
     {
         $usuarioComunidad = $this->usuarioComunidad();
@@ -144,13 +144,13 @@ class User extends Authenticatable
                 return true;
             }
         }
-        return false;        
+        return false;
     }
 
     public function tienePermiso(string $permiso)
     {
         return $this->perfil->permisos->contains('nombre', $permiso);
     }
-    
+
 
 }
