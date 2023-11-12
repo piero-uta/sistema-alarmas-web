@@ -207,6 +207,9 @@
 
     messaging.onMessage(function(message) {
         updateAlarmas();
+        if(typeof reloadMap === 'function'){
+            reloadMap();
+        }
 
         const {
             notification,

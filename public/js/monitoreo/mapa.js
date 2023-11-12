@@ -21,12 +21,11 @@ async function initMap() {
     });
 
     generarMarcadores();
-    reload();
+    reloadMap();
 }
 
 
 function generarMarcadores(alarmas = null){
-    console.log("dentro de funcion: "+ alarmas);
     direcciones.forEach(direccion => {
 
         const pinBackground = new google.maps.marker.PinView({
@@ -39,7 +38,6 @@ function generarMarcadores(alarmas = null){
 
             for (let i = 0; i < alarmas.length; i++) {
                 const alarma = alarmas[i];
-                console.log(alarma);
                 if( alarma.direccion_id === direccion.id ){
                     pinBackground.borderColor = "#FF0000";
                     pinBackground.background = "#FF0000";

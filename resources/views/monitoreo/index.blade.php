@@ -18,16 +18,17 @@
     const direcciones = <?php echo json_encode($direcciones); ?>;
     const csrf_token = <?php echo json_encode(csrf_token()); ?>;
 
-    const messagingMap = firebase.messaging();
+    // const messagingMap = firebase.messaging();
 
-    messagingMap.onMessage((payload) => {
-        console.log('Message received. ', payload);
-        reload();
-    });
+    // messagingMap.onMessage((payload) => {
+    //     console.log('Message received. ', payload);
+    //     reload();
+    // });
 
 
-    async function reload(){
+    async function reloadMap(){
         const alarmas = await obtenerAlarmas();
+        console.log('reloadMap');
         
         
         generarMarcadores(alarmas);
