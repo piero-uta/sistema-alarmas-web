@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('descripcion')->nullable()->default(null);
             $table->boolean('activo')->default(true);
             //constraint comunidad
-            $table->foreignId('comunidad_id')->constrained('comunidades');
+            $table->foreignId('comunidad_id')->nullable()->constrained('comunidades');
         });
     }
 
