@@ -27,7 +27,7 @@ class Alarmas extends Controller
         return $alarmas;
     }
 
-    public function getDeviceTokens($user, $comunidad_id)
+    public function getDeviceTokensMobile($user, $comunidad_id)
     {
         $tokens = DB::table('usuarios_comunidad AS uc1')
         ->select('u2.token_celular')
@@ -62,6 +62,41 @@ class Alarmas extends Controller
         return array_values($finalTokens);
     }
 
+    public function getDeviceTokensWeb($user, $comunidad_id)
+    {
+        $tokens = DB::table('usuarios_comunidad AS uc1')
+        ->select('u2.token_web')
+        ->distinct()
+        ->join('redes_avisos', 'uc1.direccion_id', '=', 'redes_avisos.direccion_id')
+        ->join('usuarios_comunidad AS uc2', 'uc2.direccion_id', '=', 'redes_avisos.direccion_vecino_id')
+        ->join('users AS u2', 'u2.id', '=', 'uc2.usuario_id')
+        ->where('uc1.comunidad_id', $comunidad_id)
+        ->where('uc1.usuario_id', $user->id)
+        ->pluck('u2.token_web')
+        ->toArray();
+
+        $usuarioComunidad = UsuarioComunidad::where('comunidad_id',$comunidad_id)
+        ->where('usuario_id', $user->id)
+        ->first();
+        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
+
+        $tokens_mi_direccion = DB::table('usuarios_comunidad as uc')
+        ->select('u.token_web')
+        ->join('users as u', 'uc.usuario_id', '=', 'u.id')
+        ->where('uc.direccion_id', $direccion->id)
+        ->pluck('u.token_web')
+        ->toArray();
+
+        $tokens_total = array_merge($tokens, $tokens_mi_direccion);
+
+        $tokensFiltrados = array_filter($tokens_total, function($value) {
+            return $value !== null;
+        });
+
+        $finalTokens = array_unique($tokensFiltrados);
+        return array_values($finalTokens);
+    }
+
     public function sendNotification(Request $request)
     {
         $user = $request->user();
@@ -78,7 +113,10 @@ class Alarmas extends Controller
         $body = "El usuario $user->nombre esta en emergencia";
         $avatar = isset($user->avatar) ? $user->avatar : 'https://cdn-icons-png.flaticon.com/512/4140/4140060.png';
 
-        $tokens = $this->getDeviceTokens($user, $comunidad_id);
+        $tokens_mobile = $this->getDeviceTokensMobile($user, $comunidad_id);
+        $tokens_web = $this->getDeviceTokensWeb($user, $comunidad_id);
+
+        $tokens = array_merge($tokens_mobile, $tokens_web);
 
         date_default_timezone_set('America/Santiago');
         $fecha = strftime('Fecha %d-%m-%Y');

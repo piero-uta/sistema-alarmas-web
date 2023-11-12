@@ -12,7 +12,7 @@ class Mensajes extends Controller
 {
     public function updateToken(Request $request){
         try{
-            $request->user()->update(['token_celular'=>$request->token]);
+            $request->user()->update(['token_web'=>$request->token]);
             return response()->json([
                 'success'=>true
             ]);

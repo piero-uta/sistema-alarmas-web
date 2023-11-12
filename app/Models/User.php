@@ -34,6 +34,7 @@ class User extends Authenticatable
         'telefono',
         'celular',
         'token_celular',
+        'token_web',
     ];
 
     /**
