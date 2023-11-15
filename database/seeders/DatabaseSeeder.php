@@ -28,8 +28,8 @@ class DatabaseSeeder extends Seeder
         UsuarioComunidad::factory(1000)->create();
         RedAviso::factory(300)->create();
         $this->call(AdminSeeder::class);
-        Alarma::factory(15)->create();
-        Chequeo::factory(15)->create();
+        Alarma::factory(100)->create();
+        Chequeo::factory(100)->create();
         // Direccion::factory(100)->create();
         // \App\Models\User::factory(10)->create();
     }

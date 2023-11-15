@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('chequeos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('alarma_id')->constrained('alarmas');
+            $table->foreignId('alarma_id')->constrained('alarmas')->unique();
             $table->date('fecha')->nullable();
             $table->time('hora')->nullable();
             // guardia
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('estado_chequeo')->default(false);
             // usuario que activo la alarma
             $table->string('vecino_chequeo')->nullable()->default(null);
-            $table->string('observacion');   
+            $table->string('observacion')->nullable()->default(null);   
 
             // TO DO: crear las tablas y agregar las restricciones
             $table->foreignId('tipo_chequeo')->nullable()->default(null);

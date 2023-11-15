@@ -31,7 +31,7 @@ class Chequeos extends Controller
         //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
         // join de alarmas y chequeos
         $chequeos = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')
-        ->select('chequeos.*', 'alarmas.*', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
+        ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
         ->get();
         //dd($chequeos);
 
@@ -48,8 +48,6 @@ class Chequeos extends Controller
         {        
             $chequeoId = $request->input('id'); // Obtén el valor del parámetro "chequeo_id" de la solicitud
 
-            // Ahora que tienes el ID del chequeo, puedes buscarlo en la base de datos
-            $chequeo = Chequeo::find($chequeoId);
             $comunidadId = Session::get('comunidad_id'); // Obtén el ID de la comunidad desde la sesión
             // Obtener direcciones de la comunidad
             $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
@@ -58,10 +56,11 @@ class Chequeos extends Controller
             // obtener chqueos de las alarmas
             //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
             // join de alarmas y chequeos
-            $chequeo = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')    
+
+            $chequeo = Chequeo::join('alarmas', 'chequeos.alarma_id', '=', 'alarmas.id')
             ->join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
             ->where('chequeos.id', $chequeoId)
-            ->select('chequeos.*', 'alarmas.*','alarmas.id as id_alarma' ,  'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma', 'direcciones.*')
+            ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma', 'direcciones.calle as calle_direccion', 'direcciones.numero as numero_direccion')
             ->first();
             //dd($chequeo);
             if(!$chequeo)
@@ -77,16 +76,17 @@ class Chequeos extends Controller
             // Puedes formatear la fecha y hora según tus necesidades
             $horaChile = Carbon::now('America/Santiago')->toTimeString(); // Obtiene la hora en formato 'H:i:s'
             //dd($fechaChile, $horaChile)
-            if($chequeo->usuario_chequeo == null){
+            if($chequeo->usuario_chequeo == null && $chequeo->alarma_id != null){
                 $user = Auth::user();
                 $chequeo->usuario_chequeo = $user->nombre;
                 $chequeo->estado_chequeo = 1;
                 $chequeo->fecha = $fechaChile;
-                $chequeo->hora = $horaChile;
+                $chequeo->hora = $horaChile;            
+                $chequeo->save();
+                 
+                dd($chequeo);       
             }
 
-            
-            $chequeo->save();
             $parametros['chequeo'] = $chequeo;            
         }
 
@@ -99,7 +99,24 @@ class Chequeos extends Controller
 
         $comunidad_id = Session::get('comunidad_id');
         if($request->has('id')){
-            $chequeo = Chequeo::where('id', $request->id)->where('comunidad_id', $comunidad_id)->first();
+
+            $chequeoId = $request->input('id'); // Obtén el valor del parámetro "chequeo_id" de la solicitud
+
+            $comunidadId = Session::get('comunidad_id'); // Obtén el ID de la comunidad desde la sesión
+            // Obtener direcciones de la comunidad
+            $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
+            // Obtener las alarmas de las direcciones
+            $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
+            // obtener chqueos de las alarmas
+            //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
+            // join de alarmas y chequeos
+
+            $chequeo = Chequeo::join('alarmas', 'chequeos.alarma_id', '=', 'alarmas.id')
+            ->where('chequeos.id', $chequeoId)
+            ->select('chequeos.*', 'alarmas.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
+            ->first();
+            //dd($chequeo);
+
             if(!$chequeo){
                 //agregar error a parametros
                 $parametros['error'] = 'Chequeo no encontrada';
@@ -114,7 +131,8 @@ class Chequeos extends Controller
         $chequeo->observacion = $request->observacion;
         $chequeo->tipo_chequeo = $request->tipo_chequeo;
         $chequeo->tipo_evento = $request->tipo_evento;
-        $chequeo->alarma_id = $request->alarma_id;
+        $chequeo->alarma_id = $chequeo->id_alarma;
+        //dd($request->all());
         $chequeo->save();
 
         return redirect()->route('chequeos.index');

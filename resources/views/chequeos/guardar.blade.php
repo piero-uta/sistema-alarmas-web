@@ -30,12 +30,12 @@
 <div>
     <label for="calle" class "label">Calle</label>
     <input type="text" class="input" name="calle" 
-    value="{{ old('calle')==null ? ( isset($chequeo)?$chequeo->calle:'' ) : old('calle') }}" readonly>
+    value="{{ old('calle_direccion')==null ? ( isset($chequeo)?$chequeo->calle_direccion:'' ) : old('calle_direccion') }}" readonly>
 </div>
 <div>
     <label for="numero" class "label">Numero</label>
     <input type="text" class="input" name="numero" 
-    value="{{ old('numero')==null ? ( isset($chequeo)?$chequeo->numero:'' ) : old('numero') }}" readonly>
+    value="{{ old('numero_direccion')==null ? ( isset($chequeo)?$chequeo->numero_direccion:'' ) : old('numero_direccion') }}" readonly>
 </div>
 <h1 class="login-page-new__main-form-title"style="padding-top: 5rem;">modificar Chequeo</h1>
 
@@ -58,7 +58,7 @@
     </div>
     <div >
         <label for="usuario_chequeo" class="label">Usuario chequeo*</label>
-        <input type="text" class="input" name="usuario_chequeo" required
+        <input type="text" class="input" name="usuario_chequeo"
         value="{{ old('usuario_chequeo')==null ? ( isset($chequeo)?$chequeo->usuario_chequeo:'' ) : old('usuario_chequeo') }}"readonly>
     </div>
 
