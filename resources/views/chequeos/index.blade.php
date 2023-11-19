@@ -12,7 +12,7 @@
                     #
                 </th>
                 <th scope="col">
-                    Alarma
+                    Codigo Alarma
                 </th>
                 <th scope="col">
                     Fecha
@@ -50,7 +50,7 @@
                     {{$chequeo->id}}
                 </th>
                 <td>
-                    {{$chequeo->alarma_id}}
+                    {{$chequeo->codigo}}
                 </td>
                 <td>
                     {{$chequeo->fecha}}
@@ -59,7 +59,7 @@
                     {{$chequeo->hora}}
                 </td>
                 <td>
-                    {{$chequeo->usuario_chqueo}}
+                    {{$chequeo->usuario_chequeo}}
                 </td>
                 <td>
                     {{$chequeo->estado_chequeo}}

@@ -21,7 +21,7 @@ class AlarmaFactory extends Factory
     {
         $fecha = now()->toDateString(); // Obtén la fecha actual en formato YYYY-MM-DD
         $hora = now()->toTimeString(); // Obtén la hora actual en formato HH:MM:SS
-        $chequeo = rand(0, 1);
+        
 
 
         $usuarioComunidad = UsuarioComunidad::inRandomOrder()->first();
@@ -34,7 +34,7 @@ class AlarmaFactory extends Factory
             'hora'=>$hora,
             'nombre_usuario'=> $usuario->nombre,
             'codigo'=>$direccion->codigo,
-            'chequeo'=> rand(0,1)
+            'chequeo'=> 1
         ];
     }
 }
