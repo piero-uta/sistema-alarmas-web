@@ -20,6 +20,14 @@ class DireccionFactory extends Factory
         $rut = $this->faker->unique()->numberBetween(10000000,99999999);
         $calle = $this->faker->word();
         $numero = $this->faker->numberBetween(1,999);
+
+        $latitud_base = -33.4569400;
+        $longitud_base = -70.6482700;
+
+        // crear latitud y longitud dentro de un radio de 1000 metros
+        $latitud = $latitud_base + $this->faker->randomFloat(6,-0.009,0.009);
+        $longitud = $longitud_base + $this->faker->randomFloat(6,-0.009,0.009);
+
         return [
             'comunidad_id'=>Comunidad::inRandomOrder()->first()->id,
             'rut'=> $rut,
@@ -28,8 +36,8 @@ class DireccionFactory extends Factory
             'calle'=> $calle,
             'numero'=> $numero,
             'piso' => $this->faker->numberBetween(1,10),
-            'longitud'=> $this->faker->randomFloat(2,50,10000),
-            'latitud'=> $this->faker->randomFloat(2,50,10000),
+            'longitud'=> $longitud,
+            'latitud'=> $latitud,
             'representante'=> $this->faker->name(),
             'telefono'=> $this->faker->numberBetween(100,999).'-'.$this->faker->numberBetween(100,999).'-'.$this->faker->numberBetween(100,999),
             'celular'=> $this->faker->numberBetween(100,999).' '.$this->faker->numberBetween(100,999).' '.$this->faker->numberBetween(100,999),
