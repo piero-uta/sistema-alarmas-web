@@ -24,28 +24,29 @@ async function initMap() {
     
 
     const direccionesVecinosRed = [];
-    const direccionesVecinos = [];
+    // Direcciones que no estan en la red, se mostraban con gris, ahora ya no se muestran
+    // const direccionesVecinos = [];
     var direccionPrincipal = {};
     direcciones.forEach(direccion => {
-        direccionesVecinos.push(direccion);
+        // direccionesVecinos.push(direccion);
         if(direccion_id === direccion.id){
             direccionPrincipal = direccion;
             //quitar direccionPrincipal de direccionesVecinos
-            direccionesVecinos.pop(direccion);
+            // direccionesVecinos.pop(direccion);
             
         }
         const redEncontrada = redes.forEach(red => {
             if(red.direccion_vecino_id === direccion.id){
                 direccionesVecinosRed.push(direccion);
                 //quitar direccion de direccionesVecinos
-                direccionesVecinos.pop(direccion);
+                // direccionesVecinos.pop(direccion);
             }
         });
     });
-
-    console.log("principal: "+direccionPrincipal);
-    console.log("red: "+direccionesVecinosRed);
-    console.log("otros: "+direccionesVecinos);
+    // LOG para revisar cosas
+    // console.log("principal: "+direccionPrincipal);
+    // console.log("red: "+direccionesVecinosRed);
+    // console.log("otros: "+direccionesVecinos);
 
     const redBackground = new google.maps.marker.PinView({
         borderColor: "#a83232",
@@ -78,20 +79,20 @@ async function initMap() {
         markers.push(marker);
     });
 
-    direccionesVecinos.forEach(direccion => {
-        console.log("agregando otros");
-        const greyBackground = new google.maps.marker.PinView({
-            borderColor: "#808080",
-            background: "#808080",
-            glyphColor: "#000000",
-        });
-        // create the marker
-        const marker = new google.maps.marker.AdvancedMarkerView({
-            position: {lat:direccion.latitud, lng:direccion.longitud},
-            map: map,
-            title: direccion.codigo,
-            content: greyBackground.element,
-        });
-        markers.push(marker);
-    });
+    // direccionesVecinos.forEach(direccion => {
+    //     console.log("agregando otros");
+    //     const greyBackground = new google.maps.marker.PinView({
+    //         borderColor: "#808080",
+    //         background: "#808080",
+    //         glyphColor: "#000000",
+    //     });
+    //     // create the marker
+    //     const marker = new google.maps.marker.AdvancedMarkerView({
+    //         position: {lat:direccion.latitud, lng:direccion.longitud},
+    //         map: map,
+    //         title: direccion.codigo,
+    //         content: greyBackground.element,
+    //     });
+    //     markers.push(marker);
+    // });
 }
