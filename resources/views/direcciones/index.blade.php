@@ -35,7 +35,8 @@
             </thead>
             <tbody>
                 @foreach ($direcciones as $direccion)
-                    <tr onClick="modalDireccion({{ $direccion }})">
+                    {{-- <tr onClick="modalDireccion({{ $direccion }})"> --}}
+                    <tr>
                         <th scope="row">
                             {{ $direccion->id }}
                         </th>
@@ -55,6 +56,10 @@
                             {{ $direccion->codigo }}
                         </td>
                         <td>
+                            {{-- modal ver usuarios de la direccion, llamar a funcion --}}
+                            <button type="button" class="btn btn-primary" onclick="modalUsuariosDireccion({{ $direccion }})">
+                                Ver Usuarios
+                            </button>
                             @if (in_array('DireccionesUsuario-u', $permisos))
                                 <a type="button" class="btn btn-primary" style="margin-right: 20px;"
                                     href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">Editar</a>
@@ -81,6 +86,27 @@
             </div>
         @endif
     </div>
+
+    {{-- modalUsuariosDireccion --}}
+    <div class="modal fade" id="modalUsuariosDireccion" tabindex="-1" aria-labelledby="modalUsuariosDireccionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modalUsuariosDireccionLabel" class="modal-title">Usuarios de la direccion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                </div>
+                <div id="modalUsuariosDireccionBody" class="modal-body">
+                    Cargando...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 @section('scripts')
     <script>
         var table = new DataTable('#myTable', {
@@ -88,6 +114,53 @@
                 url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
             },
         });
+    </script>
+    <script>
+        function modalUsuariosDireccion(direccion) {
+            var modal = new bootstrap.Modal(document.getElementById('modalUsuariosDireccion'), {
+                keyboard: false
+            })
+            modal.show()
+            document.getElementById('modalUsuariosDireccionLabel').innerHTML = 'Usuarios de la direccion ' + direccion.calle + ' ' + direccion.numero
+            document.getElementById('modalUsuariosDireccionBody').innerHTML = 'Cargando...'
+            fetch('{{ route('direcciones.usuarios') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        direccion_id: direccion.id
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    var response = JSON.parse(data)
+                    var usuarios = response.usuarios
+                    var html = ''
+                    html += '<table class="table table-striped">'
+                    html += '<thead>'
+                    html += '<tr>'
+                    html += '<th scope="col">#</th>'
+                    html += '<th scope="col">Nombres</th>'
+                    html += '<th scope="col">Apellidos</th>'
+                    html += '</tr>'
+                    html += '</thead>'
+                    html += '<tbody>'
+                    usuarios.forEach(usuario => {
+                        html += '<tr>'
+                        html += '<th scope="row">' + usuario.id + '</th>'
+                        // html += '<td>' + usuario.nombre + ' ' + usuario.apellido_paterno +  ' ' + usuario.apellido_materno + '</td>'
+                        html += '<td>' + usuario.nombre + '</td>'
+                        html += '<td>' + usuario.apellido_paterno + ' ' + usuario.apellido_materno + '</td>'
+                        html += '</tr>'
+                    });
+                    html += '</tbody>'
+                    html += '</table>'
+                    document.getElementById('modalUsuariosDireccionBody').innerHTML = html
+
+                })
+        }
     </script>
 @endsection
 @endsection

@@ -70,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/direcciones/crear', 'formularioGuardar')->name('direcciones.crearEditar');
         Route::post('/direcciones/guardar', 'handleGuardar')->name('direcciones.handleGuardar');
         Route::post('/direcciones/eliminar', 'eliminar')->name('direcciones.eliminar');
+        // ruta getUsuariosDireccion
+        Route::post('/direcciones/getUsuariosDireccion', 'getUsuariosDireccion')->name('direcciones.usuarios');
     });
 
     Route::controller(Usuarios::class)->group(function () {

@@ -10,6 +10,8 @@ use App\Models\UsuarioComunidad;
 use App\Models\PermisoPerfil;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Permiso;
+use App\Models\User;
+
 
 use Illuminate\Support\Facades\Session;
 
@@ -143,5 +145,32 @@ class Direcciones extends Controller
         $direccion->delete();
         return redirect()->route('direcciones.index')->with(['mensaje' => 'Direccion eliminada correctamente']);
     }
+
+    // usuario direccion
+    public function getUsuariosDireccion(Request $request)
+    {
+        $comunidad_id = Session::get('comunidad_id');
+        $direccion_id = $request->direccion_id;
+        $direccion = Direccion::where('id', $direccion_id)->where('comunidad_id', $comunidad_id)->first();
+        if(!$direccion){
+            //agregar error a parametros
+            $parametros['error'] = 'Direccion no encontrada';
+            // json error
+            return response()->json($parametros);
+        }
+        // usuario comunidad comunidad_id y direccion_id
+        $usuario_comunidad = UsuarioComunidad::where('comunidad_id', $comunidad_id)->where('direccion_id', $direccion_id)->get();
+        $usuarios = [];
+        foreach($usuario_comunidad as $uc){
+            $usuario = User::where('id', $uc->usuario_id)->first();
+            array_push($usuarios, $usuario);
+        }
+        $parametros = [];
+        $parametros['direccion'] = $direccion;
+        $parametros['usuarios'] = $usuarios;
+        // entregar json
+        return response()->json($parametros);
+    }
+    
 
 }
