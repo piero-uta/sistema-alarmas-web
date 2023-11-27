@@ -62,7 +62,7 @@
 </script>
 
 <script type="text/javascript" src="{{ asset('js/monitoreo/mapa.js') }}"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJNN-iTg6exmzgXLjB_4KNGY_869oNBGM&v=beta&libraries=marker&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&v=beta&libraries=marker&callback=initMap"></script>
 
 
 @endsection
