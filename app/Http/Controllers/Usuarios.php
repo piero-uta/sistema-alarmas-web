@@ -105,6 +105,7 @@ class Usuarios extends Controller
             'apellido_materno' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'password_confirmation' => 'required',
         ]);
 
         $usuarioComunidad = null;
@@ -121,11 +122,20 @@ class Usuarios extends Controller
             $usuario = new User();
             $usuarioComunidad = new UsuarioComunidad();
         }
+
+        // verificar password y confirmation
+        if($request->password != $request->password_confirmation){
+            $parametros['error'] = 'Password y confirmación no coinciden';
+            return redirect()->route('usuarios.index')->with($parametros);
+        }
+
+
         $usuario->nombre = $request->nombre;
         $usuario->apellido_paterno = $request->apellido_paterno;
         $usuario->apellido_materno = $request->apellido_materno;
         $usuario->email = $request->email;
         $usuario->password = $request->password;
+
         if($request->has('activo')){
             $usuario->activo = 1;
         }else{
