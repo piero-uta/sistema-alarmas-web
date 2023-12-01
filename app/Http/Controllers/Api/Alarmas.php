@@ -109,8 +109,8 @@ class Alarmas extends Controller
         $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
 
 
-        $title = "$user->nombre $user->apellido_paterno $user->apellido_materno";
-        $body = "El usuario $user->nombre esta en emergencia";
+        $title = "Alarma de vecino: ".$user->nombre;
+        $body = "Calle: ".$direccion->calle." #".$direccion->numero;
         $avatar = isset($user->avatar) ? $user->avatar : 'https://cdn-icons-png.flaticon.com/512/4140/4140060.png';
 
         $tokens_mobile = $this->getDeviceTokensMobile($user, $comunidad_id);
