@@ -29,9 +29,20 @@
             <input type="email" class="form-control" name="email" required
                 value="{{ old('email') == null ? (isset($usuario) ? $usuario->email : '') : old('email') }}">
         </div>
-        <div class="form-group">
-            <label for="password" class="label">Password*</label>
-            <input type="password" class="form-control" name="password" required>
+
+        <div>
+            <label class="label" for="password">Contraseña*</label>
+            <div class="input-group">
+                <input class="input form-control" type="password" name="password" id="password" placeholder="******" required autocomplete="new-password">
+                <button class="hide-password" id="hide-password-new" type="button"><i class="fas fa-eye-slash"></i></button>
+            </div>
+        </div>
+        <div>
+            <label class="label" for="confirmar_password">Confirmar contraseña*</label>
+            <div class="input-group">
+                <input class="input form-control" type="password" name="password_confirmation" id="confirmar_password" placeholder="******" required autocomplete="off" title="La contraseña debe ser igual a la anterior.">
+                <button class="hide-password" id="hide-password-confirmation" type="button"><i class="fas fa-eye-slash"></i></button>
+            </div>
         </div>
 
         {{-- seleccionar direccion --}}
@@ -102,5 +113,53 @@
         </div>
     </form>
 
+
+@endsection
+@section('scripts')
+<script>
+    // Password
+    const password = document.getElementById('password');
+    const passwordConfirmation = document.getElementById('confirmar_password');
+    const hidePasswordNew = document.getElementById('hide-password-new');
+    const hidePasswordConfirmation = document.getElementById('hide-password-confirmation');
+
+    // Mostrar u ocultar contraseña
+    hidePasswordNew.addEventListener('click', (e) => {
+        if(password.type == 'password'){
+            password.type = 'text';
+            hidePasswordNew.innerHTML = '<i class="fas fa-eye"></i>';
+        }else{
+            password.type = 'password';
+            hidePasswordNew.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        }
+    });
+    // Mostrar u ocultar confirmar contraseña
+    hidePasswordConfirmation.addEventListener('click', (e) => {
+        if(passwordConfirmation.type == 'password'){
+            passwordConfirmation.type = 'text';
+            hidePasswordConfirmation.innerHTML = '<i class="fas fa-eye"></i>';
+        }else{
+            passwordConfirmation.type = 'password';
+            hidePasswordConfirmation.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        }
+    });
+
+    // Validar confirmar contraseña
+    passwordConfirmation.addEventListener('input', (e) => {
+        let passwordValue = password.value;
+        let passwordConfirmationValue = e.target.value;
+        if(passwordValue != passwordConfirmationValue){
+            passwordConfirmation.setCustomValidity('La contraseña debe ser igual a la anterior.');
+            // Quitar clase valid y agregar invalid
+            passwordConfirmation.classList.remove('valid');
+            passwordConfirmation.classList.add('invalid');
+        }else{
+            passwordConfirmation.setCustomValidity('');
+            // Quitar clase invalid y agregar valid
+            passwordConfirmation.classList.remove('invalid');
+            passwordConfirmation.classList.add('valid');
+        }
+    });
+</script>
 
 @endsection
