@@ -20,10 +20,10 @@
 <div>
     <label for="codigo" class "label">Codigo</label>
     <input type="text" class="input" name="codigo" 
-    value="{{ old('codigo')==null ? ( isset($chequeo)?$chequeo->codigo:'' ) : old('codigo') }}" readonly>
+    value="{{ old('codigo_alarma')==null ? ( isset($chequeo)?$chequeo->codigo_alarma:'' ) : old('codigo_alarma') }}" readonly>
 </div>
 <div>
-    <label for="nombre_usuario" class "label">nombre de usaurio</label>
+    <label for="nombre_usuario" class "label">Usuario</label>
     <input type="text" class="input" name="nombre_usuario"
     value="{{ old('nombre_usuario')==null ? ( isset($chequeo)?$chequeo->nombre_usuario:'' ) : old('nombre_usuario') }}" readonly>
 </div>

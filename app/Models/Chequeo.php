@@ -23,5 +23,8 @@ class Chequeo extends Model
         'tipo_chequeo',
         'tipo_evento',
     ];
-
+    public function alarma()
+    {
+        return $this->belongsTo(Alarma::class, 'alarma_id', 'id');
+    }
 }

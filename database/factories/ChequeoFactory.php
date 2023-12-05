@@ -24,7 +24,7 @@ class ChequeoFactory extends Factory
         $usuarioComunidad = UsuarioComunidad::inRandomOrder()->first();
         $usuario = User::where('id', $usuarioComunidad->usuario_id)->first();
         $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
-        $alarma = Alarma::whereIn('direccion_id', $direccion->pluck('id'))->first();
+        $alarma = Alarma::whereIn('direccion_id', $direccion->pluck('id'))->inRandomOrder()->first();
 
         return [
             'alarma_id' => $alarma->id, // Asegúrate de que al inicio esté en blanco

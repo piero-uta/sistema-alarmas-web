@@ -31,7 +31,7 @@ class Chequeos extends Controller
         //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
         // join de alarmas y chequeos
         $chequeos = Alarma::join('chequeos', 'alarmas.id', '=', 'chequeos.alarma_id')
-        ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
+        ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma', 'alarmas.codigo as codigo_alarma')
         ->get();
         //dd($chequeos);
 
@@ -60,7 +60,9 @@ class Chequeos extends Controller
             $chequeo = Chequeo::join('alarmas', 'chequeos.alarma_id', '=', 'alarmas.id')
             ->join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
             ->where('chequeos.id', $chequeoId)
-            ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma', 'direcciones.calle as calle_direccion', 'direcciones.numero as numero_direccion')
+            ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 
+            'alarmas.hora as hora_alarma', 'direcciones.calle as calle_direccion',
+             'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario')
             ->first();
             //dd($chequeo);
             if(!$chequeo)
@@ -84,7 +86,8 @@ class Chequeos extends Controller
                 $chequeo->hora = $horaChile;            
                 $chequeo->save();
                  
-                dd($chequeo);       
+                //dd($chequeo);       
+                //dd($chequeo);       
             }
 
             $parametros['chequeo'] = $chequeo;            

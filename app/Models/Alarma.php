@@ -21,4 +21,9 @@ class Alarma extends Model
         'chequeo',
         'dispositivo_id'
     ];
+
+    public function chequeos() 
+    {
+        return $this->hasOne(Chequeo::class, 'alarma_id');    
+    }
 }

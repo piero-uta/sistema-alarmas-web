@@ -50,7 +50,7 @@
                     {{$chequeo->id}}
                 </th>
                 <td>
-                    {{$chequeo->codigo}}
+                    {{$chequeo->codigo_alarma}}
                 </td>
                 <td>
                     {{$chequeo->fecha}}
