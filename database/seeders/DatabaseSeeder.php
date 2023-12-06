@@ -13,6 +13,7 @@ use App\Models\RedAviso;
 use App\Models\Alarma;
 use App\Models\Permiso;
 use App\Models\PermisoPerfil;
+use App\Models\Chequeo;
 
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +62,7 @@ class DatabaseSeeder extends Seeder
         ");
         $this->call(AdminSeeder::class);
         Alarma::factory(70)->create();
-
+        Chequeo::factory(70)->create();
         Permiso::factory(1000)->create();
         DB::statement("
             DELETE p1

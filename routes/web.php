@@ -101,6 +101,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::patch('/fcm-token', [Mensajes::class, 'updateToken'])->name('fcmToken');
     Route::post('/getAlarmas', [Mensajes::class, 'getAlarmas'])->name('getAlarmas');
+// web.php
+    Route::get('/chequeos/{alarmaId}', 'ChequeoController@verChequeos')->name('chequeos.verChequeos');
 
 });
 

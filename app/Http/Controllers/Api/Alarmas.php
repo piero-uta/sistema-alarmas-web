@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Comunidad;
 use App\Models\Direccion;
 use App\Models\Alarma;
+use App\Models\Chequeo;
 
 class Alarmas extends Controller
 {
@@ -106,8 +107,22 @@ class Alarmas extends Controller
         $usuarioComunidad = UsuarioComunidad::where('comunidad_id',$comunidad_id)
         ->where('usuario_id', $user->id)
         ->first();
-        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
 
+        if(!$usuarioComunidad){
+            return response()->json([
+                'success'=>false,
+                'message'=>'No se puede enviar la notificacion, el usuario no pertenece a esta comunidad'
+            ],500);
+        }
+
+        $direccion = Direccion::where('id', $usuarioComunidad->direccion_id)->first();
+        if(!$direccion){
+            return response()->json([
+                'success'=>false,
+                'message'=>'No se puede enviar la notificacion, no se encontro la direccion del usuario'
+            ],500);
+        }
+        
 
         $title = "Alarma de vecino: ".$user->nombre;
         $body = "Calle: ".$direccion->calle." #".$direccion->numero;
@@ -124,40 +139,58 @@ class Alarmas extends Controller
         $fecha_sql = date('Y-m-d');
         $hora_sql = date('H:i:s');
 
-        if(empty($tokens)){
-            return "No se pueden enviar notificaciones, no hay tokens disponibles.";
-        }else{
+        // if(empty($tokens)){
+            // return "No se pueden enviar notificaciones, no hay tokens disponibles.";
+        // }else{
             $alarma = new Alarma;
             $alarma->direccion_id = $direccion->id;
             $alarma->fecha = $fecha_sql;
             $alarma->hora = $hora_sql;
             $alarma->nombre_usuario = $user->nombre;
-            $alarma->codigo = $direccion->codigo;
+            $alarma->codigo = $direccion->codigo;            
             $alarma->save();
+      
+            /// Crear los datos de chequeos
+            $chequeo = new Chequeo;
+            $chequeo->alarma_id = $alarma->id;
+            $chequeo->usuario_chequeo = null;
+            $chequeo->estado_chequeo = 0;
+            $chequeo->vecino_chequeo = $alarma->nombre_usuario;
+            $chequeo->observacion = '';
+            $chequeo->tipo_chequeo = null;
+            $chequeo->tipo_evento = null;    
 
-            return Larafirebase::withTitle($title)
-            ->withBody($body)
-            ->withImage('https://img.freepik.com/vector-gratis/senal-advertencia-triangulo-rojo-ilustracion-arte-vectorial_56104-865.jpg?w=740&t=st=1695986238~exp=1695986838~hmac=e4584b1d466880abfdd0ff55f35ca1150b61a04a48cad577ea888fdf4ef02e8c')
-            ->withIcon($avatar)
-            ->withSound('notification.ogg')
-            ->withClickAction('FLUTTER_NOTIFICATION_CLICK')
-            ->withPriority('high')
-            ->withAdditionalData([
-                'color' => '#rrggbb',
-                'badge' => 0,
-                'id' => $alarma->id,
-                'fecha' => $fecha,
-                'hora' => $hora,
-                'titulo' => $comunidad->razon_social,
-                'direccion' => 'Calle: '.$direccion->calle.' '.$direccion->numero.', piso'.$direccion->piso,
-                'direccion_cod' => 'Codigo: '.$direccion->codigo,
-                'latitud' => $direccion->latitud,
-                'longitud' => $direccion->longitud,
-                'nombre' => 'De '.$user->nombre,
-                'logo' => $comunidad->logo
-            ])
-            ->sendNotification($tokens);
-        }
+            $chequeo->save();
+
+            if(!empty($tokens)){
+                return Larafirebase::withTitle($title)
+                ->withBody($body)
+                ->withImage('https://img.freepik.com/vector-gratis/senal-advertencia-triangulo-rojo-ilustracion-arte-vectorial_56104-865.jpg?w=740&t=st=1695986238~exp=1695986838~hmac=e4584b1d466880abfdd0ff55f35ca1150b61a04a48cad577ea888fdf4ef02e8c')
+                ->withIcon($avatar)
+                ->withSound('notification.ogg')
+                ->withClickAction('FLUTTER_NOTIFICATION_CLICK')
+                ->withPriority('high')
+                ->withAdditionalData([
+                    'color' => '#rrggbb',
+                    'badge' => 0,
+                    'id' => $alarma->id,
+                    'fecha' => $fecha,
+                    'hora' => $hora,
+                    'titulo' => $comunidad->razon_social,
+                    'direccion' => 'Calle: '.$direccion->calle.' '.$direccion->numero.', piso'.$direccion->piso,
+                    'direccion_cod' => 'Codigo: '.$direccion->codigo,
+                    'latitud' => $direccion->latitud,
+                    'longitud' => $direccion->longitud,
+                    'nombre' => 'De '.$user->nombre,
+                    'logo' => $comunidad->logo
+                ])
+                ->sendNotification($tokens);
+            }else{
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'La alarma fue creada pero no se pueden enviar notificaciones, no hay tokens disponibles.'
+                ],500);
+            }
     }
 
     public function getComunities(Request $request)

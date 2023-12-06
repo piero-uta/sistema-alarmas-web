@@ -16,12 +16,15 @@ class Chequeo extends Model
         'alarma_id',
         'fecha',
         'hora',
-        'usuario_chqueo',
+        'usuario_chequeo',
         'estado_chequeo',
         'vecino_chequeo',
         'observacion',
         'tipo_chequeo',
         'tipo_evento',
     ];
-
+    public function alarma()
+    {
+        return $this->belongsTo(Alarma::class, 'alarma_id', 'id');
+    }
 }

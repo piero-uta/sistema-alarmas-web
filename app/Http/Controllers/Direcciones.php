@@ -115,7 +115,6 @@ class Direcciones extends Controller
         $direccion->numero = $request->numero;
         $direccion->representante = $request->representante;
         $direccion->comunidad_id = $comunidad_id;
-
         $direccion->codigo = $request->codigo;
         $direccion->piso = $request->piso;
         $direccion->latitud = $request->latitud;
