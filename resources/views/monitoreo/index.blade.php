@@ -7,7 +7,7 @@
 
     <div id="map" style="height: 400px; width: 100%; z-index: 0; margin: 3rem 0"></div>
 
-    <button onclick="reload()">Recargar</button>
+    {{-- <button onclick="reload()">Recargar</button> --}}
     <!-- Agrega la tabla debajo del mapa -->
     <div class="table-responsive">
         <table class="table table-bordered table-striped" id="tablaDatos">
@@ -70,7 +70,7 @@
                         <td>${alarma.nombre_usuario}</td>
                         <td>${alarma.codigo}</td>
                         <td>
-                            <button onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
+                            <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
                         </td>
                     </tr>`;
         tbody.innerHTML += fila;

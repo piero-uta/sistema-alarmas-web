@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('alarma_id')->constrained('alarmas')->unique();
-            $table->date('fecha')->nullable();
-            $table->time('hora')->nullable();
+            $table->date('fecha')->nullable()->default(null);
+            $table->time('hora')->nullable()->default(null);
             // guardia
             $table->string('usuario_chequeo')->nullable()->default(null);   
             // bool chequeo

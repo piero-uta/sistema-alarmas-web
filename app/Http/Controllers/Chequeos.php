@@ -49,6 +49,8 @@ class Chequeos extends Controller
             $chequeoId = $request->input('id'); // Obtén el valor del parámetro "chequeo_id" de la solicitud
 
             $comunidadId = Session::get('comunidad_id'); // Obtén el ID de la comunidad desde la sesión
+            $comunidad = Comunidad::find($comunidadId);
+            $parametros['comunidad'] = $comunidad;
             // Obtener direcciones de la comunidad
             $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
             // Obtener las alarmas de las direcciones
@@ -62,7 +64,8 @@ class Chequeos extends Controller
             ->where('chequeos.id', $chequeoId)
             ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 
             'alarmas.hora as hora_alarma', 'direcciones.calle as calle_direccion',
-             'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario')
+             'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario', 
+             'direcciones.latitud as latitud', 'direcciones.longitud as longitud')
             ->first();
             //dd($chequeo);
             if(!$chequeo)
