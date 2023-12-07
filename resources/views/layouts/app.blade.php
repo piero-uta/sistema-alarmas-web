@@ -11,6 +11,8 @@
 
 
     <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5Rl5Mvb6jUSL7rwwq5RkuQjDgC5f9SIzlwEa3Gp" crossorigin="anonymous">
+
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -110,6 +112,7 @@
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
 
+    
     {{-- TO DO: descargar esto  --}}
 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>

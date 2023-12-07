@@ -29,7 +29,7 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="/comunidades">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-building"></i>
                     <span>Comunidades</span></a>
             </li>
         @endif
@@ -44,7 +44,7 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="/usuarios">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="far fa-user"></i>
                     <span>Usuarios</span></a>
             </li>
         @endif
@@ -60,7 +60,7 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="/direcciones">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-address-book"></i>
                     <span>Direcciones</span></a>
             </li>
         @endif
@@ -75,7 +75,7 @@
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
                 <a class="nav-link" href="/red-avisos">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-bell"></i>
                     <span>Red de Avisos</span></a>
             </li>
         @endif
@@ -90,7 +90,7 @@
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
                 <a class="nav-link" href="/monitoreo">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                     <span>Dashboard de Monitoreo</span></a>
             </li>
         @endif
@@ -105,7 +105,7 @@
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
                 <a class="nav-link" href="/asignacionPerfiles">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-unlock-alt"></i>
                     <span>Asignacion de Perfiles</span></a>
             </li>
         @endif
@@ -120,7 +120,7 @@
             <!-- Nav Item - Red de Avisos -->
             <li class="nav-item active">
                 <a class="nav-link" href="/perfiles">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-users"></i>
                     <span>Perfiles</span></a>
             </li>
         @endif

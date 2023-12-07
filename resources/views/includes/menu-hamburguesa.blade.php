@@ -7,7 +7,7 @@
         {{-- Home --}}
         <li class="hamburguer__item">
             <a href="{{ route('usuarios.index') }}" class="hamburguer__item-link" title="Usuarios"><i
-                    class="hamburguer__item-icon fa-solid fa-user"></i>Usuarios</a>
+                    class="fas fa-user "></i>Usuarios</a>
         </li>
 
         <li class="hamburguer__item">
