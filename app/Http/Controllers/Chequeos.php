@@ -141,7 +141,7 @@ class Chequeos extends Controller
         //dd($request->all());
         $chequeo->save();
 
-        return redirect()->route('chequeos.index');
+        return redirect()->route('monitoreo.index');
     }
    
 }

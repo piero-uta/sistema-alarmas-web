@@ -7,7 +7,9 @@ use App\Models\Comunidad;
 use App\Models\Direccion;
 use App\Models\Alarma;
 use Illuminate\Support\Facades\Session;
-use App\Models\chequeo;
+use App\Models\Chequeo;
+
+
 class Monitoreo extends Controller
 {
     //
@@ -46,9 +48,10 @@ class Monitoreo extends Controller
         // hacer un join de alarma con chequeo
         $chequeos = chequeo::join('alarmas', 'alarmas.id', '=', 'chequeos.alarma_id')
             ->whereIn('alarmas.direccion_id', $direcciones->pluck('id'))
-            ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma')
+            ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma',)
             ->get();
 
+        
 
         return response()->json([
             'alarmas' => $alarmas,

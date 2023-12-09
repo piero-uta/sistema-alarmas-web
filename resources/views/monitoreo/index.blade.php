@@ -16,8 +16,9 @@
                     <th>Alarma ID</th>
                     <th>Fecha Alarma</th>
                     <th>Hora Alarma</th>
-                    <th>nombre usuario</th>
-                    <th>codigo</th>
+                    <th>Nombre usuario</th>
+                    <th>Dirección</th>
+                    <th>Chequeado</th>
                     <th>Acciones</th>
                     <!-- Agrega más columnas según tus necesidades -->
                 </tr>
@@ -62,13 +63,15 @@
     for (let i = 0; i < alarmas.length; i++) {
         const alarma = alarmas[i];
         const chequeo = chequeos.find(c => c.id_alarma === alarma.id);
+        const direccion = direcciones.find(d => d.id === alarma.direccion_id);
 
         const fila = `<tr>
                         <td>${alarma.id || ''}</td>
                         <td>${alarma.fecha || ''}</td>
                         <td>${alarma.hora || ''}</td>
                         <td>${alarma.nombre_usuario}</td>
-                        <td>${alarma.codigo}</td>
+                        <td>${direccion.calle} ${direccion.numero}</td>
+                        <td>${chequeo.estado_chequeo == 1 ? "Si": "No"}</td>
                         <td>
                             <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
                         </td>
