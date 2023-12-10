@@ -76,15 +76,25 @@
                 <input type="text" class="form-control" name="observacion" 
                 value="{{ old('observacion')==null ? ( isset($chequeo)?$chequeo->observacion:'' ) : old('observacion') }}">
             </div>
+            {{-- selector de tipo de chequeo --}}
             <div class="form-group">
                 <label for="tipo_chequeo" class="label">Tipo chequeo*</label>
-                <input type="text" class="form-control" name="tipo_chequeo" 
-                value="{{ old('tipo_chequeo')==null ? ( isset($chequeo)?$chequeo->tipo_chequeo:'' ) : old('tipo_chequeo') }}">
+                <select class="form-control" name="tipo_chequeo">
+                    <option value="1" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==1 ? 'selected' : '' ) : ( old('tipo_chequeo')==1 ? 'selected' : '' ) }}>Presencial</option>
+                    <option value="2" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==2 ? 'selected' : '' ) : ( old('tipo_chequeo')==2 ? 'selected' : '' ) }}>Llamada</option>
+                    <option value="3" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==3 ? 'selected' : '' ) : ( old('tipo_chequeo')==3 ? 'selected' : '' ) }}>Mensaje</option>
+                    <option value="4" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==4 ? 'selected' : '' ) : ( old('tipo_chequeo')==4 ? 'selected' : '' ) }}>Otro</option>
+                </select>
             </div>
+
             <div class="form-group">
                 <label for="tipo_evento" class="label">Tipo evento*</label>
-                <input type="text" class="form-control" name="tipo_evento" 
-                value="{{ old('tipo_evento')==null ? ( isset($chequeo)?$chequeo->tipo_evento:'' ) : old('tipo_evento') }}">
+                <select class="form-control" name="tipo_evento">
+                    <option value="1" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==1 ? 'selected' : '' ) : ( old('tipo_evento')==1 ? 'selected' : '' ) }}>Robo</option>
+                    <option value="2" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==2 ? 'selected' : '' ) : ( old('tipo_evento')==2 ? 'selected' : '' ) }}>Robo</option>
+                    <option value="3" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==3 ? 'selected' : '' ) : ( old('tipo_evento')==3 ? 'selected' : '' ) }}>Falsa Alarma</option>
+                    <option value="4" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==4 ? 'selected' : '' ) : ( old('tipo_evento')==4 ? 'selected' : '' ) }}>Otro</option>
+                </select>
             </div>
             <div class="d-flex justify-content-end py-2">
                 <button type="submit" class="btn btn-primary">Guardar</button>
