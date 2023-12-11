@@ -107,19 +107,7 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    {{-- editar --}}
-                    <a type="button" class="btn btn-primary" href="#" id="btn_editar_comunidad">Editar</a>
-                    {{-- Crear admin --}}
-                    <a type="button" class="btn btn-primary" href="#" id="btn_editar_comunidad">Gestionar
-                        comunidad</a>
-                    {{-- eliminar form --}}
-                    <form action="#" method="POST" id="form_eliminar_comunidad">
-                        @csrf
-                        <input type="hidden" name="id" id="id_comunidad_eliminar" required>
-                        <button type="submit" class="btn btn-danger" id="btn_eliminar_comunidad">Eliminar</button>
-                    </form>
-
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>

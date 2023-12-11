@@ -127,15 +127,9 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 
-                    <a type="button" class="btn btn-primary" href="#" id="btn_editar_usuario">Editar</a>
-
-                    <form action="#" method="POST" id="form_eliminar_usuario">
-                        @csrf
-                        <input type="hidden" name="id" id="id_usuario_eliminar" required>
-                        <button type="submit" class="btn btn-danger" id="btn_eliminar_usuario">Eliminar</button>
-                    </form>
+                    
 
                 </div>
             </div>
