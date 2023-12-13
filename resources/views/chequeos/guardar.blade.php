@@ -80,20 +80,26 @@
             <div class="form-group">
                 <label for="tipo_chequeo" class="label">Tipo chequeo*</label>
                 <select class="form-control" name="tipo_chequeo">
-                    <option value="1" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==1 ? 'selected' : '' ) : ( old('tipo_chequeo')==1 ? 'selected' : '' ) }}>Presencial</option>
+                    @foreach ($tiposChequeo as $tipoChequeo)
+                        <option value="{{$tipoChequeo->id}}" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==$tipoChequeo->id ? 'selected' : '' ) : ( old('tipo_chequeo')==$tipoChequeo->id ? 'selected' : '' ) }}>{{$tipoChequeo->nombre}}</option>
+                    @endforeach
+                    {{-- <option value="1" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==1 ? 'selected' : '' ) : ( old('tipo_chequeo')==1 ? 'selected' : '' ) }}>Presencial</option>
                     <option value="2" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==2 ? 'selected' : '' ) : ( old('tipo_chequeo')==2 ? 'selected' : '' ) }}>Llamada</option>
                     <option value="3" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==3 ? 'selected' : '' ) : ( old('tipo_chequeo')==3 ? 'selected' : '' ) }}>Mensaje</option>
-                    <option value="4" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==4 ? 'selected' : '' ) : ( old('tipo_chequeo')==4 ? 'selected' : '' ) }}>Otro</option>
+                    <option value="4" {{ old('tipo_chequeo')==null ? ( isset($chequeo) && $chequeo->tipo_chequeo==4 ? 'selected' : '' ) : ( old('tipo_chequeo')==4 ? 'selected' : '' ) }}>Otro</option> --}}
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="tipo_evento" class="label">Tipo evento*</label>
                 <select class="form-control" name="tipo_evento">
-                    <option value="1" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==1 ? 'selected' : '' ) : ( old('tipo_evento')==1 ? 'selected' : '' ) }}>Robo</option>
+                    @foreach ($tiposEvento as $tipoEvento)
+                        <option value="{{$tipoEvento->id}}" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==$tipoEvento->id ? 'selected' : '' ) : ( old('tipo_evento')==$tipoEvento->id ? 'selected' : '' ) }}>{{$tipoEvento->nombre}}</option>
+                    @endforeach
+                    {{-- <option value="1" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==1 ? 'selected' : '' ) : ( old('tipo_evento')==1 ? 'selected' : '' ) }}>Robo</option>
                     <option value="2" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==2 ? 'selected' : '' ) : ( old('tipo_evento')==2 ? 'selected' : '' ) }}>Robo</option>
                     <option value="3" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==3 ? 'selected' : '' ) : ( old('tipo_evento')==3 ? 'selected' : '' ) }}>Falsa Alarma</option>
-                    <option value="4" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==4 ? 'selected' : '' ) : ( old('tipo_evento')==4 ? 'selected' : '' ) }}>Otro</option>
+                    <option value="4" {{ old('tipo_evento')==null ? ( isset($chequeo) && $chequeo->tipo_evento==4 ? 'selected' : '' ) : ( old('tipo_evento')==4 ? 'selected' : '' ) }}>Otro</option> --}}
                 </select>
             </div>
             <div class="d-flex justify-content-end py-2">

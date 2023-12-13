@@ -49,6 +49,7 @@ class Monitoreo extends Controller
         $chequeos = chequeo::join('alarmas', 'alarmas.id', '=', 'chequeos.alarma_id')
             ->whereIn('alarmas.direccion_id', $direcciones->pluck('id'))
             ->select('chequeos.*','alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 'alarmas.hora as hora_alarma',)
+            ->orderBy('chequeos.id', 'desc')
             ->get();
 
         

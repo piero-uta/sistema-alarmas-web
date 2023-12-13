@@ -15,6 +15,8 @@ use App\Models\Direccion;
 use App\Models\Alarma;
 use App\Models\Chequeo;
 use Carbon\Carbon;
+use App\Models\TipoChequeo;
+use App\Models\TipoEvento;
 
 class Chequeos extends Controller
 {
@@ -95,7 +97,10 @@ class Chequeos extends Controller
 
             $parametros['chequeo'] = $chequeo;            
         }
-
+        $tipoChequeos = TipoChequeo::all();
+        $tipoEventos = TipoEvento::all();
+        $parametros['tiposChequeo'] = $tipoChequeos;
+        $parametros['tiposEvento'] = $tipoEventos;
         return view('chequeos.guardar', $parametros);
     }
 
