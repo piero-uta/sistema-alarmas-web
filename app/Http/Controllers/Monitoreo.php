@@ -43,7 +43,7 @@ class Monitoreo extends Controller
         //obtener todas las direcciones de la comunidad
         $direcciones = Direccion::where('comunidad_id', $comunidad_id)->get();
         // Obtener alarmas de las direcciones con sus chequeos
-        $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
+        $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->orderBy('id', 'desc')->get();
 
         // hacer un join de alarma con chequeo
         $chequeos = chequeo::join('alarmas', 'alarmas.id', '=', 'chequeos.alarma_id')
