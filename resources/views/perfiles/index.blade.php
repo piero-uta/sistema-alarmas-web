@@ -40,27 +40,27 @@
                             @endif
                         </td>
                         <td>
-                            <div class="d-flex">
-                                {{-- ver --}}
-                                {{-- @if (in_array('Perfiles-r', $permisos))
-                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;">Ver</button>
-                                @endif --}}
-                                {{-- editar --}}
-                                @if (in_array('Perfiles-u', $permisos))
-                                    <a href="{{ route('perfiles.crearEditar') }}?id={{ $perfil->id }}" type="button"
-                                        class="btn btn-primary" style="margin-right: 20px;">Editar</a>
-                                @endif
-                                {{-- eliminar --}}
-                                @if (in_array('Perfiles-d', $permisos))
-                                    <form method="POST" action="{{ route('perfiles.eliminar') }}">
-                                        @csrf
-                                        <input type="hidden" name="id" value={{ $perfil->id }}>
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                @endif
-                        </td>
-    </div>
-    </tr>
+                        <div class="d-flex">
+                            {{-- editar --}}
+                            @if (in_array('Perfiles-u', $permisos))
+                                <a href="{{ route('perfiles.crearEditar') }}?id={{ $perfil->id }}" type="button"style="margin-right: 20px;"
+                                    class="btn btn-primary">
+                                    <i class="fas fa-edit"></i> 
+                                </a>
+                            @endif
+                            {{-- eliminar --}}
+                            @if (in_array('Perfiles-d', $permisos))
+                                <form method="POST" action="{{ route('perfiles.eliminar') }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $perfil->id }}">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> 
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </td>
+                </tr>
     @endforeach
 
     </tbody>

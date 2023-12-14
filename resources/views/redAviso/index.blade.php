@@ -75,13 +75,14 @@
                                 Inactivo
                             @endif
                         </td>
-                        <td>
+                        <td class="acciones-container" style="display: flex; gap: 5px;">
                             @if (in_array('RedAviso-u', $permisos))
-                                <form method="GET" class="form form__container"
-                                    action="{{ route('red-avisos.crearEditar') }}">
+                                <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
-                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-right: 20px;">
+                                        <i class="fas fa-edit"></i> 
+                                    </button>
                                 </form>
                             @endif
                             @if (in_array('RedAviso-d', $permisos))
@@ -89,7 +90,9 @@
                                     @csrf
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> 
+                                    </button>
                                 </form>
                             @endif
                         </td>

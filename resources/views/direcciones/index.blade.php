@@ -55,24 +55,31 @@
                         <td>
                             {{ $direccion->codigo }}
                         </td>
-                        <td>
-                            {{-- modal ver usuarios de la direccion, llamar a funcion --}}
-                            <button type="button" class="btn btn-primary" onclick="modalUsuariosDireccion({{ $direccion }})">
-                                Ver Usuarios
+                        <!-- Reemplaza la sección 'Acciones' con íconos por esta sección -->
+                        <td class="acciones-container" style="display: flex; gap: 5px; ">
+                            <!-- modal ver usuarios de la direccion, llamar a funcion -->
+                            <button type="button" class="btn btn-primary"style="margin-right: 20px;" onclick="modalUsuariosDireccion({{ $direccion }})">
+                                <i class="fas fa-users"></i>
                             </button>
+                            
                             @if (in_array('DireccionesUsuario-u', $permisos))
-                                <a type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                    href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">Editar</a>
+                                <a type="button" class="btn btn-primary" style="margin-right: 20px;" href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                             @endif
-                            {{-- eliminar --}}
+                            
+                            <!-- eliminar -->
                             @if (in_array('DireccionesUsuario-d', $permisos))
                                 <form method="POST" action="{{ route('direcciones.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $direccion->id }}">
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
                                 </form>
                             @endif
                         </td>
+
 
                     </tr>
                 @endforeach

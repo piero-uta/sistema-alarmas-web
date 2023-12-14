@@ -79,26 +79,32 @@
                                 Inactivo
                             @endif
                         </td>
-                        <td>
-                            <div class="d-flex">
-                                {{-- ver --}}
-                                @if (in_array('Usuarios-r', $permisos))
-                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                        onClick="modalUsuario({{ $usuario }})">Ver</button>
-                                @endif
-                                {{-- editar --}}
-                                @if (in_array('Usuarios-u', $permisos))
-                                    <a type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                        href="{{ route('usuarios.crearEditar') }}?id={{ $usuario->id }}">Editar</a>
-                                @endif
-                                {{-- eliminar --}}
-                                @if (in_array('Usuarios-d', $permisos))
-                                    <form method="POST" action="{{ route('usuarios.eliminar') }}">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $usuario->id }}">
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                @endif
+                        <td class="acciones-container" style="display: flex; gap: 5px; ">
+                            {{-- ver --}}
+                            @if (in_array('Usuarios-r', $permisos))
+                                <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalUsuario({{ $usuario }})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            @endif
+                            
+                            {{-- editar --}}
+                            @if (in_array('Usuarios-u', $permisos))
+                                <a type="button" class="btn btn-primary" style="margin-right: 20px;"
+                                    href="{{ route('usuarios.crearEditar') }}?id={{ $usuario->id }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            @endif
+                            
+                            {{-- eliminar --}}
+                            @if (in_array('Usuarios-d', $permisos))
+                                <form method="POST" action="{{ route('usuarios.eliminar') }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $usuario->id }}">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            @endif
                         </td>
     </div>
     </tr>

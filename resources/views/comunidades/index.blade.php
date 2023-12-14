@@ -64,26 +64,33 @@
                                 Inactivo
                             @endif
                         </td>
-                        <td>
-                            <div class="d-flex">
-                                @if (in_array('Comunidad-r', $permisos))
-                                    <button type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                        onClick="modalComunidad({{ $comunidad }})">Ver</button>
-                                @endif
-                                {{-- editar --}}
-                                @if (in_array('Comunidad-u', $permisos))
-                                    <a type="button" class="btn btn-primary"style="margin-right: 20px;"
-                                        href="{{ route('comunidades.crearEditar') }}?id={{ $comunidad->id }}">Editar</a>
-                                @endif
-                                {{-- eliminar --}}
-                                @if (in_array('Comunidad-d', $permisos))
-                                    <form method="POST" action="{{ route('comunidades.eliminar') }}">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $comunidad->id }}">
-                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                    </form>
-                                @endif
-                            </div>
+                        <td class="acciones-container" style="display: flex; gap: 5px;">
+                            {{-- ver --}}
+                            @if (in_array('Comunidad-r', $permisos))
+                                <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalComunidad({{ $comunidad }})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            @endif
+                            
+                            {{-- editar --}}
+                            @if (in_array('Comunidad-u', $permisos))
+                                <a type="button" class="btn btn-primary" style="margin-right: 20px;"
+                                    href="{{ route('comunidades.crearEditar') }}?id={{ $comunidad->id }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            @endif
+                            
+                            {{-- eliminar --}}
+                            @if (in_array('Comunidad-d', $permisos))
+                                <form method="POST" action="{{ route('comunidades.eliminar') }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $comunidad->id }}">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
 
