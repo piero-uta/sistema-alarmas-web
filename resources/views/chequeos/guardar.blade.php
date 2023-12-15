@@ -65,12 +65,6 @@
                 <input type="text" class="form-control" name="usuario_chequeo"
                 value="{{ old('usuario_chequeo')==null ? ( isset($chequeo)?$chequeo->usuario_chequeo:'' ) : old('usuario_chequeo') }}"readonly>
             </div>
-        
-            <div class="form-group">
-                <label for="vecino_chequeo" class="label">Vecino chequeo*</label>
-                <input type="text" class="form-control" name="vecino_chequeo" required
-                value="{{ old('vecino_chequeo')==null ? ( isset($chequeo)?$chequeo->vecino_chequeo:'' ) : old('vecino_chequeo') }}"readonly>
-            </div>
             <div class="form-group">
                 <label for="observacion" class="label">Observacion*</label>
                 <input type="text" class="form-control" name="observacion" 
