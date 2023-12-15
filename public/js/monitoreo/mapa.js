@@ -38,7 +38,7 @@ function generarMarcadores(alarmas = null){
 
             for (let i = 0; i < alarmas.length; i++) {
                 const alarma = alarmas[i];
-                if( alarma.direccion_id === direccion.id ){
+                if( alarma.chequeo == 0 && alarma.direccion_id === direccion.id ){
                     pinBackground.borderColor = "#FF0000";
                     pinBackground.background = "#FF0000";
                     pinBackground.glyphColor = "#FFFFFF";

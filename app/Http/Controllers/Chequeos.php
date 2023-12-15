@@ -87,8 +87,11 @@ class Chequeos extends Controller
                 $user = Auth::user();
                 $chequeo->usuario_chequeo = $user->nombre;
                 $chequeo->estado_chequeo = 1;
+                $alarma = Alarma::find($chequeo->alarma_id);
+                $alarma->chequeo = 1;
                 $chequeo->fecha = $fechaChile;
-                $chequeo->hora = $horaChile;            
+                $chequeo->hora = $horaChile; 
+                $alarma->save();           
                 $chequeo->save();
                  
                 //dd($chequeo);       
