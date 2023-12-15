@@ -13,7 +13,7 @@
         <table class="table table-bordered table-striped" id="tablaDatos">
             <thead class="thead-dark">
                 <tr>
-                    <th>Alarma ID</th>
+                    <th></th>
                     <th>Fecha Alarma</th>
                     <th>Hora Alarma</th>
                     <th>Nombre usuario</th>
@@ -59,25 +59,31 @@
         const tbody = document.getElementById('tablaDatos').querySelector('tbody');
         tbody.innerHTML = '';
 
-    // Itera sobre las alarmas y agrega filas a la tabla
-    for (let i = 0; i < alarmas.length; i++) {
-        const alarma = alarmas[i];
-        const chequeo = chequeos.find(c => c.id_alarma === alarma.id);
-        const direccion = direcciones.find(d => d.id === alarma.direccion_id);
+        // Itera sobre las alarmas y agrega filas a la tabla
+        for (let i = 0; i < alarmas.length; i++) {
+            const alarma = alarmas[i];
+            const chequeo = chequeos.find(c => c.id_alarma === alarma.id);
+            const direccion = direcciones.find(d => d.id === alarma.direccion_id);
 
-        const fila = `<tr>
-                        <td>${alarma.id || ''}</td>
-                        <td>${alarma.fecha || ''}</td>
-                        <td>${alarma.hora || ''}</td>
-                        <td>${alarma.nombre_usuario}</td>
-                        <td>${direccion.calle} ${direccion.numero}</td>
-                        <td>${chequeo.estado_chequeo == 1 ? "Si": "No"}</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
-                        </td>
-                    </tr>`;
-        tbody.innerHTML += fila;
-    }
+            // Agrega una clase y el ícono de FontAwesome en función del estado de chequeo
+            const claseFila = chequeo.estado_chequeo == 1 ? '' : 'fila-alerta';
+
+            const iconoChequeo = chequeo.estado_chequeo == 1 ? '' : '<i class="fas fa-exclamation-triangle text-danger"></i>';
+
+            const fila = `<tr class="${claseFila}" style="border: ${chequeo.estado_chequeo == 1 ? '' : '2px solid red; border-radius: 10px; background-color: #f8d7da;'}">
+                            <td>${iconoChequeo || ''}</td>
+                   
+                            <td>${alarma.fecha || ''}</td>
+                            <td>${alarma.hora || ''}</td>
+                            <td>${alarma.nombre_usuario}</td>
+                            <td>${direccion.calle} ${direccion.numero}</td>
+                            <td>${chequeo.estado_chequeo == 1 ? "Si": "No"}</td>
+                            <td>
+                                <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
+                            </td>
+                        </tr>`;
+            tbody.innerHTML += fila;
+            }
         }
 
         async function obtenerAlarmas() {
