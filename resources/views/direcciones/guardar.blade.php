@@ -73,8 +73,8 @@
     <input class="input" type="text" name="latitud" id="latitud" value="{{ old('latitud')==null ? ( isset($direccion)?$direccion->latitud:'' ) : old('latitud') }}" hidden>
     <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($direccion)?$direccion->longitud:'' ) : old('longitud') }}" hidden>
 
-    <div class="d-grid gap-2 py-2">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+    <div class="d-flex justify-content-end py-2">
+        <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
         <a class="btn btn-danger" href="javascript:history.back()">Cancelar</a>
     </div>
 </form>

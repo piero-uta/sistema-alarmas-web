@@ -57,9 +57,6 @@ class Chequeos extends Controller
             $direcciones = Direccion::where('comunidad_id', $comunidadId)->get();
             // Obtener las alarmas de las direcciones
             $alarmas = Alarma::whereIn('direccion_id', $direcciones->pluck('id'))->get();
-            // obtener chqueos de las alarmas
-            //$chequeos = Chequeo::whereIn('alarma_id', $alarmas->pluck('id'))->get();
-            // join de alarmas y chequeos
 
             $chequeo = Chequeo::join('alarmas', 'chequeos.alarma_id', '=', 'alarmas.id')
             ->join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
@@ -69,11 +66,11 @@ class Chequeos extends Controller
              'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario', 
              'direcciones.latitud as latitud', 'direcciones.longitud as longitud')
             ->first();
-            //dd($chequeo);
+            
             if(!$chequeo)
             {
                 //agregar error a parametros
-                $parametros['error'] = 'Chequeo no encontrada';
+                $parametros['error'] = 'Chequeo no encontrado';
                 return redirect()->route('chequeos.index')->with($parametros);
             }       
 
@@ -102,7 +99,7 @@ class Chequeos extends Controller
             }
 
         }else{
-            $chequeo = new Chequeo();
+            return redirect()->route('chequeos.index');
         }
 
         // Obtener la fecha y hora actual de Chile
@@ -119,10 +116,7 @@ class Chequeos extends Controller
             $chequeo->fecha = $fechaChile;
             $chequeo->hora = $horaChile; 
             $alarma->save();           
-            $chequeo->save();
-                
-            //dd($chequeo);       
-            //dd($chequeo);       
+            $chequeo->save();     
         }
 
 

@@ -106,7 +106,7 @@
     @if (in_array('RedAviso-c', $permisos))
         @if ($direccion_id != '')
             {{-- boton crear --}}
-            <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
+            <form method="GET" class="d-flex justify-content-end py-2" action="{{ route('red-avisos.crearEditar') }}">
                 <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>

@@ -50,16 +50,6 @@
         <input type="email" class="form-control" name="email"
         value="{{ old('email')==null ? ( isset($comunidad)?$comunidad->email:'' ) : old('email') }}">
     </div>
-    {{-- <div class="mb-3">
-        <label for="calle" class="form-label">Calle*</label>
-        <input type="text" class="form-control" name="calle" required id ="calle"
-        value="{{ old('calle')==null ? ( isset($comunidad)?$comunidad->calle:'' ) : old('calle') }}">
-    </div>
-    <div class="mb-3">
-        <label for="numero" class="form-label">Numero*</label>
-        <input type="text" class="form-control" name="numero" required id ="numero"
-        value="{{ old('numero')==null ? ( isset($comunidad)?$comunidad->numero:'' ) : old('numero') }}">
-    </div> --}}
     <div class="mb-3">
         <label for="direccion" class="form-label">Direccion*</label>
         <input type="text" class="form-control" name="direccion" required id ="direccion"
