@@ -76,27 +76,6 @@ class Chequeos extends Controller
                 $parametros['error'] = 'Chequeo no encontrada';
                 return redirect()->route('chequeos.index')->with($parametros);
             }       
-            // Compara el estado actual con el estado enviado desde el formulario
-            $parametros['chequeo'] = new Chequeo();
-            // Obtener la fecha y hora actual de Chile
-            $fechaChile = Carbon::now('America/Santiago')->toDateString(); // Obtiene la fecha en formato 'Y-m-d'
-            // Puedes formatear la fecha y hora según tus necesidades
-            $horaChile = Carbon::now('America/Santiago')->toTimeString(); // Obtiene la hora en formato 'H:i:s'
-            //dd($fechaChile, $horaChile)
-            if($chequeo->usuario_chequeo == null && $chequeo->alarma_id != null){
-                $user = Auth::user();
-                $chequeo->usuario_chequeo = $user->nombre;
-                $chequeo->estado_chequeo = 1;
-                $alarma = Alarma::find($chequeo->alarma_id);
-                $alarma->chequeo = 1;
-                $chequeo->fecha = $fechaChile;
-                $chequeo->hora = $horaChile; 
-                $alarma->save();           
-                $chequeo->save();
-                 
-                //dd($chequeo);       
-                //dd($chequeo);       
-            }
 
             $parametros['chequeo'] = $chequeo;            
         }
@@ -125,6 +104,28 @@ class Chequeos extends Controller
         }else{
             $chequeo = new Chequeo();
         }
+
+        // Obtener la fecha y hora actual de Chile
+        $fechaChile = Carbon::now('America/Santiago')->toDateString(); // Obtiene la fecha en formato 'Y-m-d'
+        // Puedes formatear la fecha y hora según tus necesidades
+        $horaChile = Carbon::now('America/Santiago')->toTimeString(); // Obtiene la hora en formato 'H:i:s'
+        //dd($fechaChile, $horaChile)
+        if($chequeo->usuario_chequeo == null && $chequeo->alarma_id != null){
+            $user = Auth::user();
+            $chequeo->usuario_chequeo = $user->nombre;
+            $chequeo->estado_chequeo = 1;
+            $alarma = Alarma::find($chequeo->alarma_id);
+            $alarma->chequeo = 1;
+            $chequeo->fecha = $fechaChile;
+            $chequeo->hora = $horaChile; 
+            $alarma->save();           
+            $chequeo->save();
+                
+            //dd($chequeo);       
+            //dd($chequeo);       
+        }
+
+
         $chequeo->usuario_chequeo = $request->usuario_chequeo;
         $chequeo->vecino_chequeo = $request->vecino_chequeo;
         $chequeo->observacion = $request->observacion;
