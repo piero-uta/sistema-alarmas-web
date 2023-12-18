@@ -15,7 +15,9 @@ use Carbon\Carbon;
 use App\Http\Controllers\Monitoreo;
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    // redirigir a login 
+    return redirect()->route('login');
 })->name('welcome');
 
 // Login de usuarios
