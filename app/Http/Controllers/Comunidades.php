@@ -175,7 +175,9 @@ class Comunidades extends Controller
         Session::put('comunidad_logo', $comunidad->logo);
         Session::put('perfil_actual', $perfil->nombre);
         Session::put('permisos', $this->getPermisos($comunidad));
-        return redirect()->back();
+        // return redirect()->back();
+        // return vsita main-dashboard
+        return view('main-dashboard');
     }
 
     static public function setComunidadActual($comunidad_id)
