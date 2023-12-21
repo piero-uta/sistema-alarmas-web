@@ -92,7 +92,7 @@
                                 <td>${direccion.calle} ${direccion.numero}</td>
                                 <td>${chequeo.estado_chequeo == 1 ? "Si": "No"}</td>
                                 <td>
-                                    <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})">Ver Chequeo</button>
+                                <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})"><i class="fas fa-sync-alt"></i></button>
                                 </td>
                             </tr>`;
                 // Agrega la fila a la tabla
