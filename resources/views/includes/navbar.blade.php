@@ -9,7 +9,9 @@
 @if (session('comunidad_id'))
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"> --}}
+        {{-- regresar vista main-dashboard.blade.php --}}
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
             <img  width="50" src="/images/logo_sistema_de_alarma.png" alt="IMG" style="background-color:aliceblue">
 
             <div class="sidebar-brand-text mx-3">Sistema de Alarmas</div>

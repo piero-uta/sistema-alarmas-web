@@ -42,6 +42,11 @@ Route::middleware(['auth:admin'])->group(function () {
 
 // Rutas de usuarios
 Route::middleware(['auth'])->group(function () {    
+    Route::get('/dashboard', function () {
+        // return view('welcome');
+        // redirigir a login 
+        return view('main-dashboard');
+    })->name('dashboard');
         
     
     Route::controller(Comunidades::class)->group(function () {
