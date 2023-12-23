@@ -31,7 +31,7 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Seleccionar</button>
+        <button type="submit" class="btn btn-primary" Style="background: #509fd8;">Seleccionar</button>
 
     </form>
 
@@ -80,7 +80,7 @@
                                 <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
-                                    <button type="submit" class="btn btn-primary" style="margin-right: 20px;">
+                                    <button type="submit" class="btn btn-primary" style="background: none; border: none; padding: 0;">
                                     <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
                                         <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
                                     </div>
@@ -112,7 +112,7 @@
             {{-- boton crear --}}
             <form method="GET" class="d-flex justify-content-end py-2" action="{{ route('red-avisos.crearEditar') }}">
                 <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
-                <button type="submit" class="btn btn-primary">Crear</button>
+                <button type="submit" class="btn btn-primary" Style="background: #509fd8;">Crear</button>
             </form>
         @else
             <h3>Debes seleccionar una dirección</h3>
