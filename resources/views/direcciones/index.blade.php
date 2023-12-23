@@ -56,15 +56,21 @@
                             {{ $direccion->codigo }}
                         </td>
                         <!-- Reemplaza la sección 'Acciones' con íconos por esta sección -->
-                        <td class="acciones-container" style="display: flex; gap: 5px; ">
+                        <td class="acciones-container" style="display: flex; gap: 5px; justify-content: center;">
                             <!-- modal ver usuarios de la direccion, llamar a funcion -->
-                            <button type="button" class="btn btn-primary"style="margin-right: 20px;" onclick="modalUsuariosDireccion({{ $direccion }})">
-                                <i class="fas fa-users"></i>
+                            <button type="button" class="btn "style="background: none; border: none; padding: 0; margin-right: 20px;" onclick="modalUsuariosDireccion({{ $direccion }})">
+                                <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono16.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                </div>
                             </button>
                             
                             @if (in_array('DireccionesUsuario-u', $permisos))
-                                <a type="button" class="btn btn-primary" style="margin-right: 20px;" href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">
-                                    <i class="fas fa-edit"></i>
+                                <!-- editar -->
+                                <a type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;"
+                                href="{{ route('direcciones.crearEditar', ['id' => $direccion->id]) }}">
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </a>
                             @endif
                             
@@ -73,8 +79,10 @@
                                 <form method="POST" action="{{ route('direcciones.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $direccion->id }}">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="submit" class="btn" style="background: none; border: none; padding: 0;">
+                                        <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                            <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                        </div>   
                                     </button>
                                 </form>
                             @endif
@@ -89,7 +97,7 @@
         </table>
         @if (in_array('DireccionesUsuario-c', $permisos))
             <div class="d-flex justify-content-end py-2">
-                <a type="button" class="btn btn-primary" href="{{ route('direcciones.crearEditar') }}">Crear</a>
+                <a type="button" class="btn btn-primary" href="{{ route('direcciones.crearEditar') }}" Style="background: #509fd8;">Crear</a>
             </div>
         @endif
     </div>

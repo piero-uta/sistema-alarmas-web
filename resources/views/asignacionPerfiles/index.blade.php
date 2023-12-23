@@ -38,21 +38,21 @@
                         <td>
                             {{ $permiso['opcion'] }}
                         </td>
-                        <td>
+                        <td >
                             @php
                                 $array = explode('-', $permiso['acciones_concatenadas']);
                             @endphp
                             @foreach (['c' => 'Crear', 'r' => 'Leer', 'u' => 'Actualizar', 'd' => 'Eliminar'] as $letter => $action)
                                 @if (in_array($letter, $array))
                                     {{-- {{ $action }} está en el array --}}
-                                    <input type="checkbox" class="checkbox-perfiles"
+                                    <input type="checkbox" class="checkbox-perfiles "
                                         name="{{ $perfil_aux . '-' . $permiso['opcion'] . '-' . $letter }}"
-                                        value="{{ $letter }}" checked>
+                                        value="{{ $letter }}" checked style="background: #509fd8;">
                                 @else
                                     {{-- {{ $action }} no está en el array --}}
                                     <input type="checkbox" class="checkbox-perfiles"
                                         name="{{ $perfil_aux . '-' . $permiso['opcion'] . '-' . $letter }}"
-                                        value="{{ $letter }}">
+                                        value="{{ $letter }}"checked style="background: #509fd8;">
                                 @endif
                                 {{ $action }}
                             @endforeach

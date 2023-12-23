@@ -83,7 +83,7 @@
 
                             {{-- ver --}}
                             @if (in_array('Usuarios-r', $permisos))
-                                <button type="button" class="btn" style="background: none; border: none; padding: 0;"  onClick="modalUsuario({{ $usuario }})">
+                                <button type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;"  onClick="modalUsuario({{ $usuario }})">
                                     <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
                                         <img src="{{ asset('img/iconos/icono1.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
                                     </div>
@@ -93,7 +93,7 @@
 
                             {{-- editar --}}
                             @if (in_array('Usuarios-u', $permisos))
-                                <a type="button" class="btn" style="background: none; border: none; padding: 0;"
+                                <a type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;"
                                     href="{{ route('usuarios.crearEditar') }}?id={{ $usuario->id }}">
                                     <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
                                         <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
@@ -127,7 +127,7 @@
     </div>
     @if (in_array('Usuarios-c', $permisos))
         <div class="d-flex justify-content-end py-2">
-            <a type="button" class="btn btn-primary" href="{{ route('usuarios.crearEditar') }}">Crear</a>
+            <a Style="background: #509fd8;" type="button" class="btn btn-primary" href="{{ route('usuarios.crearEditar') }}">Crear</a>
         </div>
     @endif
 

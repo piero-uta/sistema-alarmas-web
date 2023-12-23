@@ -92,7 +92,10 @@
                                 <td>${direccion.calle} ${direccion.numero}</td>
                                 <td>${chequeo.estado_chequeo == 1 ? "Si": "No"}</td>
                                 <td>
-                                <button class="btn btn-primary" onclick="verChequeo(${chequeo.id})"><i class="fas fa-sync-alt"></i></button>
+                                <button class="btn btn-primary" style="background: none; border: none; padding: 0;" onclick="verChequeo(${chequeo.id})">
+                                <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono13.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </td>
                             </tr>`;
                 // Agrega la fila a la tabla

@@ -67,26 +67,33 @@
                         <td class="acciones-container" style="display: flex; gap: 5px;">
                             {{-- ver --}}
                             @if (in_array('Comunidad-r', $permisos))
-                                <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalComunidad({{ $comunidad }})">
-                                    <i class="fas fa-eye"></i>
+                                <button type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;" onClick="modalComunidad({{ $comunidad }})">
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono1.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </button>
                             @endif
                             
                             {{-- editar --}}
                             @if (in_array('Comunidad-u', $permisos))
-                                <a type="button" class="btn btn-primary" style="margin-right: 20px;"
-                                    href="{{ route('comunidades.crearEditar') }}?id={{ $comunidad->id }}">
-                                    <i class="fas fa-edit"></i>
+                                <a type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;"
+                                href="{{ route('comunidades.crearEditar') }}?id={{ $comunidad->id }}">
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </a>
                             @endif
                             
                             {{-- eliminar --}}
                             @if (in_array('Comunidad-d', $permisos))
-                                <form method="POST" action="{{ route('comunidades.eliminar') }}">
+
+                                <form method="POST" action="{{ route('usuarios.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $comunidad->id }}">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="submit" class="btn" style="background: none; border: none; padding: 0;">
+                                        <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                            <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                        </div>                                   
                                     </button>
                                 </form>
                             @endif
@@ -99,7 +106,7 @@
         </table>
         @if (in_array('Comunidad-c', $permisos))
             <div class="d-flex justify-content-end py-2">
-                <a type="button" class="btn btn-primary" href="{{ route('comunidades.crearEditar') }}">Crear</a>
+                <a type="button" class="btn btn-primary" href="{{ route('comunidades.crearEditar') }}" style="background: #509fd8;">Crear</a>
             </div>
         @endif
     </div>

@@ -75,13 +75,15 @@
                                 Inactivo
                             @endif
                         </td>
-                        <td class="acciones-container" style="display: flex; gap: 5px;">
+                        <td class="acciones-container" style="display: flex; gap: 5px; justify-content: center;">
                             @if (in_array('RedAviso-u', $permisos))
                                 <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
                                     <button type="submit" class="btn btn-primary" style="margin-right: 20px;">
-                                        <i class="fas fa-edit"></i> 
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                     </button>
                                 </form>
                             @endif
@@ -91,7 +93,9 @@
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
                                     <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i> 
+                                        <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                                <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                        </div>   
                                     </button>
                                 </form>
                             @endif

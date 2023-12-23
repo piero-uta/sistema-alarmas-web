@@ -43,18 +43,22 @@
                         <div class="d-flex">
                             {{-- editar --}}
                             @if (in_array('Perfiles-u', $permisos))
-                                <a href="{{ route('perfiles.crearEditar') }}?id={{ $perfil->id }}" type="button"style="margin-right: 20px;"
-                                    class="btn btn-primary">
-                                    <i class="fas fa-edit"></i> 
+                                <a type="button" class="btn" style="background: none; border: none; padding: 0; margin-right: 20px;"
+                                href="{{ route('perfiles.crearEditar') }}?id={{ $perfil->id }}" >
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </a>
                             @endif
                             {{-- eliminar --}}
                             @if (in_array('Perfiles-d', $permisos))
-                                <form method="POST" action="{{ route('perfiles.eliminar') }}">
+                                <form method="POST" action="{{ route('usuarios.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $perfil->id }}">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i> 
+                                    <button type="submit" class="btn" style="background: none; border: none; padding: 0;">
+                                        <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                            <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                        </div>                                   
                                     </button>
                                 </form>
                             @endif
@@ -69,7 +73,7 @@
     </div>
     @if (in_array('Perfiles-c', $permisos))
         <div class="d-flex justify-content-end py-2">
-            <a href="{{ route('perfiles.crearEditar') }}" type="button" class="btn btn-primary">Crear</a>
+            <a href="{{ route('perfiles.crearEditar') }}" type="button" class="btn btn-primary" Style="background: #509fd8;">Crear</a>
         </div>
     @endif
 
