@@ -79,33 +79,44 @@
                                 Inactivo
                             @endif
                         </td>
-                        <td class="acciones-container" style="display: flex; gap: 5px; ">
+                        <td class="acciones-container" style="display: flex; gap: 5px; justify-content: center;">
+
                             {{-- ver --}}
                             @if (in_array('Usuarios-r', $permisos))
-                                <button type="button" class="btn btn-primary" style="margin-right: 20px;" onClick="modalUsuario({{ $usuario }})">
-                                    <i class="fas fa-eye"></i>
+                                <button type="button" class="btn" style="background: none; border: none; padding: 0;"  onClick="modalUsuario({{ $usuario }})">
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono1.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </button>
                             @endif
-                            
+
+
                             {{-- editar --}}
                             @if (in_array('Usuarios-u', $permisos))
-                                <a type="button" class="btn btn-primary" style="margin-right: 20px;"
+                                <a type="button" class="btn" style="background: none; border: none; padding: 0;"
                                     href="{{ route('usuarios.crearEditar') }}?id={{ $usuario->id }}">
-                                    <i class="fas fa-edit"></i>
+                                    <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                        <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                    </div>
                                 </a>
                             @endif
-                            
+
                             {{-- eliminar --}}
                             @if (in_array('Usuarios-d', $permisos))
                                 <form method="POST" action="{{ route('usuarios.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $usuario->id }}">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="submit" class="btn" style="background: none; border: none; padding: 0;">
+                                        <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
+                                            <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
+                                        </div>                                   
                                     </button>
                                 </form>
                             @endif
+
                         </td>
+
+
     </div>
     </tr>
     @endforeach
