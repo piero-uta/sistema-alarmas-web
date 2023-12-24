@@ -29,38 +29,38 @@
             </div>
             <div class="col-lg-8">
                 <div class="row gx-5 row-cols-1 row-cols-md-2">
-                    <div class="col mb-5 h-100">
-                    <i class="fas fa-user fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem;"></i>
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
+                    <div class="col mb-5 h-100" >
+                    <i class="fas fa-user fa-lg mb-0 text-white  " style="padding: 10px; border-radius: 0.25rem; background: #509fd8;"></i>
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3 "><i class="bi bi-building"></i></div>
                         <h2 class="h5">Usuarios</h2>
                         <p class="mb-0">Gestiona las cuentas para los vecinos de tu comunidad. Asigna sus perfiles y direcciones.</p>
                     </div>
                     <div class="col mb-5 h-100">
-                        <i class="fas fa-address-book fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem;"></i>
+                        <i class="fas fa-address-book fa-lg mb-0 text-white " style="padding: 10px; border-radius: 0.25rem; background: #509fd8;"></i>
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
                         <h2 class="h5">Direcciones</h2>
                         <p class="mb-0">Gestiona las direcciones para tu comunidad, selecciona un punto en el mapa para especificar la ubicación.</p>
                     </div>
                     <div class="col mb-5 mb-md-0 h-100">
-                        <i class="fas fa-bell fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem;"></i>
+                        <i class="fas fa-bell fa-lg mb-0 text-white" style="padding: 10px; border-radius: 0.25rem; background: #509fd8;"></i>
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                         <h2 class="h5">Red de avisos</h2>
                         <p class="mb-4">Indica como cada dirección se comunica con las otras direcciones de sus vecinos.</p>
                     </div>
                         <div class="col mb-5 mb-md-0 h-100">  
-                        <i class="fas fa-map-marker-alt fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem;"></i>
+                        <i class="fas fa-map-marker-alt fa-lg mb-0 text-white" style="padding: 10px; border-radius: 0.25rem; background: #509fd8;"></i>
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                         <h2 class="h5">Dashboard de monitoreo</h2>
                         <p class="mb-4">Monitorea el mapa de tu comunidad en tiempo real para lograr visualizar la creación de nuevas alarmas y chequea estas para indicar que los vecinos ya se encuentran seguros.</p>
                     </div>
                     <div class="col mb-5 mb-md-0 h-100">
-                        <i class="fas fa-users fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem; margin-bottom: 0.5rem;"></i>
+                        <i class="fas fa-users fa-lg mb-0 text-white" style="padding: 10px; border-radius: 0.25rem; margin-bottom: 0.5rem; background: #509fd8;"></i>
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                         <h2 class="h5">Perfiles</h2>
                         <p class="mb-0">Crea perfiles nuevos para los usuarios de tu comunidad.</p>
                     </div>
                     <div class="col h-100">
-                    <i class="fas fa-unlock-alt fa-lg mb-0 text-white bg-primary square" style="padding: 10px; border-radius: 0.25rem; margin-bottom: 0.5rem;"></i>
+                    <i class="fas fa-unlock-alt fa-lg mb-0 text-white" style="padding: 10px; border-radius: 0.25rem; margin-bottom: 0.5rem; background: #509fd8;"></i>
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                         <h2 class="h5">Asignación de perfiles</h2>
                         <p class="mb-0">Asigna permisos para los perfiles de tu comunidad y maneja las limitaciones de tus vecinos.</p>
