@@ -80,7 +80,7 @@
                                 <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
-                                    <button type="submit" class="btn btn-primary" style="background: none; border: none; padding: 0;">
+                                    <button type="submit" class="btn btn-primary" style="background: none; border: none; padding: 0; margin-right: 20px;">
                                     <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
                                         <img src="{{ asset('img/iconos/icono14.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
                                     </div>
@@ -92,7 +92,7 @@
                                     @csrf
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn" style="background: none; border: none; padding: 0;">
                                         <div style="width: 38px; height: 38px; background-color: white; overflow: hidden;">
                                                 <img src="{{ asset('img/iconos/icono4.png') }}" style="display: block; width: 60px; height: 60px; margin: -11px 0 0 -11px;" clip: ; alt="Icono 1">
                                         </div>   

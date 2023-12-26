@@ -79,7 +79,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
-                    <a type="button" class="btn btn-primary" href="#" id="btn_editar_usuario">Editar</a>
+                    <a type="button" class="btn" href="#" id="btn_editar_usuario" style="background: #509fd8;">Editar</a>
 
                     <form action="#" method="POST" id="form_eliminar_usuario">
                         @csrf
