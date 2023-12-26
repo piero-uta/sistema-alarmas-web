@@ -4,9 +4,9 @@
 @section('content')
 <!-- Header-->
 <header class="bg-dark py-5">
-    <div class="container px-5">
+    <div class="container px-2">
         <div class="row gx-5 align-items-center justify-content-center">
-            <div class="col-lg-8 col-xl-7 col-xxl-6">
+            <div class="col-xl-6 col-xxl-6">
                 <div class="my-5 text-center text-xl-start">
                     <h1 class="display-5 fw-bolder text-white mb-2">Descubre Cómo Funciona el Sistema de Alarma Comunitaria</h1>
                     <p class="lead fw-normal text-white-50 mb-4">
@@ -16,7 +16,43 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+            <div class="col-xl-6 col-xxl-6 d-none d-xl-block text-center">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen1.png') }}"  alt="..." />
+            
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen2.png') }}" alt="..." />
+            
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen3.png') }}" alt="..." />
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen4.png') }}" alt="..." />
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen5.png') }}" alt="..." />
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen6.png') }}" alt="..." />
+                      </div>
+                      <div class="carousel-item">
+                        <img class="img-fluid rounded-3 my-5" src="{{ asset('images/main-dashboard-carousel/imagen7.png') }}" alt="..." />
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Siguiente</span>
+                    </a>
+                  </div>
+                </div>
         </div>
     </div>
 </header>
