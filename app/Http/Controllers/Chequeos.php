@@ -44,10 +44,10 @@ class Chequeos extends Controller
 
     // create
     public function formularioGuardar(Request $request)
-    {   
+    {
         $parametros = [];
         if($request->has('id'))
-        {        
+        {
             $chequeoId = $request->input('id'); // Obtén el valor del parámetro "chequeo_id" de la solicitud
 
             $comunidadId = Session::get('comunidad_id'); // Obtén el ID de la comunidad desde la sesión
@@ -61,25 +61,26 @@ class Chequeos extends Controller
             $chequeo = Chequeo::join('alarmas', 'chequeos.alarma_id', '=', 'alarmas.id')
             ->join('direcciones', 'alarmas.direccion_id', '=', 'direcciones.id')
             ->where('chequeos.id', $chequeoId)
-            ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma', 
+            ->select('chequeos.*', 'alarmas.id as id_alarma', 'alarmas.fecha as fecha_alarma',
             'alarmas.hora as hora_alarma', 'direcciones.calle as calle_direccion',
-             'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario', 
+             'direcciones.numero as numero_direccion','alarmas.codigo as codigo_alarma', 'alarmas.nombre_usuario as nombre_usuario',
              'direcciones.latitud as latitud', 'direcciones.longitud as longitud')
             ->first();
-            
+
             if(!$chequeo)
             {
                 //agregar error a parametros
                 $parametros['error'] = 'Chequeo no encontrado';
                 return redirect()->route('chequeos.index')->with($parametros);
-            }       
+            }
 
-            $parametros['chequeo'] = $chequeo;            
+            $parametros['chequeo'] = $chequeo;
         }
         $tipoChequeos = TipoChequeo::all();
         $tipoEventos = TipoEvento::all();
         $parametros['tiposChequeo'] = $tipoChequeos;
         $parametros['tiposEvento'] = $tipoEventos;
+
         return view('chequeos.guardar', $parametros);
     }
 
@@ -114,9 +115,9 @@ class Chequeos extends Controller
             $alarma = Alarma::find($chequeo->alarma_id);
             $alarma->chequeo = 1;
             $chequeo->fecha = $fechaChile;
-            $chequeo->hora = $horaChile; 
-            $alarma->save();           
-            $chequeo->save();     
+            $chequeo->hora = $horaChile;
+            $alarma->save();
+            $chequeo->save();
         }
 
 
@@ -126,7 +127,16 @@ class Chequeos extends Controller
         $chequeo->tipo_chequeo = $request->tipo_chequeo;
         $chequeo->tipo_evento = $request->tipo_evento;
         $chequeo->save();
+
+        $database = app('firebase.database');
+        $user2 = User::where('nombre', $request->usuario_emisor)->first();
+        $database->getReference('users/' . $user2->id . '/' . $comunidad_id)->set([
+        'isEnabledButton' => true
+        ]);
+
+
+
         return redirect()->route('monitoreo.index');
     }
-   
+
 }
