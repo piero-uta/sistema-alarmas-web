@@ -62,7 +62,7 @@
     <label class="label" for="direccion">Dirección</label>
         <div class="form__container-flex">
             <input class="input" type="text" list="direcciones" name="direccion" id="direccion" value="{{ old('direccion')==null ? ( isset($direccion)?$direccion->calle .' '. strval($direccion->numero):'' ) : old('direccion') }}">
-            <button type="button" class="btn btn-primary" id="btn-geolocalizacion">Obtener ubicación</button>
+            <button type="button" class="btn btn-primary" id="btn-geolocalizacion" style="background: #509fd8;">Obtener ubicación</button>
 
             {{-- Datalist --}}
             <datalist id="direcciones"></datalist>
@@ -74,7 +74,7 @@
     <input class="input" type="text" name="longitud" id="longitud" value="{{ old('longitud')==null ? ( isset($direccion)?$direccion->longitud:'' ) : old('longitud') }}" hidden>
 
     <div class="d-flex justify-content-end py-2">
-        <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
+        <button type="submit" class="btn btn-primary" style="margin-right: 20px; background: #509fd8;">Guardar</button>
         <a class="btn btn-danger" href="javascript:history.back()">Cancelar</a>
     </div>
 </form>

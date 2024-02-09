@@ -108,7 +108,7 @@
 
 
         <div class="d-flex justify-content-end py-2">
-            <button type="submit" class="btn btn-primary" style="margin-right: 20px;">Guardar</button>
+            <button type="submit" class="btn btn-primary" style="margin-right: 20px; background: #509fd8;">Guardar</button>
             <a class="btn btn-danger" href="javascript:history.back()">Cancelar</a>
         </div>
     </form>
