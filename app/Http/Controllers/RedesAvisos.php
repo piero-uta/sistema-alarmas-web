@@ -61,7 +61,7 @@ class RedesAvisos extends Controller
         in_array('RedAviso-r', $permisos)||
         in_array('RedAviso-u', $permisos)||
         in_array('RedAviso-d', $permisos)){
-        return view('redAviso.index', $parametros, compact('permisos'));
+        return view('redAvisos.index', $parametros, compact('permisos'));
         }else{
             return view('main-dashboard');
             // return redirect()->route('login');
@@ -77,15 +77,15 @@ class RedesAvisos extends Controller
         $comunidad_id = Session::get('comunidad_id');
         if(!$direccionSeleccionada || $direccionSeleccionada->comunidad_id != $comunidad_id){
             //agregar error a parametros
-            $parametros['error'] = 'Direccion no encontrada';
-            return redirect()->route('redAviso.index')->with($parametros);
+            $parametros['error'] = 'Dirección no encontrada';
+            return redirect()->route('redAvisos.index')->with($parametros);
         }
         $comunidad = Comunidad::where('id', $comunidad_id)->first();
         $parametros['comunidad'] = $comunidad;
         if(!$direccionSeleccionada){
             //agregar error a parametros
-            $parametros['error'] = 'Direccion no encontrada';
-            return redirect()->route('redAviso.index')->with($parametros);
+            $parametros['error'] = 'Dirección no encontrada';
+            return redirect()->route('redAvisos.index')->with($parametros);
         }
         $parametros['direccionSeleccionada'] = $direccionSeleccionada;
         // obtener redes de aviso con direccion_id = $request->direccion_id
@@ -96,7 +96,7 @@ class RedesAvisos extends Controller
             if(!$red){
                 //agregar error a parametros
                 $parametros['error'] = 'Red de aviso no encontrada';
-                return redirect()->route('redAviso.index')->with($parametros);
+                return redirect()->route('redAvisos.index')->with($parametros);
             }
             $parametros['red'] = $red;
             // quitar red de redes
@@ -108,7 +108,7 @@ class RedesAvisos extends Controller
         $direcciones = Direccion::where('comunidad_id', $comunidad_id)->where('id', '!=', $request->direccion_id)->whereNotIn('id', $redes->pluck('direccion_vecino_id'))->get();
         $parametros['direcciones'] = $direcciones;
 
-        return view('redAviso.guardar', $parametros);
+        return view('redAvisos.guardar', $parametros);
     }
 
     public function handleGuardar(Request $request)
@@ -123,7 +123,7 @@ class RedesAvisos extends Controller
             if(!$red){
                 //agregar error a parametros
                 $parametros['error'] = 'Red de aviso no encontrada';
-                return redirect()->route('redAviso.index')->with($parametros);
+                return redirect()->route('redAvisos.index')->with($parametros);
             }
         }else{
             $red = new RedAviso();
@@ -136,7 +136,9 @@ class RedesAvisos extends Controller
             $red->activo = 0;
         }
         $red->save();
-        return redirect()->route('red-avisos.index');
+        //success
+        $parametros['success'] = 'Red de aviso guardada';
+        return redirect()->route('redAvisos.index')->with($parametros);
     }
 
     public function eliminar(Request $request)
@@ -148,10 +150,12 @@ class RedesAvisos extends Controller
         if(!$red){
             //agregar error a parametros
             $parametros['error'] = 'Red de aviso no encontrada';
-            return redirect()->route('redAviso.index')->with($parametros);
+            return redirect()->route('redAvisos.index')->with($parametros);
         }
         $red->delete();
-        return redirect()->route('red-avisos.index');
+        //success
+        $parametros['success'] = 'Red de aviso eliminada';
+        return redirect()->route('redAvisos.index')->with($parametros);
     }
 
 }

@@ -42,7 +42,7 @@
     </div>
     <div class="mb-3">
         <label for="numero" class="form-label">Numero*</label>
-        <input type="text" class="form-control" name="numero" required id ="numero"
+        <input type="number" class="form-control" name="numero" required id ="numero"
         value="{{ old('numero')==null ? ( isset($direccion)?$direccion->numero:'' ) : old('numero') }}">
     </div>
     <div class="mb-3">

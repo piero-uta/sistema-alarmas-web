@@ -18,7 +18,7 @@
 
 @section('content')
     <h2>Crear red de aviso para {{$direccionSeleccionada->codigo}}</h2>
-    <form method="POST" class="form form__container" action="{{ route('red-avisos.handleGuardar') }}">
+    <form method="POST" class="form form__container" action="{{ route('redAvisos.handleGuardar') }}">
         @csrf
         @if (isset($red))
             <input type="hidden" name="id" value="{{ $red->id }}">

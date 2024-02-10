@@ -125,7 +125,7 @@ class Comunidades extends Controller
 
         $comunidad->save();
         $comunidad->perfilesPorDefecto();
-        $parametros['success'] = 'Comunidad' . $request->razon_social . 'guardada';
+        $parametros['success'] = 'Comunidad ' . $request->razon_social . ' guardada';
         return redirect()->route('comunidades.index')->with($parametros);
     }
 
@@ -143,7 +143,7 @@ class Comunidades extends Controller
         $razonSocial = $comunidad->razon_social;
         $comunidad->delete();
         //success
-        $parametros['success'] = 'Comunidad' . $razonSocial . 'eliminada';
+        $parametros['success'] = 'Comunidad ' . $razonSocial . ' eliminada';
         return redirect()->route('comunidades.index')->with($parametros);
     }
 

@@ -8,10 +8,11 @@
 @section('content')
 
     <h2>Red de aviso</h2>
+    @include('includes.alerts')
     {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     {{-- seleccionar direccion --}}
-    <form method="GET" class="form form__container" action="{{ route('red-avisos.index') }}">
+    <form method="GET" class="form form__container" action="{{ route('redAvisos.index') }}">
         <div class="form-group">
             <label for="direccion">Dirección</label>
             <select class="form-control" id="direccion" name="direccion_id">
@@ -77,7 +78,7 @@
                         </td>
                         <td class="acciones-container" style="display: flex; gap: 5px; justify-content: center;">
                             @if (in_array('RedAviso-u', $permisos))
-                                <form method="GET" class="form form__container" action="{{ route('red-avisos.crearEditar') }}">
+                                <form method="GET" class="form form__container" action="{{ route('redAvisos.crearEditar') }}">
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
                                     <button type="submit" class="btn btn-primary" style="background: none; border: none; padding: 0; margin-right: 20px;">
@@ -88,7 +89,7 @@
                                 </form>
                             @endif
                             @if (in_array('RedAviso-d', $permisos))
-                                <form method="POST" action="{{ route('red-avisos.eliminar') }}">
+                                <form method="POST" action="{{ route('redAvisos.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                                     <input type="hidden" name="id" value="{{ $red->id }}" required>
@@ -110,7 +111,7 @@
     @if (in_array('RedAviso-c', $permisos))
         @if ($direccion_id != '')
             {{-- boton crear --}}
-            <form method="GET" class="d-flex justify-content-end py-2" action="{{ route('red-avisos.crearEditar') }}">
+            <form method="GET" class="d-flex justify-content-end py-2" action="{{ route('redAvisos.crearEditar') }}">
                 <input type="hidden" name="direccion_id" value="{{ $direccion_id }}" required>
                 <button type="submit" class="btn btn-primary" Style="background: #509fd8;">Crear</button>
             </form>

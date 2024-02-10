@@ -71,7 +71,7 @@ class Chequeos extends Controller
             {
                 //agregar error a parametros
                 $parametros['error'] = 'Chequeo no encontrado';
-                return redirect()->route('chequeos.index')->with($parametros);
+                return redirect()->route('monitoreo.index')->with($parametros);
             }
 
             $parametros['chequeo'] = $chequeo;
@@ -96,11 +96,13 @@ class Chequeos extends Controller
             if(!$chequeo){
                 //agregar error a parametros
                 $parametros['error'] = 'Chequeo no encontrada';
-                return redirect()->route('chequeos.index')->with($parametros);
+                return redirect()->route('monitoreo.index')->with($parametros);
             }
 
         }else{
-            return redirect()->route('chequeos.index');
+            //agregar error a parametros
+            $parametros['error'] = 'Chequeo no encontrada';
+            return redirect()->route('monitoreo.index')->with($parametros);
         }
 
         // Obtener la fecha y hora actual de Chile
@@ -135,8 +137,8 @@ class Chequeos extends Controller
         ]);
 
 
-
-        return redirect()->route('monitoreo.index');
+        $parametros['success'] = 'Chequeo editado correctamente';
+        return redirect()->route('monitoreo.index')->with($parametros);
     }
 
 }

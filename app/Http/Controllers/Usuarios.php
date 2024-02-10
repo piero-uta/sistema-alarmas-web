@@ -76,7 +76,7 @@ class Usuarios extends Controller
 
             if(!$usuario){
                 //agregar error a parametros
-                $parametros['error'] = 'Usaurio no encontrada';
+                $parametros['error'] = 'Usaurio no encontrado en esta comunidad';
                 return redirect()->route('usuarios.index')->with($parametros);
             }
             $parametros['usuario'] = $usuario;
@@ -154,7 +154,7 @@ class Usuarios extends Controller
         }
         $usuarioComunidad->save();
 
-        $parametros['success'] = 'Usuario' . $request->nombre . 'guardado';
+        $parametros['success'] = 'Usuario ' . $request->nombre . ' guardado con éxito';
         return redirect()->route('usuarios.index')->with($parametros);
 
     }
@@ -171,13 +171,16 @@ class Usuarios extends Controller
             return redirect()->route('usuarios.index')->with($parametros);
         }
         $nombre = $usuario->nombre;
+
+        //TO DO: pensar muy bien como va a ser el sistema de eliminacion de usuarios 
+
         // buscar usuarioComunidad
         $usuarioComunidad = UsuarioComunidad::where('usuario_id', $usuario->id)->where('comunidad_id', Session::get('comunidad_id'))->first();
         if($usuarioComunidad){
             $usuarioComunidad->delete();
         }
         //success
-        $parametros['success'] = 'Usuario' . $nombre . 'eliminada';
+        $parametros['success'] = 'Usuario ' . $nombre . ' eliminado con éxito';
         return redirect()->route('usuarios.index')->with($parametros);
     }
 

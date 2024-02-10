@@ -4,6 +4,7 @@
     @section('content')
 
     <h2>Dashboard de monitoreo</h2>
+    @include('includes.alerts')
 
     <div id="map" style="height: 400px; width: 100%; z-index: 0; margin: 3rem 0"></div>
 
