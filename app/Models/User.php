@@ -153,5 +153,10 @@ class User extends Authenticatable
         return $this->perfil->permisos->contains('nombre', $permiso);
     }
 
-
+    public static function datosQuery(){
+        return User::select('users.id','users.email', 'users.nombre', 'users.apellido_paterno', 'users.apellido_materno')
+        ->orderBy('users.nombre')
+        ->orderBy('users.apellido_paterno')
+        ->orderBy('users.apellido_materno');
+    }
 }

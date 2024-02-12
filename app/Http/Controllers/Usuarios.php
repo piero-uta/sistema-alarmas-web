@@ -64,6 +64,7 @@ class Usuarios extends Controller
     {
         $parametros = [];
         $comunidad_id = Session::get('comunidad_id');
+
         if($request->has('id')){
             // $usuario = User::find($request->id);
 
@@ -99,6 +100,27 @@ class Usuarios extends Controller
 
     public function handleGuardar(Request $request)
     {
+        
+        $comunidad_id = Session::get('comunidad_id');
+        $email = $request->input('email');
+        
+        $emailRepetido = User::where('email', $request->input('email'))
+        ->whereExists(function ($query) use ($comunidad_id) {
+            $query->select('id')
+                ->from('usuarios_comunidad')
+                ->whereRaw('usuarios_comunidad.usuario_id = users.id')
+                ->where('usuarios_comunidad.comunidad_id', $comunidad_id);
+        })
+        ->exists();
+       
+        if ($emailRepetido) {
+               // Si el correo electrónico está repetido, redirigir con un mensaje de error
+                return redirect()->route('usuarios.crearEditar')
+                ->withErrors(['email' => 'Ya existe un usuario con este correo electrónico en esta comunidad.'])
+                ->withInput();
+        }
+        
+
         $request->validate([
             'nombre' => 'required',
             'apellido_paterno' => 'required',
@@ -182,6 +204,36 @@ class Usuarios extends Controller
         //success
         $parametros['success'] = 'Usuario ' . $nombre . ' eliminado con éxito';
         return redirect()->route('usuarios.index')->with($parametros);
+    }
+        // API Buscar usuarios por datos correo o nombre o apellido1 o apellido2 o rut
+    public function buscarPersonas(Request $request){
+        // Obtener datos del request
+        $search_query = $request->input('search');
+        
+        
+        if( !isset($search_query) || empty($search_query) ){
+            // Response
+            return response()->json([
+                'personas' => [],
+                'status' => 'success',
+            ], 200);
+        }
+
+        // Obtener usuarios personas primeras 15 coincidencias
+        $usuarios = User::datosQuery()
+                    ->where('users.email', 'LIKE', '%'.$search_query.'%')
+                    ->orWhere('users.nombre', 'LIKE', '%'.$search_query.'%')
+                    ->orWhere('users.apellido_paterno', 'LIKE', '%'.$search_query.'%')
+                    ->orWhere('users.apellido_materno', 'LIKE', '%'.$search_query.'%')
+                    ->limit(15)
+                    ->get();
+
+        // Response
+        return response()->json([
+            'usuario' => $usuarios,
+            'status' => 'success',
+        ], 200);
+
     }
 
 }
