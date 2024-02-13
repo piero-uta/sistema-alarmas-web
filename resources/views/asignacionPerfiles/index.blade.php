@@ -3,6 +3,7 @@
 
 @section('content')
     <h2>Asignacion de Perfiles</h2>
+    @include('includes.alerts')
     {{-- <div>{{ json_encode($permisos) }}</div> --}}
     <hr>
     <label>selección Perfiles: </label>

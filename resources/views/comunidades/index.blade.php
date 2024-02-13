@@ -4,6 +4,7 @@
 @section('content')
 
     <h2>Comunidades</h2>
+    @include('includes.alerts')
     {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">
@@ -87,7 +88,7 @@
                             {{-- eliminar --}}
                             @if (in_array('Comunidad-d', $permisos))
 
-                                <form method="POST" action="{{ route('usuarios.eliminar') }}">
+                                <form method="POST" action="{{ route('comunidades.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $comunidad->id }}">
                                     <button type="submit" class="btn" style="background: none; border: none; padding: 0;">

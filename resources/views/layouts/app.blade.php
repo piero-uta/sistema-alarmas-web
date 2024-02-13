@@ -8,6 +8,15 @@
     {{-- CSRF --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Sistema de alarma comunitaria - @yield('title')</title>
+    {{-- Bootstrap --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+    <!-- Agrega esto en tu archivo HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="...">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="..." crossorigin="anonymous"></script>
 
 
     <!-- Custom fonts for this template-->
@@ -33,9 +42,6 @@
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
     https://firebase.google.com/docs/web/setup#available-libraries -->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
     {{-- Scripts --}}
     @stack('head-scripts')

@@ -87,12 +87,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/usuarios/guardar', 'handleGuardar')->name('usuarios.handleGuardar');
         Route::post('/usuarios/eliminar', 'eliminar')->name('usuarios.eliminar');
     });
+    // buscar usuario
+    Route::get('/api/usuarios/buscar', [Usuarios::class, 'buscarPersonas'])->name('api-usuarios-buscar');
 
     Route::controller(RedesAvisos::class)->group(function () {
-        Route::get('/red-avisos', 'index')->name('red-avisos.index');
-        Route::get('/red-avisos/crear', 'formularioGuardar')->name('red-avisos.crearEditar');
-        Route::post('/red-avisos/guardar', 'handleGuardar')->name('red-avisos.handleGuardar');
-        Route::post('/red-avisos/eliminar', 'eliminar')->name('red-avisos.eliminar');
+        Route::get('/red-avisos', 'index')->name('redAvisos.index');
+        Route::get('/red-avisos/crear', 'formularioGuardar')->name('redAvisos.crearEditar');
+        Route::post('/red-avisos/guardar', 'handleGuardar')->name('redAvisos.handleGuardar');
+        Route::post('/red-avisos/eliminar', 'eliminar')->name('redAvisos.eliminar');
     });
     Route::controller(Chequeos::class)->group(function () {
         Route::get('/chequeos', 'index')->name('chequeos.index');

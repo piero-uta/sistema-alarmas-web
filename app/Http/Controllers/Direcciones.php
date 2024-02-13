@@ -129,7 +129,7 @@ class Direcciones extends Controller
         }
 
         $direccion->save();
-        return redirect()->route('direcciones.index')->with(['mensaje' => 'Direccion guardada correctamente']);
+        return redirect()->route('direcciones.index')->with(['success' => 'Direccion guardada correctamente']);
     }
 
     public function eliminar(Request $request)
@@ -142,7 +142,7 @@ class Direcciones extends Controller
             return redirect()->route('direcciones.index')->with($parametros);
         }
         $direccion->delete();
-        return redirect()->route('direcciones.index')->with(['mensaje' => 'Direccion eliminada correctamente']);
+        return redirect()->route('direcciones.index')->with(['success' => 'Direccion eliminada correctamente']);
     }
 
     // usuario direccion

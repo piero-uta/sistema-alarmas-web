@@ -4,6 +4,7 @@
 @section('content')
 
     <h2>Direcciones</h2>
+    @include('includes.alerts')
     {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">

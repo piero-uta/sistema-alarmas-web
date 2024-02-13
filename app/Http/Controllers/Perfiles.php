@@ -69,7 +69,13 @@ class Perfiles extends Controller
         $parametros = [];
         $comunidad_id = Session::get('comunidad_id');
         if($request->has('id')){
+            //TO DO: se deberia comprobar tambien la comunidad
             $perfil = Perfil::find($request->id);
+            if(!$perfil){
+                //agregar error a parametros
+                $parametros['error'] = 'Perfil no encontrada';
+                return redirect()->route('perfiles.index')->with($parametros);
+            }
             $parametros['perfil'] = $perfil;
 
         }
@@ -109,7 +115,7 @@ class Perfiles extends Controller
         $perfil->save();
 
 
-        $parametros['success'] = 'Perfil' . $request->nombre . 'guardado';
+        $parametros['success'] = 'Perfil ' . $request->nombre . ' guardado';
         return redirect()->route('perfiles.index')->with($parametros);
 
     }
@@ -122,7 +128,7 @@ class Perfiles extends Controller
             UsuarioComunidad::where('perfil_id', $id)->update(['perfil_id' => null]);
             PermisoPerfil::where('perfil_id', $id)->delete();
             $perfil->delete();
-            $parametros['success'] = 'Perfil' . $perfil . 'eliminada';
+            $parametros['success'] = 'Perfil ' . $perfil->nombre . ' eliminada';
         } else {
             $parametros['error'] = 'Perfil no encontrada';
         }

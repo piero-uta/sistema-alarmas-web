@@ -3,6 +3,7 @@
 
 @section('content')
     <h2>Perfiles</h2>
+    @include('includes.alerts')
     {{-- <div>{{ json_encode($permisos) }}</div> --}}
 
     <div class="table-responsive">
@@ -52,7 +53,7 @@
                             @endif
                             {{-- eliminar --}}
                             @if (in_array('Perfiles-d', $permisos))
-                                <form method="POST" action="{{ route('usuarios.eliminar') }}">
+                                <form method="POST" action="{{ route('perfiles.eliminar') }}">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $perfil->id }}">
                                     <button type="submit" class="btn" style="background: none; border: none; padding: 0;">

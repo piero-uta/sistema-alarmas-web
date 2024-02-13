@@ -4,6 +4,7 @@
 @section('content')
 
 <h2>chequeos</h2>
+@include('includes.alerts')
 <div>
     <table class="table">
         <thead>
