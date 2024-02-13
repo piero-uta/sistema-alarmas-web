@@ -3,6 +3,7 @@
 
 @section('content')
     <h2>Crear usuario</h2>
+    @include('includes.alerts')
 
 <div class="container">    
     <h1 class="heading">Crear empleado</h1>

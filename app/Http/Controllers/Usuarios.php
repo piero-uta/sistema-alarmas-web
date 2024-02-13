@@ -115,9 +115,9 @@ class Usuarios extends Controller
        
         if ($emailRepetido) {
                // Si el correo electrónico está repetido, redirigir con un mensaje de error
-                return redirect()->route('usuarios.crearEditar')
-                ->withErrors(['email' => 'Ya existe un usuario con este correo electrónico en esta comunidad.'])
-                ->withInput();
+                return redirect()->route('usuarios.crearEditar')->with('error', 'Ya existe un usuario con este correo electrónico en esta comunidad.');	
+                //->withErrors(['email' => 'Ya existe un usuario con este correo electrónico en esta comunidad.'])
+                //->withInput();
         }
         
 
