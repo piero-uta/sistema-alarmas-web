@@ -208,6 +208,9 @@ class Alarmas extends Controller
             if($user->token_celular != $request->token){
                 $newDevice = true;
             }
+            if($user->token_celular == null){
+                $newDevice = false;
+            }
             $request->user()->update(['token_celular'=>$request->token]);
             return response()->json([
                 'success' => true,
@@ -221,4 +224,26 @@ class Alarmas extends Controller
             ],500);
         }
     }
+
+    public function removeFCMToken(Request $request)
+    {
+        try {
+            $user = User::where('id', $request->user()->id)->first();
+            if (!$user) {
+                throw new \Exception('User not found');
+            }
+            $user->token_celular = null;
+            $user->save();
+            return response()->json([
+                'success' => true
+            ]);
+
+        } catch (\Exception $e) {
+            report($e);
+            return response()->json([
+                'Error'=> 'User not found'
+            ],400);
+        }
+    }
+
 }

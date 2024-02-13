@@ -56,6 +56,7 @@ Route::group(['middleware'=>['cors']], function(){
 
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/save-fcmtoken', [Alarmas::class, 'saveFCMToken'])->name('saveFCMToken');
+        Route::post('/remove-fcmtoken', [Alarmas::class, 'removeFCMToken'])->name('removeFCMToken');
         Route::post('/send-notification', [Alarmas::class,'sendNotification'])->name('sendNotification');
     });
 });
