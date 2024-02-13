@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\Autenticacion;
 use App\Http\Controllers\Api\Alarmas;
 use App\Models\Alarma;
 use App\Models\UsuarioComunidad;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes

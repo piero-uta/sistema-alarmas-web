@@ -122,7 +122,7 @@ class Alarmas extends Controller
                 'message'=>'No se puede enviar la notificacion, no se encontro la direccion del usuario'
             ],500);
         }
-        
+
 
         $title = "Alarma de vecino: ".$user->nombre;
         $body = "Calle: ".$direccion->calle." #".$direccion->numero;
@@ -147,9 +147,9 @@ class Alarmas extends Controller
             $alarma->fecha = $fecha_sql;
             $alarma->hora = $hora_sql;
             $alarma->nombre_usuario = $user->nombre;
-            $alarma->codigo = $direccion->codigo;            
+            $alarma->codigo = $direccion->codigo;
             $alarma->save();
-      
+
             /// Crear los datos de chequeos
             $chequeo = new Chequeo;
             $chequeo->alarma_id = $alarma->id;
@@ -158,7 +158,7 @@ class Alarmas extends Controller
             $chequeo->vecino_chequeo = $alarma->nombre_usuario;
             $chequeo->observacion = '';
             $chequeo->tipo_chequeo = null;
-            $chequeo->tipo_evento = null;    
+            $chequeo->tipo_evento = null;
 
             $chequeo->save();
 
@@ -203,10 +203,17 @@ class Alarmas extends Controller
     public function saveFCMToken(Request $request)
     {
         try {
+            $newDevice = false;
+            $user = $request->user();
+            if($user->token_celular != $request->token){
+                $newDevice = true;
+            }
             $request->user()->update(['token_celular'=>$request->token]);
             return response()->json([
-                'success' => true
+                'success' => true,
+                'newDevice'=> $newDevice
             ]);
+
         } catch (\Exception $e) {
             report($e);
             return response()->json([
