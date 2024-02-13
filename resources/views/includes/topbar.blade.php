@@ -207,7 +207,7 @@
 
     messaging.onMessage(function(message) {
         updateAlarmas();
-        if (typeof reloadMap === 'function') {
+        if(typeof reloadMap === 'function'){
             reloadMap();
         }
 
